@@ -235,7 +235,7 @@ function UserDetails() {
     window.history.pushState({}, "", nextUrl);
   };
 
-  const goBack = () => { window.location.href = "License Optimization.html"; };
+  const goBack = () => { window.location.href = "/"; };
 
   return (
     <div className="lo-page ud-page">

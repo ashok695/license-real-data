@@ -1,0 +1,27 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/License%20Optimization.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/License%20Optimization",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/User%20Details.html",
+      "destination": "/user-details",
+      "permanent": true
+    },
+    {
+      "source": "/User%20Details",
+      "destination": "/user-details",
+      "permanent": true
+    }
+  ]
+}

@@ -542,7 +542,7 @@ function LicenseOptimizationPage() {
                       }
                     </td>}
                     <td className="col-action">
-                      <button className="view-btn" onClick={(e) => { e.stopPropagation(); window.location.href = `User Details.html?id=${u.id}`; }}>
+                      <button className="view-btn" onClick={(e) => { e.stopPropagation(); window.location.href = `user-details?id=${u.id}`; }}>
                         View
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
                       </button>
