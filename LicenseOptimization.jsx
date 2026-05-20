@@ -30,6 +30,8 @@ function TopKpiCard({ tone, icon, label, value, sub, breakdown, layout }) {
   const breakdownTotal = breakdown
     ? breakdown.reduce((sum, item) => sum + item.value, 0)
     : 0;
+  const hasValue = value !== undefined && value !== null;
+  const renderedValue = typeof value === "number" ? value.toLocaleString() : value;
 
   return (
     <div className={`top-kpi-card top-kpi-${tone || "blue"}`}>
@@ -39,6 +41,7 @@ function TopKpiCard({ tone, icon, label, value, sub, breakdown, layout }) {
       </div>
       {breakdown ? (
         <div className={`top-kpi-breakdown top-kpi-breakdown-${layout || "tiles"}`}>
+          {hasValue ? <div className="top-kpi-value">{renderedValue}</div> : null}
           {layout === "chart" && (
             <div className="top-kpi-chart" aria-hidden="true">
               {breakdown.map(item => (
@@ -68,7 +71,7 @@ function TopKpiCard({ tone, icon, label, value, sub, breakdown, layout }) {
           </div>
         </div>
       ) : (
-        <div className="top-kpi-value">{value.toLocaleString()}</div>
+        <div className="top-kpi-value">{renderedValue}</div>
       )}
       {sub ? <div className="top-kpi-sub">{sub}</div> : null}
     </div>
@@ -88,6 +91,24 @@ function LicensePill({ license }) {
     "HD Platform": "pill-rose", "Employee": "pill-slate"
   };
   return <span className={`pill ${map[license] || "pill-blue"}`}>{license}</span>;
+}
+
+function LicenseMismatchPill({ actualLicense, targetLicense }) {
+  const mismatched = (actualLicense || "NA") !== (targetLicense || "NA");
+  return (
+    <span className={`pill ${mismatched ? "pill-red" : "pill-green"}`}>
+      {mismatched ? "Mismatched" : "No Change"}
+    </span>
+  );
+}
+
+function AssignmentPill({ value }) {
+  const assignment = value || "Directly Assigned";
+  return (
+    <span className={`pill ${assignment === "Indirectly Assigned" ? "pill-amber" : "pill-green"}`}>
+      {assignment}
+    </span>
+  );
 }
 
 // License count chip for Pro/Func/Prod columns
@@ -172,16 +193,19 @@ function LicenseOptimizationPage() {
     { key: "pro",    label: "Professional" },
     { key: "func",   label: "Functional" },
     { key: "prod",   label: "Productivity" },
+    { key: "actual", label: "Actual License",                 required: true },
     { key: "target", label: "Target License Classification",  required: true },
+    { key: "mismatch", label: "License Mismatch",             required: true },
     { key: "role",   label: "Role" },
+    { key: "assignment", label: "Role Assignment" },
     { key: "auth",   label: "Auth Object" },
     { key: "field",  label: "Field" },
     { key: "values", label: "Values" },
     { key: "fstat",  label: "Field Status" },
-    { key: "lic",    label: "License" },
-    { key: "rec",    label: "Recommendation" }
+    { key: "lic",    label: "License" }
+    // { key: "rec",    label: "Recommendation" }
   ];
-  function show(k) { return !hidden.has(k); }
+  function show(k) { return k !== "rec" && !hidden.has(k); }
   function toggleColumn(k) {
     setHidden(s => { const n = new Set(s); n.has(k) ? n.delete(k) : n.add(k); return n; });
   }
@@ -194,8 +218,11 @@ function LicenseOptimizationPage() {
       professional: 0,
       functional: 0,
       productivity: 0,
-      unusedAuthObjects: 0,
-      rolesNeedAttention: 0
+      licenseMatches: 0,
+      licenseMismatches: 0,
+      licenseMatchRate: 0,
+      rolesCreated: data.totals?.roles || data.rolesAggregated?.length || 0,
+      assignedRoles: 0
     };
 
     data.users.forEach(user => {
@@ -206,15 +233,15 @@ function LicenseOptimizationPage() {
       else if (user.targetLicense === "HD Functional") totals.functional++;
       else if (user.targetLicense === "HD Productivity") totals.productivity++;
 
-      user.roles.forEach(role => {
-        if (role.recommendation && role.recommendation.type !== "Retain") {
-          totals.rolesNeedAttention++;
-        }
-        role.authObjs.forEach(authObj => {
-          if (authObj.fieldStatus === "Unused") totals.unusedAuthObjects++;
-        });
-      });
+      if ((user.license || "NA") === (user.targetLicense || "NA")) totals.licenseMatches++;
+      else totals.licenseMismatches++;
+
+      totals.assignedRoles += user.roleCount || user.roles.length;
     });
+
+    totals.licenseMatchRate = totals.users
+      ? Math.round((totals.licenseMatches / totals.users) * 100)
+      : 0;
 
     return totals;
   }, [data.users]);
@@ -300,14 +327,17 @@ function LicenseOptimizationPage() {
           else if (c.key === "pro") row.push(role.licenseCounts.professional);
           else if (c.key === "func") row.push(role.licenseCounts.functional);
           else if (c.key === "prod") row.push(role.licenseCounts.productivity);
+          else if (c.key === "actual") row.push(u.license);
           else if (c.key === "target") row.push(u.targetLicense);
+          else if (c.key === "mismatch") row.push(u.license === u.targetLicense ? "No Change" : "Mismatched");
           else if (c.key === "role") row.push(role.name);
+          else if (c.key === "assignment") row.push(role.assignmentType || "Directly Assigned");
           else if (c.key === "auth") row.push(role.authObjs.length);
           else if (c.key === "field") row.push("");
           else if (c.key === "values") row.push("");
           else if (c.key === "fstat") row.push("");
           else if (c.key === "lic") row.push(role.targetLicense);
-          else if (c.key === "rec") row.push(role.recommendation ? `${role.recommendation.type}: ${role.recommendation.action}` : "");
+          // else if (c.key === "rec") row.push(role.recommendation ? `${role.recommendation.type}: ${role.recommendation.action}` : "");
         });
         rows.push(row);
       });
@@ -386,18 +416,18 @@ function LicenseOptimizationPage() {
           icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 14l9 5 9-5"/><path d="M3 11l9 5 9-5"/></svg>}
         />
         <TopKpiCard
-          tone="rose"
-          label="Unused Auth Obj"
-          value={topKpis.unusedAuthObjects}
-          sub="Authorization objects marked unused"
-          icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="m5 7 1 13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4h6v3"/></svg>}
+          tone="green"
+          label="License Match Rate"
+          value={`${topKpis.licenseMatchRate}%`}
+          sub={`${topKpis.licenseMatches.toLocaleString()} matched / ${topKpis.licenseMismatches.toLocaleString()} mismatched`}
+          icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>}
         />
         <TopKpiCard
           tone="amber"
-          label="Total Roles Need Attention"
-          value={topKpis.rolesNeedAttention}
-          sub="Roles with optimization recommendation"
-          icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M10.3 3.3 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>}
+          label="Total Roles Created"
+          value={topKpis.rolesCreated}
+          sub={`${topKpis.assignedRoles.toLocaleString()} assigned roles`}
+          icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 14l9 5 9-5"/><path d="M3 11l9 5 9-5"/></svg>}
         />
       </div>
 
@@ -477,14 +507,17 @@ function LicenseOptimizationPage() {
                 {show("pro")    && <th className="th-num"><span className="th-lic"><LicDot kind="pro" />Professional</span></th>}
                 {show("func")   && <th className="th-num"><span className="th-lic"><LicDot kind="func" />Functional</span></th>}
                 {show("prod")   && <th className="th-num"><span className="th-lic"><LicDot kind="prod" />Productivity</span></th>}
+                {show("actual") && <th onClick={() => toggleSort("license")} className="sortable">Actual License <SortIcon active={sort.key === "license"} dir={sort.dir} /></th>}
                 {show("target") && <th onClick={() => toggleSort("targetLicense")} className="sortable">Target License Classification <SortIcon active={sort.key === "targetLicense"} dir={sort.dir} /></th>}
+                {show("mismatch") && <th>License Mismatch</th>}
                 {show("role")   && <th onClick={() => toggleSort("roleCount")} className="sortable">Role <SortIcon active={sort.key === "roleCount"} dir={sort.dir} /></th>}
+                {show("assignment") && <th>Role Assignment</th>}
                 {show("auth")   && <th>Auth Object</th>}
                 {show("field")  && <th>Field</th>}
                 {show("values") && <th>Values</th>}
                 {show("fstat")  && <th>Field Status</th>}
                 {show("lic")    && <th>License</th>}
-                {show("rec")    && <th>Recommendation</th>}
+                {/* {show("rec")    && <th>Recommendation</th>} */}
                 <th style={{ width: 70 }}></th>
               </tr>
             </thead>
@@ -522,14 +555,17 @@ function LicenseOptimizationPage() {
                     {show("pro")    && <td className="num"><CountCell value={u.licenseCounts.professional} kind="pro" /></td>}
                     {show("func")   && <td className="num"><CountCell value={u.licenseCounts.functional} kind="func" /></td>}
                     {show("prod")   && <td className="num"><CountCell value={u.licenseCounts.productivity} kind="prod" /></td>}
+                    {show("actual") && <td><LicensePill license={u.license} /></td>}
                     {show("target") && <td><LicensePill license={u.targetLicense} /></td>}
+                    {show("mismatch") && <td><LicenseMismatchPill actualLicense={u.license} targetLicense={u.targetLicense} /></td>}
                     {show("role")   && <td className="num">{u.roleCount} {u.roleCount === 1 ? "role" : "roles"}</td>}
+                    {show("assignment") && <td></td>}
                     {show("auth")   && <td className="num">{u.authCount.toLocaleString()} auth objs</td>}
                     {show("field")  && <td></td>}
                     {show("values") && <td></td>}
                     {show("fstat")  && <td></td>}
                     {show("lic")    && <td></td>}
-                    {show("rec")    && <td>
+                    {/* {show("rec")    && <td>
                       {actionableCount > 0
                         ? <span className="rec-summary">
                             <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.5 5 5.5.8-4 3.9.9 5.5L12 14.5 7.1 17.2 8 11.7 4 7.8 9.5 7z"/></svg>
@@ -540,9 +576,9 @@ function LicenseOptimizationPage() {
                             All roles healthy
                           </span>
                       }
-                    </td>}
+                    </td>} */}
                     <td className="col-action">
-                      <button className="view-btn" onClick={(e) => { e.stopPropagation(); window.location.href = `user-details?id=${u.id}`; }}>
+                      <button className="view-btn" onClick={(e) => { e.stopPropagation(); window.location.href = `user-details.html?id=${u.id}`; }}>
                         View
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
                       </button>
@@ -565,18 +601,21 @@ function LicenseOptimizationPage() {
                         {show("pro")    && <td className="num"><CountCell value={role.licenseCounts.professional} kind="pro" /></td>}
                         {show("func")   && <td className="num"><CountCell value={role.licenseCounts.functional} kind="func" /></td>}
                         {show("prod")   && <td className="num"><CountCell value={role.licenseCounts.productivity} kind="prod" /></td>}
+                        {show("actual") && <td></td>}
                         {show("target") && <td><LicensePill license={role.targetLicense} /></td>}
+                        {show("mismatch") && <td></td>}
                         {show("role")   && <td className="role-cell">
                           <ChevDown open={roleOpen} />
                           <span className="mono role-name">{role.name}</span>
                           <span className="muted role-meta">· {role.authObjs.length} auth objs</span>
                         </td>}
+                        {show("assignment") && <td><AssignmentPill value={role.assignmentType} /></td>}
                         {show("auth")   && <td></td>}
                         {show("field")  && <td></td>}
                         {show("values") && <td></td>}
                         {show("fstat")  && <td></td>}
                         {show("lic")    && <td></td>}
-                        {show("rec")    && <td><RecommendationCell rec={role.recommendation} /></td>}
+                        {/* {show("rec")    && <td><RecommendationCell rec={role.recommendation} /></td>} */}
                         <td></td>
                       </tr>
                     );
@@ -593,14 +632,17 @@ function LicenseOptimizationPage() {
                             {show("pro")    && <td></td>}
                             {show("func")   && <td></td>}
                             {show("prod")   && <td></td>}
+                            {show("actual") && <td></td>}
                             {show("target") && <td></td>}
+                            {show("mismatch") && <td></td>}
                             {show("role")   && <td></td>}
+                            {show("assignment") && <td></td>}
                             {show("auth")   && <td className="link mono">{a.name}</td>}
                             {show("field")  && <td className="mono muted">{a.field}</td>}
                             {show("values") && <td className="mono muted">{a.values}</td>}
                             {show("fstat")  && <td><FieldStatusPill status={a.fieldStatus} /></td>}
                             {show("lic")    && <td><LicensePill license={a.license} /></td>}
-                            {show("rec")    && <td><span className="muted">—</span></td>}
+                            {/* {show("rec")    && <td><span className="muted">—</span></td>} */}
                             <td></td>
                           </tr>
                         );

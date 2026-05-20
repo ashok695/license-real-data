@@ -91,7 +91,8 @@ window.LICENSE_DATA = (function () {
           : (rand(i + j * 13 + k * 5) > 0.5 ? "NA" : pick(licenses, i + k));
         authObjs.push({ name: a.name, field: a.field, values: a.values, fieldStatus: fs, license: lic });
       }
-      roles.push({ name: roleName, type: j % 3 === 0 ? "Composite" : "Single", authObjs });
+      const assignmentType = (j === 0 || rand(i * 29 + j * 31) > 0.35) ? "Directly Assigned" : "Indirectly Assigned";
+      roles.push({ name: roleName, type: j % 3 === 0 ? "Composite" : "Single", assignmentType, authObjs });
     }
 
     // Target License Classification
@@ -187,6 +188,7 @@ window.LICENSE_DATA = (function () {
 
   // ---- User-detail enrichment: per-user activity, KPIs, top transaction codes
   function lcg(seed) { let s = seed >>> 0 || 1; return () => (s = (s * 1664525 + 1013904223) >>> 0) / 0x100000000; }
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const tcodePool = [
     { code: "ME21N", desc: "Create Purchase Order", module: "MM" },
     { code: "ME22N", desc: "Change Purchase Order", module: "MM" },
@@ -225,7 +227,15 @@ window.LICENSE_DATA = (function () {
     const r = lcg(u.id + 7);
     const lastLoginDays = Math.floor(r() * 90);
     const lastLogin = new Date(Date.now() - lastLoginDays * 86400000);
+    const validityStartDays = 180 + Math.floor(r() * 900);
+    const validityEndDays = u.status === "Expired"
+      ? -(1 + Math.floor(r() * 180))
+      : 30 + Math.floor(r() * 720);
+    const validFrom = new Date(Date.now() - validityStartDays * 86400000);
+    const validTo = new Date(Date.now() + validityEndDays * 86400000);
     u.lastLogin = lastLogin.toISOString().slice(0, 10);
+    u.validFrom = validFrom.toISOString().slice(0, 10);
+    u.validTo = validTo.toISOString().slice(0, 10);
     u.fue = +(0.4 + r() * 4.6).toFixed(2);
     u.referenceUser = "REF_" + String(1000 + Math.floor(r() * 8999));
     u.inferredLicense = u.targetLicense;
@@ -270,6 +280,19 @@ window.LICENSE_DATA = (function () {
       lastUsed: new Date(Date.now() - Math.floor(r() * 60) * 86400000).toISOString().slice(0, 10),
       classification: ["HD Professional", "HD Functional", "HD Productivity"][Math.floor(r() * 3)]
     })).sort((a, b) => b.executions - a.executions);
+
+    const monthlyBase = Math.max(30, Math.round(u.topTcodes.reduce((sum, t) => sum + t.executions, 0) / 12));
+    u.monthlyUsage = Array.from({ length: 6 }, (_, monthIndex) => {
+      const date = new Date();
+      date.setDate(1);
+      date.setMonth(date.getMonth() - (5 - monthIndex));
+      const trendLift = 0.82 + (monthIndex * 0.06);
+      const variation = 0.78 + r() * 0.48;
+      return {
+        month: `${monthNames[date.getMonth()]} '${String(date.getFullYear()).slice(2)}`,
+        count: Math.max(0, Math.round(monthlyBase * trendLift * variation))
+      };
+    });
   });
 
   // ---- Aggregated roles dataset for Card 2 (Role-Based License Classification)
@@ -306,7 +329,7 @@ window.LICENSE_DATA = (function () {
   return {
     users,
     rolesAggregated,
-    totals: { users: 559, authObjects: 408834, roles: 19401 },
+    totals: { users: 559, authObjects: 408834, roles: 450 },
     licenses,
     statuses,
     modules: ["FI", "MM", "SD", "HR", "BC", "PM"]

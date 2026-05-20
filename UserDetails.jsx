@@ -74,6 +74,39 @@ function FieldUsagePill({ status }) {
   return <span className={`field-status status-${usage.toLowerCase()}`}>{usage}</span>;
 }
 
+function RedundantRolesBadge({ count }) {
+  const hasRedundantRoles = count > 0;
+  return (
+    <span className={`pill ${hasRedundantRoles ? "pill-red" : "pill-green"}`}>
+      {hasRedundantRoles ? `Yes (${count})` : "No"}
+    </span>
+  );
+}
+
+function getRedundantRoleCount(user) {
+  const roleNameCounts = {};
+  const authObjectRoleNames = {};
+
+  user.roles.forEach(role => {
+    roleNameCounts[role.name] = (roleNameCounts[role.name] || 0) + 1;
+
+    const uniqueAuthObjects = new Set(role.authObjs.map(auth => auth.name));
+    uniqueAuthObjects.forEach(authName => {
+      if (!authObjectRoleNames[authName]) authObjectRoleNames[authName] = new Set();
+      authObjectRoleNames[authName].add(role.name);
+    });
+  });
+
+  return user.roles.filter(role => {
+    const sameRoleAssigned = roleNameCounts[role.name] > 1;
+    const sharedWithDifferentRole = role.authObjs.some(auth => {
+      const roleNames = authObjectRoleNames[auth.name];
+      return roleNames && roleNames.size > 1;
+    });
+    return sameRoleAssigned || sharedWithDifferentRole;
+  }).length;
+}
+
 function UsageProgress({ active }) {
   const colors = {
     active: "#5FBF90"
@@ -94,6 +127,61 @@ function UsageProgress({ active }) {
         <div className="ud-progress-row">
           <span><span className="dot" style={{ background: colors.active }}></span>Used</span>
           <b>{active}%</b>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function UsageTrendChart({ data }) {
+  const maxCount = Math.max(...data.map(row => row.count), 1);
+  const minCount = Math.min(...data.map(row => row.count), 0);
+  const range = Math.max(maxCount - minCount, 1);
+  const totalCount = data.reduce((sum, row) => sum + row.count, 0);
+  const width = 640;
+  const height = 180;
+  const padX = 34;
+  const padY = 22;
+  const chartWidth = width - padX * 2;
+  const chartHeight = height - padY * 2;
+  const points = data.map((row, index) => {
+    const x = data.length === 1 ? width / 2 : padX + (index / (data.length - 1)) * chartWidth;
+    const y = padY + ((maxCount - row.count) / range) * chartHeight;
+    return { ...row, x, y };
+  });
+  const linePath = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`).join(" ");
+  const areaPath = points.length
+    ? `${linePath} L ${points[points.length - 1].x} ${height - padY} L ${points[0].x} ${height - padY} Z`
+    : "";
+
+  return (
+    <div className="ud-trend">
+      <div className="ud-trend-summary">
+        <div>
+          <div className="ud-trend-label">Monthly Usage Count</div>
+          <div className="ud-trend-sub">Last 6 months transaction activity</div>
+        </div>
+        <div className="ud-trend-total">{totalCount.toLocaleString()}</div>
+      </div>
+      <div className="ud-trend-line-wrap" aria-label="Monthly usage trend">
+        <svg className="ud-trend-line-chart" viewBox={`0 0 ${width} ${height}`} role="img">
+          <path className="ud-trend-area" d={areaPath}></path>
+          <path className="ud-trend-line" d={linePath}></path>
+          {points.map(point => (
+            <g key={point.month}>
+              <circle className="ud-trend-point" cx={point.x} cy={point.y} r="4.5"></circle>
+              <text className="ud-trend-point-value" x={point.x} y={point.y - 10} textAnchor="middle">{point.count.toLocaleString()}</text>
+              <text className="ud-trend-point-month" x={point.x} y={height - 4} textAnchor="middle">{point.month}</text>
+            </g>
+          ))}
+        </svg>
+        <div className="ud-trend-line-list">
+          {data.map(row => (
+            <div className="ud-trend-line-item" key={row.month}>
+              <span>{row.month}</span>
+              <b>{row.count.toLocaleString()}</b>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -219,6 +307,7 @@ function UserDetails() {
   const authorizedTransactions = user.topTcodes.length;
   const totalActivities = user.topTcodes.reduce((sum, t) => sum + t.executions, 0);
   const usedActivities = Math.round(totalActivities * (user.usageDonut.active / 100));
+  const redundantRoleCount = getRedundantRoleCount(user);
 
   const toggleAuthRole = (roleName) => {
     setExpandedAuthRoles(s => {
@@ -235,7 +324,7 @@ function UserDetails() {
     window.history.pushState({}, "", nextUrl);
   };
 
-  const goBack = () => { window.location.href = "/"; };
+  const goBack = () => { window.location.href = "index.html"; };
 
   return (
     <div className="lo-page ud-page">
@@ -280,6 +369,8 @@ function UserDetails() {
             <div><span className="meta-l">SAP ID</span><span className="meta-v">{user.sapId}</span></div>
             <div><span className="meta-l">Email</span><span className="meta-v">{user.email}</span></div>
             <div><span className="meta-l">Reference User</span><span className="meta-v">{user.referenceUser}</span></div>
+            <div><span className="meta-l">Validity From</span><span className="meta-v">{user.validFrom}</span></div>
+            <div><span className="meta-l">Validity To</span><span className="meta-v">{user.validTo}</span></div>
           </div>
         </div>
         <div className="ud-id-side">
@@ -318,6 +409,7 @@ function UserDetails() {
             <SummaryList rows={[
               { label: "Total Roles:", value: user.roleActivity.total.toLocaleString() },
               { label: "Active Roles:", value: user.roleActivity.active.toLocaleString() },
+              { label: "Redundant Roles:", value: <RedundantRolesBadge count={redundantRoleCount} /> },
               { label: "Total Activities:", value: totalActivities.toLocaleString() },
               { label: "Used Activities:", value: usedActivities.toLocaleString() }
             ]} />
@@ -329,6 +421,16 @@ function UserDetails() {
           <div className="ud-card-body ud-usage-body">
             <UsageProgress {...user.usageDonut} />
           </div>
+        </div>
+      </div>
+
+      <div className="ud-card ud-section">
+        <div className="ud-card-head-block">
+          <div className="ud-card-heading">Usage Trend</div>
+          <div className="ud-card-subtitle">Monthly usage count for this user</div>
+        </div>
+        <div className="ud-card-body">
+          <UsageTrendChart data={user.monthlyUsage || []} />
         </div>
       </div>
 
