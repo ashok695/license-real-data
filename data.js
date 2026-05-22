@@ -17,6 +17,7 @@ window.LICENSE_DATA = (function () {
   const licenses = ["HD Productivity", "HD Professional", "HD Functional", "HD Developer", "HD Platform", "Employee", "NA"];
   const fieldStatuses = ["Used", "Unused", "Partial"];
   const statuses = ["Active", "Inactive", "Locked", "Expired"];
+  const sapUserTypes = ["Dialog", "System", "Communication", "Service", "Reference"];
   const domains = ["lottechem.com", "westlake.com", "bs.nttdata.com", "lottechem.us", "kaartech.com"];
 
   const sampleRoles = [
@@ -41,20 +42,20 @@ window.LICENSE_DATA = (function () {
   };
 
   const sampleAuthObjects = [
-    { name: "/SRMSMC/BO", field: "/BOFU/BO", values: "/SRMSMC/MO_PUC" },
-    { name: "/SRMSMC/BO", field: "ACTVT", values: "F4" },
-    { name: "A_S_ANLKL", field: "ACTVT", values: "F4" },
-    { name: "A_S_ANLKL", field: "ANLKL", values: "*" },
-    { name: "A_S_ANLKL", field: "BUKRS", values: "$BUKRS" },
-    { name: "B_BUP_PCPT", field: "ACTVT", values: "03" },
-    { name: "B_BUPA_GRP", field: "ACTVT", values: "03" },
-    { name: "B_BUPA_GRP", field: "ACTVT", values: "F4" },
-    { name: "B_BUPA_GRP", field: "BEGRU", values: "*" },
-    { name: "B_BUPA_RLT", field: "ACTVT", values: "F4" },
-    { name: "B_BUPA_RLT", field: "RLTYP", values: "*" },
-    { name: "F_BKPF_BUK", field: "BUKRS", values: "1000, 2000" },
-    { name: "M_BEST_BSA", field: "BSART", values: "NB, FO" },
-    { name: "V_VBAK_AAT", field: "AUART", values: "OR, RE" }
+    { name: "/SRMSMC/BO", field: "/BOFU/BO", values: "/SRMSMC/MO_PUC", desc: "SRM business object access scope" },
+    { name: "/SRMSMC/BO", field: "ACTVT", values: "F4", desc: "Permitted SRM object activity" },
+    { name: "A_S_ANLKL", field: "ACTVT", values: "F4", desc: "Asset class activity permission" },
+    { name: "A_S_ANLKL", field: "ANLKL", values: "*", desc: "Authorized asset class range" },
+    { name: "A_S_ANLKL", field: "BUKRS", values: "$BUKRS", desc: "Company code authorization variable" },
+    { name: "B_BUP_PCPT", field: "ACTVT", values: "03", desc: "Business partner display activity" },
+    { name: "B_BUPA_GRP", field: "ACTVT", values: "03", desc: "Business partner group display activity" },
+    { name: "B_BUPA_GRP", field: "ACTVT", values: "F4", desc: "Business partner group value help activity" },
+    { name: "B_BUPA_GRP", field: "BEGRU", values: "*", desc: "Business partner authorization group" },
+    { name: "B_BUPA_RLT", field: "ACTVT", values: "F4", desc: "Business partner role value help activity" },
+    { name: "B_BUPA_RLT", field: "RLTYP", values: "*", desc: "Business partner role category" },
+    { name: "F_BKPF_BUK", field: "BUKRS", values: "1000, 2000", desc: "Accounting document company code" },
+    { name: "M_BEST_BSA", field: "BSART", values: "NB, FO", desc: "Purchasing document type authorization" },
+    { name: "V_VBAK_AAT", field: "AUART", values: "OR, RE", desc: "Sales document type authorization" }
   ];
 
   function pick(arr, i) { return arr[i % arr.length]; }
@@ -76,6 +77,9 @@ window.LICENSE_DATA = (function () {
       : "NA";
     const license = pick(licenses, i + Math.floor(r * licenses.length));
     const status = pick(statuses, i + Math.floor(r2 * 4));
+    let sapUserType = pick(sapUserTypes, i + Math.floor(r3 * sapUserTypes.length));
+    if (/ADAPTER|AGENT/.test(sap)) sapUserType = "System";
+    else if (!hasEmail) sapUserType = "Service";
 
     const numRoles = Math.min(Math.max(roleCount, 1), 5);
     const roles = [];
@@ -89,7 +93,7 @@ window.LICENSE_DATA = (function () {
         const lic = rand(i + j * 11 + k * 7) > 0.55
           ? "HD Productivity"
           : (rand(i + j * 13 + k * 5) > 0.5 ? "NA" : pick(licenses, i + k));
-        authObjs.push({ name: a.name, field: a.field, values: a.values, fieldStatus: fs, license: lic });
+        authObjs.push({ name: a.name, desc: a.desc, field: a.field, values: a.values, fieldStatus: fs, license: lic });
       }
       const assignmentType = (j === 0 || rand(i * 29 + j * 31) > 0.35) ? "Directly Assigned" : "Indirectly Assigned";
       roles.push({ name: roleName, type: j % 3 === 0 ? "Composite" : "Single", assignmentType, authObjs });
@@ -179,7 +183,7 @@ window.LICENSE_DATA = (function () {
 
     return {
       id: i, firstName: fn, lastName: ln, sapId: sap, email,
-      roleCount, authCount, license, status, roles, targetLicense, licenseCounts: userCounts
+      roleCount, authCount, license, status, sapUserType, roles, targetLicense, licenseCounts: userCounts
     };
   }
 
@@ -271,6 +275,10 @@ window.LICENSE_DATA = (function () {
     const idlePct = Math.floor((100 - usagePct) * 0.6);
     const criticalPct = 100 - usagePct - idlePct;
     u.usageDonut = { active: usagePct, idle: idlePct, critical: criticalPct };
+    const login30 = Math.max(0, Math.floor((usagePct / 100) * (8 + r() * 24)));
+    const login60 = login30 + Math.floor((usagePct / 100) * (5 + r() * 18));
+    const login90 = login60 + Math.floor((usagePct / 100) * (4 + r() * 16));
+    u.loginCounts = { last30: login30, last60: login60, last90: login90 };
 
     // Top transaction codes (subset, ranked by execution count)
     const shuffled = tcodePool.slice().sort(() => r() - 0.5).slice(0, 12);
@@ -332,6 +340,7 @@ window.LICENSE_DATA = (function () {
     totals: { users: 559, authObjects: 408834, roles: 450 },
     licenses,
     statuses,
+    sapUserTypes,
     modules: ["FI", "MM", "SD", "HR", "BC", "PM"]
   };
 })();

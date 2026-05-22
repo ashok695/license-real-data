@@ -43,6 +43,27 @@ function StatusPill({ status }) {
   return <span className="ud-status-pill" style={{ background: s.bg, color: s.fg, borderColor: s.border }}>{status}</span>;
 }
 
+function UsageFrequencyBadge({ active }) {
+  const value = active >= 75 ? "High" : active >= 55 ? "Medium" : "Low";
+  const map = {
+    Low: "pill-gray",
+    Medium: "pill-amber",
+    High: "pill-green"
+  };
+  return <span className={`pill ud-frequency-badge ${map[value]}`}>{value} Frequency</span>;
+}
+
+function SapUserTypePill({ value }) {
+  const map = {
+    Dialog: "pill-blue",
+    System: "pill-violet",
+    Communication: "pill-cyan",
+    Service: "pill-amber",
+    Reference: "pill-slate"
+  };
+  return <span className={`pill ud-sap-user-type ${map[value] || "pill-gray"}`}>{value || "NA"}</span>;
+}
+
 function LicensePill({ value }) {
   if (value === "NA" || !value) return <span className="pill pill-slate">NA</span>;
   const map = {
@@ -226,6 +247,7 @@ function UserSwitcher({ users, currentUser, onSelect }) {
             userDisplayName(u),
             u.sapId,
             u.email,
+            u.sapUserType,
             u.referenceUser
           ].join(" ").toLowerCase();
           return haystack.includes(q);
@@ -358,38 +380,70 @@ function UserDetails() {
 
       {/* User identity strip */}
       <div className="ud-identity">
-        <div className="ud-avatar-lg" style={{ background: ac.bg, color: ac.fg }}>{initials(user.firstName, user.lastName)}</div>
-        <div className="ud-id-main">
-          <div className="ud-eyebrow">User Profile</div>
-          <div className="ud-id-name-row">
-            <h1 className="ud-name">{user.firstName} {user.lastName}</h1>
-            <StatusPill status={user.status} />
+        <div className="ud-identity-hero">
+          <div className="ud-avatar-wrap">
+            <div className="ud-avatar-lg" style={{ background: ac.bg, color: ac.fg }}>{initials(user.firstName, user.lastName)}</div>
+            <span className={`ud-avatar-status ud-avatar-status-${(user.status || "active").toLowerCase()}`} aria-hidden="true" title={user.status}></span>
           </div>
-          <div className="ud-id-meta">
-            <div><span className="meta-l">SAP ID</span><span className="meta-v">{user.sapId}</span></div>
-            <div><span className="meta-l">Email</span><span className="meta-v">{user.email}</span></div>
-            <div><span className="meta-l">Reference User</span><span className="meta-v">{user.referenceUser}</span></div>
-            <div><span className="meta-l">Validity From</span><span className="meta-v">{user.validFrom}</span></div>
-            <div><span className="meta-l">Validity To</span><span className="meta-v">{user.validTo}</span></div>
+          <div className="ud-identity-hero-main">
+            <div className="ud-identity-name-row">
+              <h1 className="ud-name" title={`${user.firstName} ${user.lastName}`}>{user.firstName} {user.lastName}</h1>
+              <StatusPill status={user.status} />
+            </div>
+            <div className="ud-identity-sub">
+              <span className="ud-identity-sub-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 10h18"></path><path d="M8 4v4"></path></svg>
+                <span className="ud-identity-sub-label">SAP ID</span>
+                <span className="ud-identity-sub-value">{user.sapId}</span>
+              </span>
+              <span className="ud-identity-sub-sep" aria-hidden="true"></span>
+              <span className="ud-identity-sub-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                <span className="ud-identity-sub-value ud-identity-sub-email" title={user.email}>{user.email}</span>
+              </span>
+              <span className="ud-identity-sub-sep" aria-hidden="true"></span>
+              <span className="ud-identity-sub-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 7h-3V5a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1z"></path><path d="M9 7V5h6v2"></path></svg>
+                <span className="ud-identity-sub-value">{user.sapUserType || "NA"}</span>
+              </span>
+            </div>
           </div>
         </div>
-        <div className="ud-id-side">
-          <div className="ud-side-tile">
-            <div className="ud-side-l">Last Login</div>
-            <div className="ud-side-v">{user.lastLogin}</div>
+        <div className="ud-identity-rail">
+          <div className="ud-rail-item">
+            <div className="ud-rail-label">Validity</div>
+            <div className="ud-rail-value ud-rail-validity">
+              <span>{user.validFrom}</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              <span>{user.validTo}</span>
+            </div>
           </div>
-          <div className="ud-side-tile">
-            <div className="ud-side-l">Inferred License</div>
-            <div className="ud-side-v"><LicensePill value={user.inferredLicense} /></div>
+          <div className="ud-rail-item">
+            <div className="ud-rail-label">Last Login</div>
+            <div className="ud-rail-value">{user.lastLogin}</div>
           </div>
-          <div className="ud-side-tile">
-            <div className="ud-side-l">FUE Value</div>
-            <div className="ud-side-v ud-fue">{user.fue}</div>
+          <div className="ud-rail-item">
+            <div className="ud-rail-label">Login Count</div>
+            <div className="ud-rail-counts">
+              <span><b>{user.loginCounts.last30}</b><small>30D</small></span>
+              <span className="ud-rail-counts-sep" aria-hidden="true"></span>
+              <span><b>{user.loginCounts.last60}</b><small>60D</small></span>
+              <span className="ud-rail-counts-sep" aria-hidden="true"></span>
+              <span><b>{user.loginCounts.last90}</b><small>90D</small></span>
+            </div>
+          </div>
+          <div className="ud-rail-item">
+            <div className="ud-rail-label">Inferred License</div>
+            <div className="ud-rail-value"><LicensePill value={user.inferredLicense} /></div>
+          </div>
+          <div className="ud-rail-item">
+            <div className="ud-rail-label">Target License</div>
+            <div className="ud-rail-value"><LicensePill value={user.targetLicense} /></div>
           </div>
         </div>
       </div>
 
-      {/* 3 KPI cards */}
+      {/* KPI cards */}
       <div className="ud-kpi-grid">
         <div className="ud-card">
           <CardHeader title="Authorization Summary" />
@@ -424,13 +478,38 @@ function UserDetails() {
         </div>
       </div>
 
-      <div className="ud-card ud-section">
-        <div className="ud-card-head-block">
-          <div className="ud-card-heading">Usage Trend</div>
-          <div className="ud-card-subtitle">Monthly usage count for this user</div>
+      <div className="ud-trend-license-row ud-section">
+        <div className="ud-card ud-trend-card">
+          <div className="ud-card-head-block">
+            <div className="ud-card-heading">Usage Trend</div>
+            <div className="ud-card-subtitle">Monthly usage count for this user</div>
+          </div>
+          <div className="ud-card-body">
+            <UsageTrendChart data={user.monthlyUsage || []} />
+          </div>
         </div>
-        <div className="ud-card-body">
-          <UsageTrendChart data={user.monthlyUsage || []} />
+
+        <div className="ud-card ud-license-count-card">
+          <div className="ud-card-head-block">
+            <div className="ud-card-heading">License Counts</div>
+            <div className="ud-card-subtitle">Authorization objects by license type</div>
+          </div>
+          <div className="ud-card-body">
+            <div className="ud-license-count-grid">
+              <div className="ud-kpi-tile" style={{ "--metric-accent": "#8b5cf6" }}>
+                <div className="ud-kpi-value">{user.licenseCounts.professional.toLocaleString()}</div>
+                <div className="ud-kpi-label">Professional</div>
+              </div>
+              <div className="ud-kpi-tile" style={{ "--metric-accent": "#06b6d4" }}>
+                <div className="ud-kpi-value">{user.licenseCounts.functional.toLocaleString()}</div>
+                <div className="ud-kpi-label">Functional</div>
+              </div>
+              <div className="ud-kpi-tile" style={{ "--metric-accent": "#2563eb" }}>
+                <div className="ud-kpi-value">{user.licenseCounts.productivity.toLocaleString()}</div>
+                <div className="ud-kpi-label">Productivity</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -444,18 +523,20 @@ function UserDetails() {
           <div className="table-wrap">
             <table className="data-table ud-auth-table">
               <colgroup>
-                <col style={{ width: "20%" }} />
                 <col style={{ width: "18%" }} />
                 <col style={{ width: "16%" }} />
-                <col style={{ width: "21%" }} />
-                <col style={{ width: "12%" }} />
                 <col style={{ width: "13%" }} />
+                <col style={{ width: "20%" }} />
+                <col style={{ width: "17%" }} />
+                <col style={{ width: "8%" }} />
+                <col style={{ width: "8%" }} />
               </colgroup>
               <thead>
                 <tr>
                   <th>Role</th>
                   <th>Auth Object</th>
                   <th>Field Name</th>
+                  <th>Description</th>
                   <th>Value</th>
                   <th>Field Usage</th>
                   <th>License Type</th>
@@ -477,6 +558,7 @@ function UserDetails() {
                       <td className="muted">-</td>
                       <td className="muted">-</td>
                       <td className="muted">-</td>
+                      <td className="muted">-</td>
                     </tr>
                   ];
 
@@ -490,6 +572,7 @@ function UserDetails() {
                           <td></td>
                           <td className="link">{showObject ? auth.name : ""}</td>
                           <td>{auth.field}</td>
+                          <td className="muted">{auth.desc || "-"}</td>
                           <td>{auth.values}</td>
                           <td><FieldUsagePill status={auth.fieldStatus} /></td>
                           <td><LicensePill value={auth.license} /></td>

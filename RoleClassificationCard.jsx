@@ -271,10 +271,11 @@
                           <table className="data-table sub-table">
                             <thead>
                               <tr>
-                                <th style={{ width: "26%" }}>Auth Object</th>
-                                <th style={{ width: "20%" }}>Field</th>
-                                <th style={{ width: "28%" }}>Values</th>
-                                <th style={{ width: "26%" }}>License</th>
+                                <th style={{ width: "22%" }}>Auth Object</th>
+                                <th style={{ width: "16%" }}>Field</th>
+                                <th style={{ width: "26%" }}>Description</th>
+                                <th style={{ width: "20%" }}>Values</th>
+                                <th style={{ width: "16%" }}>License</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -282,6 +283,7 @@
                                 <tr key={`${r.name}::a${ai}`}>
                                   <td className="link mono">{a.name}</td>
                                   <td className="mono muted">{a.field}</td>
+                                  <td className="muted">{a.desc || "-"}</td>
                                   <td className="mono muted">{a.values}</td>
                                   <td><LicensePill license={a.license} /></td>
                                 </tr>
