@@ -16,7 +16,7 @@ window.LICENSE_DATA = (function () {
   ];
   const licenses = ["HD Productivity", "HD Professional", "HD Functional", "HD Developer", "HD Platform", "Employee", "NA"];
   const fieldStatuses = ["Used", "Unused", "Partial"];
-  const statuses = ["Active", "Inactive", "Locked", "Expired"];
+  const statuses = ["Active", "Inactive"];
   const sapUserTypes = ["Dialog", "System", "Communication", "Service", "Reference"];
   const domains = ["lottechem.com", "westlake.com", "bs.nttdata.com", "lottechem.us", "kaartech.com"];
 

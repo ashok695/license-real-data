@@ -102,6 +102,33 @@ function LicenseMismatchPill({ actualLicense, targetLicense }) {
   );
 }
 
+function licenseDivisionFromAuthObjs(authObjs) {
+  return authObjs.reduce((counts, auth) => {
+    if (auth.license === "HD Professional") counts.professional++;
+    else if (auth.license === "HD Functional") counts.functional++;
+    else if (auth.license === "HD Productivity") counts.productivity++;
+    return counts;
+  }, { professional: 0, functional: 0, productivity: 0 });
+}
+
+function LicenseDivision({ counts }) {
+  const c = counts || { professional: 0, functional: 0, productivity: 0 };
+  const parts = [
+    { key: "productivity", value: c.productivity || 0 },
+    { key: "functional", value: c.functional || 0 },
+    { key: "professional", value: c.professional || 0 }
+  ];
+  return (
+    <span className="license-division" title="Productivity | Functional | Professional">
+      {parts.map(part => (
+        <span className={`license-division-chip license-division-${part.key}`} key={part.key}>
+          <span className="license-division-value">{part.value.toLocaleString()}</span>
+        </span>
+      ))}
+    </span>
+  );
+}
+
 function AssignmentPill({ value }) {
   const assignment = value || "Directly Assigned";
   const label = assignment === "Indirectly Assigned" ? "Indirect" : "Direct";
@@ -134,19 +161,15 @@ function authUsageCounts(items) {
   return { used, total };
 }
 
-function UsageRatioCell({ used, total }) {
-  const pct = total ? Math.round((used / total) * 100) : 0;
-  return (
-    <div className="usage-ratio" title={`${used}/${total} used / total`}>
-      <div className="usage-ratio-main">
-        <span className="usage-ratio-count">{used}/{total}</span>
-        <span className="usage-ratio-label">used / total</span>
-      </div>
-      <div className="usage-ratio-track" aria-hidden="true">
-        <span style={{ width: `${pct}%` }}></span>
-      </div>
-    </div>
-  );
+function getAuthLastUsedDate(user, role, auth, index) {
+  if (auth.lastUsed) return auth.lastUsed;
+  if (auth.fieldStatus === "Unused") return "NA";
+
+  const seed = `${user.id}|${role.name}|${auth.name}|${auth.field}|${index}`;
+  const hash = seed.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  const date = new Date();
+  date.setDate(date.getDate() - (1 + (hash % 180)));
+  return date.toISOString().slice(0, 10);
 }
 
 // Recommendation cell — used in the new Recommendation column
@@ -210,32 +233,32 @@ function LicenseOptimizationPage() {
   const [statusFilter, setStatusFilter] = React.useState("All Status");
   const [sort, setSort] = React.useState({ key: "firstName", dir: "asc" });
   const [expandedUsers, setExpandedUsers] = React.useState(new Set());
+  const [expandedAssignments, setExpandedAssignments] = React.useState(new Set());
   const [expandedRoles, setExpandedRoles] = React.useState(new Set());
   const [selectedUsers, setSelectedUsers] = React.useState(new Set());
   const [pageSize] = React.useState(25);
   const [page, setPage] = React.useState(1);
-  const [hidden, setHidden] = React.useState(() => new Set(["pro", "func", "prod"]));
+  const [hidden, setHidden] = React.useState(() => new Set());
   const [chooserOpen, setChooserOpen] = React.useState(false);
 
   const allocColumns = [
     { key: "name",   label: "Name (First / Last)",            required: true },
     { key: "sapId",  label: "SAP ID" },
     { key: "email",  label: "Email" },
-    { key: "pro",    label: "Professional" },
-    { key: "func",   label: "Functional" },
-    { key: "prod",   label: "Productivity" },
     { key: "actual", label: "Actual License",                 required: true },
     { key: "target", label: "Target License Classification",  required: true },
     { key: "mismatch", label: "License Mismatch",             required: true },
-    { key: "role",   label: "Role" },
-    { key: "roleType", label: "Role Type" },
+    { key: "licenseDivision", label: "License Division" },
     { key: "assignmentSource", label: "Assignment Source" },
-    { key: "auth",   label: "Auth Object" },
-    { key: "authDesc", label: "Description" },
-    { key: "usage", label: "Used Auth Objects" },
-    { key: "field",  label: "Field" },
-    { key: "values", label: "Values" },
+    { key: "role",   label: "Roles" },
+    { key: "roleType", label: "Role Type" },
+    { key: "auth",   label: "Auth Objects" },
+    { key: "authDesc", label: "Auth Description" },
+    { key: "field",  label: "Auth Field" },
+    { key: "values", label: "Auth Value" },
     { key: "fstat",  label: "Field Status" },
+    { key: "usage", label: "Used Auth Objects Count" },
+    { key: "lastUsed", label: "Last Used Date" },
     { key: "lic",    label: "License" }
     // { key: "rec",    label: "Recommendation" }
   ];
@@ -310,6 +333,9 @@ function LicenseOptimizationPage() {
   function toggleUser(id) {
     setExpandedUsers((s) => { const n = new Set(s); n.has(id) ? n.delete(id) : n.add(id); return n; });
   }
+  function toggleAssignment(key) {
+    setExpandedAssignments((s) => { const n = new Set(s); n.has(key) ? n.delete(key) : n.add(key); return n; });
+  }
   function toggleRole(key) {
     setExpandedRoles((s) => { const n = new Set(s); n.has(key) ? n.delete(key) : n.add(key); return n; });
   }
@@ -330,11 +356,18 @@ function LicenseOptimizationPage() {
   }
   function expandAll() {
     const u = new Set(visible.map(x => x.id));
+    const a = new Set();
     const r = new Set();
-    visible.forEach(x => x.roles.forEach(rl => r.add(`${x.id}::${rl.name}`)));
-    setExpandedUsers(u); setExpandedRoles(r);
+    visible.forEach(x => {
+      if (x.roles.some(role => (role.assignmentType || "Directly Assigned") !== "Indirectly Assigned")) a.add(`${x.id}::direct`);
+      if (x.roles.some(role => (role.assignmentType || "Directly Assigned") === "Indirectly Assigned")) a.add(`${x.id}::indirect`);
+      x.roles
+        .filter(role => (role.assignmentType || "Directly Assigned") !== "Indirectly Assigned")
+        .forEach((role, roleIndex) => r.add(`${x.id}::direct::${role.name}::${roleIndex}`));
+    });
+    setExpandedUsers(u); setExpandedAssignments(a); setExpandedRoles(r);
   }
-  function collapseAll() { setExpandedUsers(new Set()); setExpandedRoles(new Set()); }
+  function collapseAll() { setExpandedUsers(new Set()); setExpandedAssignments(new Set()); setExpandedRoles(new Set()); }
 
   // Aggregate user-level rec summary (count of roles needing action)
   function userRecSummary(u) {
@@ -364,15 +397,17 @@ function LicenseOptimizationPage() {
           else if (c.key === "actual") row.push(u.license);
           else if (c.key === "target") row.push(u.targetLicense);
           else if (c.key === "mismatch") row.push(u.license === u.targetLicense ? "No Change" : "Mismatched");
+          else if (c.key === "licenseDivision") row.push(`${role.licenseCounts.productivity} | ${role.licenseCounts.functional} | ${role.licenseCounts.professional}`);
           else if (c.key === "role") row.push(role.name);
           else if (c.key === "roleType") row.push(role.type || "Single");
-          else if (c.key === "assignmentSource") row.push((role.assignmentType || "Directly Assigned") === "Indirectly Assigned" ? "Indirect" : "Direct");
+          else if (c.key === "assignmentSource") row.push("");
           else if (c.key === "auth") row.push(role.authObjs.length);
           else if (c.key === "authDesc") row.push("");
           else if (c.key === "usage") {
             const usage = authUsageCounts(role.authObjs);
-            row.push(`${usage.used}/${usage.total} used / total`);
+            row.push(usage.used);
           }
+          else if (c.key === "lastUsed") row.push("");
           else if (c.key === "field") row.push("");
           else if (c.key === "values") row.push("");
           else if (c.key === "fstat") row.push("");
@@ -544,24 +579,23 @@ function LicenseOptimizationPage() {
                 {show("name")   && <th onClick={() => toggleSort("firstName")} className="sortable">Name <SortIcon active={sort.key === "firstName"} dir={sort.dir} /></th>}
                 {show("sapId")  && <th onClick={() => toggleSort("sapId")} className="sortable">SAP ID <SortIcon active={sort.key === "sapId"} dir={sort.dir} /></th>}
                 {show("email")  && <th>Email</th>}
-                {show("pro")    && <th className="th-num"><span className="th-lic"><LicDot kind="pro" />Professional</span></th>}
-                {show("func")   && <th className="th-num"><span className="th-lic"><LicDot kind="func" />Functional</span></th>}
-                {show("prod")   && <th className="th-num"><span className="th-lic"><LicDot kind="prod" />Productivity</span></th>}
                 {show("actual") && <th onClick={() => toggleSort("license")} className="sortable">Actual License <SortIcon active={sort.key === "license"} dir={sort.dir} /></th>}
                 {show("target") && <th onClick={() => toggleSort("targetLicense")} className="sortable">Target License Classification <SortIcon active={sort.key === "targetLicense"} dir={sort.dir} /></th>}
                 {show("mismatch") && <th>License Mismatch</th>}
-                {show("role")   && <th onClick={() => toggleSort("roleCount")} className="sortable">Role <SortIcon active={sort.key === "roleCount"} dir={sort.dir} /></th>}
-                {show("roleType") && <th>Role Type</th>}
+                {show("licenseDivision") && <th>License Division</th>}
                 {show("assignmentSource") && <th>Assignment Source</th>}
-                {show("auth")   && <th>Auth Object</th>}
-                {show("authDesc") && <th>Description</th>}
-                {show("usage") && <th>Used Auth Objects</th>}
-                {show("field")  && <th>Field</th>}
-                {show("values") && <th>Values</th>}
+                {show("role")   && <th onClick={() => toggleSort("roleCount")} className="sortable">Roles <SortIcon active={sort.key === "roleCount"} dir={sort.dir} /></th>}
+                {show("roleType") && <th>Role Type</th>}
+                {show("auth")   && <th>Auth Objects</th>}
+                {show("authDesc") && <th>Auth Description</th>}
+                {show("field")  && <th>Auth Field</th>}
+                {show("values") && <th>Auth Value</th>}
                 {show("fstat")  && <th>Field Status</th>}
+                {show("usage") && <th>Used Auth Objects Count</th>}
+                {show("lastUsed") && <th>Last Used Date</th>}
                 {show("lic")    && <th>License</th>}
                 {/* {show("rec")    && <th>Recommendation</th>} */}
-                <th style={{ width: 70 }}></th>
+                <th style={{ width: 70 }}>View</th>
               </tr>
             </thead>
             <tbody>
@@ -599,21 +633,20 @@ function LicenseOptimizationPage() {
                     )}
                     {show("sapId")  && <td className="link mono">{highlight(u.sapId, query)}</td>}
                     {show("email")  && <td className={u.email === "NA" ? "muted" : "link"}>{highlight(u.email, query)}</td>}
-                    {show("pro")    && <td className="num"><CountCell value={u.licenseCounts.professional} kind="pro" /></td>}
-                    {show("func")   && <td className="num"><CountCell value={u.licenseCounts.functional} kind="func" /></td>}
-                    {show("prod")   && <td className="num"><CountCell value={u.licenseCounts.productivity} kind="prod" /></td>}
                     {show("actual") && <td><LicensePill license={u.license} /></td>}
                     {show("target") && <td><LicensePill license={u.targetLicense} /></td>}
                     {show("mismatch") && <td><LicenseMismatchPill actualLicense={u.license} targetLicense={u.targetLicense} /></td>}
+                    {show("licenseDivision") && <td><LicenseDivision counts={u.licenseCounts} /></td>}
+                    {show("assignmentSource") && <td></td>}
                     {show("role")   && <td className="num">{u.roleCount} {u.roleCount === 1 ? "role" : "roles"}</td>}
                     {show("roleType") && <td></td>}
-                    {show("assignmentSource") && <td></td>}
                     {show("auth")   && <td className="num">{u.authCount.toLocaleString()} auth objs</td>}
                     {show("authDesc") && <td></td>}
-                    {show("usage") && <td><UsageRatioCell used={userUsage.used} total={userUsage.total} /></td>}
                     {show("field")  && <td></td>}
                     {show("values") && <td></td>}
                     {show("fstat")  && <td></td>}
+                    {show("usage") && <td className="num">{userUsage.used.toLocaleString()}</td>}
+                    {show("lastUsed") && <td></td>}
                     {show("lic")    && <td></td>}
                     {/* {show("rec")    && <td>
                       {actionableCount > 0
@@ -637,8 +670,50 @@ function LicenseOptimizationPage() {
                 );
 
                 if (userOpen) {
-                  u.roles.forEach((role) => {
-                    const rkey = `${u.id}::${role.name}`;
+                  const directRoles = u.roles.filter(role => (role.assignmentType || "Directly Assigned") !== "Indirectly Assigned");
+                  const indirectRoles = u.roles.filter(role => (role.assignmentType || "Directly Assigned") === "Indirectly Assigned");
+                  const directGroupKey = `${u.id}::direct`;
+                  const indirectGroupKey = `${u.id}::indirect`;
+                  const directOpen = expandedAssignments.has(directGroupKey);
+                  const indirectOpen = expandedAssignments.has(indirectGroupKey);
+
+                  if (directRoles.length > 0) {
+                    const directAuthObjs = directRoles.flatMap(role => role.authObjs);
+                    const directUsage = authUsageCounts(directAuthObjs);
+                    rows.push(
+                      <tr key={`g-${u.id}-direct`} className={`row-assignment ${directOpen ? "expanded" : ""}`}>
+                        <td></td>
+                        <td></td>
+                        {show("name")   && <td></td>}
+                        {show("sapId")  && <td></td>}
+                        {show("email")  && <td></td>}
+                        {show("actual") && <td></td>}
+                        {show("target") && <td></td>}
+                        {show("mismatch") && <td></td>}
+                        {show("licenseDivision") && <td><LicenseDivision counts={licenseDivisionFromAuthObjs(directAuthObjs)} /></td>}
+                        {show("assignmentSource") && <td>
+                          <button type="button" className="assignment-toggle" onClick={() => toggleAssignment(directGroupKey)}>
+                            <ChevDown open={directOpen} />
+                            <AssignmentPill value="Directly Assigned" />
+                          </button>
+                        </td>}
+                        {show("role")   && <td></td>}
+                        {show("roleType") && <td></td>}
+                        {show("auth")   && <td className="num">{directAuthObjs.length.toLocaleString()} auth objs</td>}
+                        {show("authDesc") && <td></td>}
+                        {show("field")  && <td></td>}
+                        {show("values") && <td></td>}
+                        {show("fstat")  && <td></td>}
+                        {show("usage") && <td className="num">{directUsage.used.toLocaleString()}</td>}
+                        {show("lastUsed") && <td></td>}
+                        {show("lic")    && <td></td>}
+                        <td></td>
+                      </tr>
+                    );
+                  }
+
+                  if (directOpen) directRoles.forEach((role, roleIndex) => {
+                    const rkey = `${u.id}::direct::${role.name}::${roleIndex}`;
                     const roleOpen = expandedRoles.has(rkey);
                     const roleUsage = authUsageCounts(role.authObjs);
 
@@ -649,25 +724,24 @@ function LicenseOptimizationPage() {
                         {show("name")   && <td></td>}
                         {show("sapId")  && <td></td>}
                         {show("email")  && <td></td>}
-                        {show("pro")    && <td className="num"><CountCell value={role.licenseCounts.professional} kind="pro" /></td>}
-                        {show("func")   && <td className="num"><CountCell value={role.licenseCounts.functional} kind="func" /></td>}
-                        {show("prod")   && <td className="num"><CountCell value={role.licenseCounts.productivity} kind="prod" /></td>}
                         {show("actual") && <td></td>}
-                        {show("target") && <td><LicensePill license={role.targetLicense} /></td>}
+                        {show("target") && <td></td>}
                         {show("mismatch") && <td></td>}
+                        {show("licenseDivision") && <td><LicenseDivision counts={role.licenseCounts} /></td>}
+                        {show("assignmentSource") && <td></td>}
                         {show("role")   && <td className="role-cell">
                           <ChevDown open={roleOpen} />
                           <span className="mono role-name">{role.name}</span>
                           <span className="muted role-meta">· {role.authObjs.length} auth objs</span>
                         </td>}
                         {show("roleType") && <td><RoleTypePill value={role.type} /></td>}
-                        {show("assignmentSource") && <td><AssignmentPill value={role.assignmentType} /></td>}
                         {show("auth")   && <td></td>}
                         {show("authDesc") && <td></td>}
-                        {show("usage") && <td><UsageRatioCell used={roleUsage.used} total={roleUsage.total} /></td>}
                         {show("field")  && <td></td>}
                         {show("values") && <td></td>}
                         {show("fstat")  && <td></td>}
+                        {show("usage") && <td className="num">{roleUsage.used.toLocaleString()}</td>}
+                        {show("lastUsed") && <td></td>}
                         {show("lic")    && <td></td>}
                         {/* {show("rec")    && <td><RecommendationCell rec={role.recommendation} /></td>} */}
                         <td></td>
@@ -683,21 +757,20 @@ function LicenseOptimizationPage() {
                             {show("name")   && <td></td>}
                             {show("sapId")  && <td></td>}
                             {show("email")  && <td></td>}
-                            {show("pro")    && <td></td>}
-                            {show("func")   && <td></td>}
-                            {show("prod")   && <td></td>}
                             {show("actual") && <td></td>}
                             {show("target") && <td></td>}
                             {show("mismatch") && <td></td>}
+                            {show("licenseDivision") && <td></td>}
+                            {show("assignmentSource") && <td></td>}
                             {show("role")   && <td></td>}
                             {show("roleType") && <td></td>}
-                            {show("assignmentSource") && <td></td>}
                             {show("auth")   && <td className="link mono">{a.name}</td>}
                             {show("authDesc") && <td className="muted">{a.desc || "-"}</td>}
-                            {show("usage") && <td><UsageRatioCell used={a.fieldStatus === "Unused" ? 0 : 1} total={1} /></td>}
                             {show("field")  && <td className="mono muted">{a.field}</td>}
                             {show("values") && <td className="mono muted">{a.values}</td>}
                             {show("fstat")  && <td><FieldStatusPill status={a.fieldStatus} /></td>}
+                            {show("usage") && <td className="num">{a.fieldStatus === "Unused" ? 0 : 1}</td>}
+                            {show("lastUsed") && <td className="mono muted">{getAuthLastUsedDate(u, role, a, ai)}</td>}
                             {show("lic")    && <td><LicensePill license={a.license} /></td>}
                             {/* {show("rec")    && <td><span className="muted">—</span></td>} */}
                             <td></td>
@@ -706,6 +779,70 @@ function LicenseOptimizationPage() {
                       });
                     }
                   });
+
+                  if (indirectRoles.length > 0) {
+                    const indirectAuthRows = indirectRoles.flatMap(role => role.authObjs.map((auth, authIndex) => ({ role, auth, authIndex })));
+                    const indirectUsage = authUsageCounts(indirectAuthRows.map(row => row.auth));
+
+                    rows.push(
+                      <tr key={`g-${u.id}-indirect`} className={`row-assignment ${indirectOpen ? "expanded" : ""}`}>
+                        <td></td>
+                        <td></td>
+                        {show("name")   && <td></td>}
+                        {show("sapId")  && <td></td>}
+                        {show("email")  && <td></td>}
+                        {show("actual") && <td></td>}
+                        {show("target") && <td></td>}
+                        {show("mismatch") && <td></td>}
+                        {show("licenseDivision") && <td><LicenseDivision counts={licenseDivisionFromAuthObjs(indirectAuthRows.map(row => row.auth))} /></td>}
+                        {show("assignmentSource") && <td>
+                          <button type="button" className="assignment-toggle" onClick={() => toggleAssignment(indirectGroupKey)}>
+                            <ChevDown open={indirectOpen} />
+                            <AssignmentPill value="Indirectly Assigned" />
+                          </button>
+                        </td>}
+                        {show("role")   && <td></td>}
+                        {show("roleType") && <td></td>}
+                        {show("auth")   && <td className="num">{indirectAuthRows.length.toLocaleString()} auth objs</td>}
+                        {show("authDesc") && <td></td>}
+                        {show("field")  && <td></td>}
+                        {show("values") && <td></td>}
+                        {show("fstat")  && <td></td>}
+                        {show("usage") && <td className="num">{indirectUsage.used.toLocaleString()}</td>}
+                        {show("lastUsed") && <td></td>}
+                        {show("lic")    && <td></td>}
+                        <td></td>
+                      </tr>
+                    );
+
+                    if (indirectOpen) indirectAuthRows.forEach(({ role, auth: a, authIndex }, rowIndex) => {
+                      rows.push(
+                        <tr key={`a-${u.id}-indirect-${role.name}-${authIndex}-${rowIndex}`} className="row-auth">
+                          <td></td>
+                          <td></td>
+                          {show("name")   && <td></td>}
+                          {show("sapId")  && <td></td>}
+                          {show("email")  && <td></td>}
+                          {show("actual") && <td></td>}
+                          {show("target") && <td></td>}
+                          {show("mismatch") && <td></td>}
+                          {show("licenseDivision") && <td></td>}
+                          {show("assignmentSource") && <td></td>}
+                          {show("role")   && <td></td>}
+                          {show("roleType") && <td></td>}
+                          {show("auth")   && <td className="link mono">{a.name}</td>}
+                          {show("authDesc") && <td className="muted">{a.desc || "-"}</td>}
+                          {show("field")  && <td className="mono muted">{a.field}</td>}
+                          {show("values") && <td className="mono muted">{a.values}</td>}
+                          {show("fstat")  && <td><FieldStatusPill status={a.fieldStatus} /></td>}
+                          {show("usage") && <td className="num">{a.fieldStatus === "Unused" ? 0 : 1}</td>}
+                          {show("lastUsed") && <td className="mono muted">{getAuthLastUsedDate(u, role, a, authIndex)}</td>}
+                          {show("lic")    && <td><LicensePill license={a.license} /></td>}
+                          <td></td>
+                        </tr>
+                      );
+                    });
+                  }
                 }
 
                 return rows;

@@ -53,6 +53,17 @@ function UsageFrequencyBadge({ active }) {
   return <span className={`pill ud-frequency-badge ${map[value]}`}>{value} Frequency</span>;
 }
 
+function LoginFrequencyBadge({ loginCounts }) {
+  const last30 = loginCounts?.last30 || 0;
+  const value = last30 >= 20 ? "High" : last30 >= 10 ? "Medium" : "Low";
+  const map = {
+    Low: "pill-gray",
+    Medium: "pill-amber",
+    High: "pill-green"
+  };
+  return <span className={`pill ud-frequency-badge ${map[value]}`}>{value}</span>;
+}
+
 function SapUserTypePill({ value }) {
   const map = {
     Dialog: "pill-blue",
@@ -95,16 +106,53 @@ function FieldUsagePill({ status }) {
   return <span className={`field-status status-${usage.toLowerCase()}`}>{usage}</span>;
 }
 
-function RedundantRolesBadge({ count }) {
+function RoleAssignmentPill({ value }) {
+  const indirect = value === "Indirectly Assigned";
+  return <span className={`pill ${indirect ? "pill-amber" : "pill-green"}`}>{indirect ? "Indirect" : "Direct"}</span>;
+}
+
+function getUsedAuthObjectCount(auth) {
+  return auth.fieldStatus === "Unused" ? 0 : 1;
+}
+
+function getRoleUsedAuthObjectCount(role) {
+  return role.authObjs.reduce((sum, auth) => sum + getUsedAuthObjectCount(auth), 0);
+}
+
+function getAuthLastUsedOn(user, role, auth, index) {
+  if (auth.lastUsed) return auth.lastUsed;
+  if (!getUsedAuthObjectCount(auth)) return "NA";
+
+  const seed = `${user.id}|${role.name}|${auth.name}|${auth.field}|${index}`;
+  const hash = seed.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  const date = new Date();
+  date.setDate(date.getDate() - (1 + (hash % 180)));
+  return date.toISOString().slice(0, 10);
+}
+
+function TcodeAssignmentSourcePill({ value }) {
+  return <span className={`pill ${value === "Role" ? "pill-blue" : "pill-green"}`}>{value}</span>;
+}
+
+function TcodeUsagePill({ executions }) {
+  const used = executions > 0;
+  return <span className={`field-status status-${used ? "used" : "unused"}`}>{used ? "Used" : "Unused"}</span>;
+}
+
+function RedundantRolesBadge({ count, onClick }) {
   const hasRedundantRoles = count > 0;
+  if (!hasRedundantRoles) {
+    return <span className="pill pill-green">No</span>;
+  }
+
   return (
-    <span className={`pill ${hasRedundantRoles ? "pill-red" : "pill-green"}`}>
-      {hasRedundantRoles ? `Yes (${count})` : "No"}
-    </span>
+    <button type="button" className="pill pill-red ud-clickable-pill" onClick={onClick}>
+      Yes ({count})
+    </button>
   );
 }
 
-function getRedundantRoleCount(user) {
+function getRedundantRoles(user) {
   const roleNameCounts = {};
   const authObjectRoleNames = {};
 
@@ -118,14 +166,60 @@ function getRedundantRoleCount(user) {
     });
   });
 
-  return user.roles.filter(role => {
+  return user.roles.map(role => {
     const sameRoleAssigned = roleNameCounts[role.name] > 1;
     const sharedWithDifferentRole = role.authObjs.some(auth => {
       const roleNames = authObjectRoleNames[auth.name];
       return roleNames && roleNames.size > 1;
     });
-    return sameRoleAssigned || sharedWithDifferentRole;
-  }).length;
+    const sharedAuthObjects = role.authObjs
+      .filter(auth => {
+        const roleNames = authObjectRoleNames[auth.name];
+        return roleNames && roleNames.size > 1;
+      })
+      .map(auth => auth.name);
+
+    return {
+      ...role,
+      redundancyReason: sameRoleAssigned ? "Duplicate role assignment" : "Shared authorization objects",
+      sharedAuthObjects: Array.from(new Set(sharedAuthObjects))
+    };
+  }).filter(role => roleNameCounts[role.name] > 1 || role.sharedAuthObjects.length > 0);
+}
+
+function RedundantRolesModal({ roles, onClose }) {
+  if (!roles.length) return null;
+
+  return (
+    <div className="ud-modal-backdrop" role="presentation" onClick={onClose}>
+      <div className="ud-modal" role="dialog" aria-modal="true" aria-labelledby="redundant-roles-title" onClick={e => e.stopPropagation()}>
+        <div className="ud-modal-head">
+          <div>
+            <div className="ud-modal-title" id="redundant-roles-title">Redundant Roles</div>
+            <div className="ud-modal-subtitle">{roles.length.toLocaleString()} role{roles.length === 1 ? "" : "s"} flagged for review</div>
+          </div>
+          <button type="button" className="ud-modal-close" onClick={onClose} aria-label="Close redundant roles modal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div className="ud-modal-body">
+          <div className="ud-redundant-role-list">
+            {roles.map((role, index) => (
+              <div className="ud-redundant-role-item" key={`${role.name}-${index}`}>
+                <div className="ud-redundant-role-main">
+                  <span className="mono ud-redundant-role-name">{role.name}</span>
+                  <span className="pill pill-amber">{role.type || "Single"}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="ud-modal-foot">
+          <button type="button" className="btn-secondary" onClick={onClose}>Close</button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function UsageProgress({ active }) {
@@ -305,7 +399,9 @@ function UserDetails() {
   const user = data.users.find(u => u.id === selectedId) || data.users[0];
 
   const [tcodeFilter, setTcodeFilter] = React.useState("");
-  const [expandedAuthRoles, setExpandedAuthRoles] = React.useState(new Set([user.roles[0]?.name].filter(Boolean)));
+  const [expandedAuthSources, setExpandedAuthSources] = React.useState(new Set());
+  const [expandedAuthRoles, setExpandedAuthRoles] = React.useState(new Set());
+  const [redundantRolesOpen, setRedundantRolesOpen] = React.useState(false);
 
   React.useEffect(() => {
     const handlePopState = () => setSelectedId(getQueryUserId());
@@ -314,9 +410,20 @@ function UserDetails() {
   }, []);
 
   React.useEffect(() => {
-    setExpandedAuthRoles(new Set([user.roles[0]?.name].filter(Boolean)));
+    setExpandedAuthSources(new Set());
+    setExpandedAuthRoles(new Set());
     setTcodeFilter("");
+    setRedundantRolesOpen(false);
   }, [user.id]);
+
+  React.useEffect(() => {
+    if (!redundantRolesOpen) return;
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setRedundantRolesOpen(false);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [redundantRolesOpen]);
 
   const ac = avatarColor(user.id);
   const filteredTcodes = user.topTcodes.filter(t =>
@@ -329,7 +436,16 @@ function UserDetails() {
   const authorizedTransactions = user.topTcodes.length;
   const totalActivities = user.topTcodes.reduce((sum, t) => sum + t.executions, 0);
   const usedActivities = Math.round(totalActivities * (user.usageDonut.active / 100));
-  const redundantRoleCount = getRedundantRoleCount(user);
+  const redundantRoles = getRedundantRoles(user);
+  const redundantRoleCount = redundantRoles.length;
+
+  const toggleAuthSource = (sourceKey) => {
+    setExpandedAuthSources(s => {
+      const n = new Set(s);
+      n.has(sourceKey) ? n.delete(sourceKey) : n.add(sourceKey);
+      return n;
+    });
+  };
 
   const toggleAuthRole = (roleName) => {
     setExpandedAuthRoles(s => {
@@ -406,6 +522,12 @@ function UserDetails() {
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 7h-3V5a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1z"></path><path d="M9 7V5h6v2"></path></svg>
                 <span className="ud-identity-sub-value">{user.sapUserType || "NA"}</span>
               </span>
+              <span className="ud-identity-sub-sep" aria-hidden="true"></span>
+              <span className="ud-identity-sub-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                <span className="ud-identity-sub-label">Login Frequency</span>
+                <LoginFrequencyBadge loginCounts={user.loginCounts} />
+              </span>
             </div>
           </div>
         </div>
@@ -463,7 +585,7 @@ function UserDetails() {
             <SummaryList rows={[
               { label: "Total Roles:", value: user.roleActivity.total.toLocaleString() },
               { label: "Active Roles:", value: user.roleActivity.active.toLocaleString() },
-              { label: "Redundant Roles:", value: <RedundantRolesBadge count={redundantRoleCount} /> },
+              { label: "Redundant Roles:", value: <RedundantRolesBadge count={redundantRoleCount} onClick={() => setRedundantRolesOpen(true)} /> },
               { label: "Total Activities:", value: totalActivities.toLocaleString() },
               { label: "Used Activities:", value: usedActivities.toLocaleString() }
             ]} />
@@ -488,29 +610,6 @@ function UserDetails() {
             <UsageTrendChart data={user.monthlyUsage || []} />
           </div>
         </div>
-
-        <div className="ud-card ud-license-count-card">
-          <div className="ud-card-head-block">
-            <div className="ud-card-heading">License Counts</div>
-            <div className="ud-card-subtitle">Authorization objects by license type</div>
-          </div>
-          <div className="ud-card-body">
-            <div className="ud-license-count-grid">
-              <div className="ud-kpi-tile" style={{ "--metric-accent": "#8b5cf6" }}>
-                <div className="ud-kpi-value">{user.licenseCounts.professional.toLocaleString()}</div>
-                <div className="ud-kpi-label">Professional</div>
-              </div>
-              <div className="ud-kpi-tile" style={{ "--metric-accent": "#06b6d4" }}>
-                <div className="ud-kpi-value">{user.licenseCounts.functional.toLocaleString()}</div>
-                <div className="ud-kpi-label">Functional</div>
-              </div>
-              <div className="ud-kpi-tile" style={{ "--metric-accent": "#2563eb" }}>
-                <div className="ud-kpi-value">{user.licenseCounts.productivity.toLocaleString()}</div>
-                <div className="ud-kpi-label">Productivity</div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Role Authorization Breakdown */}
@@ -523,61 +622,124 @@ function UserDetails() {
           <div className="table-wrap">
             <table className="data-table ud-auth-table">
               <colgroup>
-                <col style={{ width: "18%" }} />
-                <col style={{ width: "16%" }} />
+                <col style={{ width: "13%" }} />
+                <col style={{ width: "15%" }} />
                 <col style={{ width: "13%" }} />
                 <col style={{ width: "20%" }} />
-                <col style={{ width: "17%" }} />
-                <col style={{ width: "8%" }} />
+                <col style={{ width: "12%" }} />
+                <col style={{ width: "12%" }} />
+                <col style={{ width: "10%" }} />
+                <col style={{ width: "9%" }} />
                 <col style={{ width: "8%" }} />
               </colgroup>
               <thead>
                 <tr>
+                  <th>Assignment Source</th>
                   <th>Role</th>
                   <th>Auth Object</th>
+                  <th>Auth Obj Description</th>
                   <th>Field Name</th>
-                  <th>Description</th>
-                  <th>Value</th>
-                  <th>Field Usage</th>
-                  <th>License Type</th>
+                  <th>Field Value</th>
+                  <th>Field Status</th>
+                  <th>Used Auth Objects Count</th>
+                  <th>Last Used On</th>
                 </tr>
               </thead>
               <tbody>
-                {user.roles.map((role) => {
-                  const open = expandedAuthRoles.has(role.name);
+                {[
+                  {
+                    key: "direct",
+                    assignmentType: "Directly Assigned",
+                    roles: user.roles.filter(role => (role.assignmentType || "Directly Assigned") !== "Indirectly Assigned")
+                  },
+                  {
+                    key: "indirect",
+                    assignmentType: "Indirectly Assigned",
+                    roles: user.roles.filter(role => (role.assignmentType || "Directly Assigned") === "Indirectly Assigned")
+                  }
+                ].filter(group => group.roles.length).map(group => {
+                  const sourceOpen = expandedAuthSources.has(group.key);
+                  const groupAuthObjs = group.roles.flatMap(role => role.authObjs);
+                  const groupUsedAuthCount = groupAuthObjs.reduce((sum, auth) => sum + getUsedAuthObjectCount(auth), 0);
                   const rows = [
-                    <tr key={`auth-role-${role.name}`} className="ud-auth-role-row" onClick={() => toggleAuthRole(role.name)}>
+                    <tr key={`auth-source-${group.key}`} className="ud-auth-source-row" onClick={() => toggleAuthSource(group.key)}>
                       <td>
                         <div className="ud-auth-role-cell">
-                          <ChevDown open={open} />
-                          <span>{role.name}</span>
+                          <ChevDown open={sourceOpen} />
+                          <RoleAssignmentPill value={group.assignmentType} />
                         </div>
                       </td>
-                      <td className="muted">{role.authObjs.length.toLocaleString()} auth fields</td>
+                      <td className="muted">{group.key === "direct" ? `${group.roles.length.toLocaleString()} role${group.roles.length === 1 ? "" : "s"}` : "-"}</td>
+                      <td className="muted">{groupAuthObjs.length.toLocaleString()} auth fields</td>
                       <td className="muted">-</td>
                       <td className="muted">-</td>
                       <td className="muted">-</td>
                       <td className="muted">-</td>
+                      <td className="num">{groupUsedAuthCount.toLocaleString()}</td>
                       <td className="muted">-</td>
                     </tr>
                   ];
 
-                  if (open) {
-                    let lastObject = null;
-                    role.authObjs.forEach((auth, index) => {
-                      const showObject = auth.name !== lastObject;
-                      lastObject = auth.name;
+                  if (!sourceOpen) return rows;
+
+                  if (group.key === "direct") {
+                    group.roles.forEach(role => {
+                      const open = expandedAuthRoles.has(role.name);
+                      const usedAuthCount = getRoleUsedAuthObjectCount(role);
                       rows.push(
-                        <tr key={`auth-${role.name}-${index}`} className="ud-auth-field-row">
+                        <tr key={`auth-role-${group.key}-${role.name}`} className="ud-auth-role-row" onClick={() => toggleAuthRole(role.name)}>
                           <td></td>
-                          <td className="link">{showObject ? auth.name : ""}</td>
-                          <td>{auth.field}</td>
-                          <td className="muted">{auth.desc || "-"}</td>
-                          <td>{auth.values}</td>
-                          <td><FieldUsagePill status={auth.fieldStatus} /></td>
-                          <td><LicensePill value={auth.license} /></td>
+                          <td>
+                            <div className="ud-auth-role-cell">
+                              <ChevDown open={open} />
+                              <span>{role.name}</span>
+                            </div>
+                          </td>
+                          <td className="muted">{role.authObjs.length.toLocaleString()} auth fields</td>
+                          <td className="muted">-</td>
+                          <td className="muted">-</td>
+                          <td className="muted">-</td>
+                          <td className="muted">-</td>
+                          <td className="num">{usedAuthCount.toLocaleString()}</td>
+                          <td className="muted">-</td>
                         </tr>
                       );
+
+                      if (open) {
+                        role.authObjs.forEach((auth, index) => {
+                          rows.push(
+                            <tr key={`auth-${group.key}-${role.name}-${index}`} className="ud-auth-field-row">
+                              <td></td>
+                              <td></td>
+                              <td className="link">{auth.name}</td>
+                              <td className="muted">{auth.desc || "-"}</td>
+                              <td>{auth.field}</td>
+                              <td>{auth.values}</td>
+                              <td><FieldUsagePill status={auth.fieldStatus} /></td>
+                              <td className="num">{getUsedAuthObjectCount(auth).toLocaleString()}</td>
+                              <td className="mono muted">{getAuthLastUsedOn(user, role, auth, index)}</td>
+                            </tr>
+                          );
+                        });
+                      }
+                    });
+                  } else {
+                    group.roles.forEach(role => {
+                      role.authObjs.forEach((auth, index) => {
+                        rows.push(
+                          <tr key={`auth-${group.key}-${role.name}-${index}`} className="ud-auth-field-row">
+                            <td></td>
+                            <td></td>
+                            <td className="link">{auth.name}</td>
+                            <td className="muted">{auth.desc || "-"}</td>
+                            <td>{auth.field}</td>
+                            <td>{auth.values}</td>
+                            <td><FieldUsagePill status={auth.fieldStatus} /></td>
+                            <td className="num">{getUsedAuthObjectCount(auth).toLocaleString()}</td>
+                            <td className="mono muted">{getAuthLastUsedOn(user, role, auth, index)}</td>
+                          </tr>
+                        );
+                      });
                     });
                   }
 
@@ -592,7 +754,7 @@ function UserDetails() {
       {/* Top Transaction Codes */}
       <div className="ud-card ud-section">
         <div className="ud-card-header ud-card-header-row">
-          <span className="ud-card-title">Top Transaction Codes</span>
+          <span className="ud-card-title">Transaction Codes</span>
           <div className="ud-card-toolbar">
             <div className="search-box small">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -604,39 +766,46 @@ function UserDetails() {
           <div className="table-wrap">
             <table className="data-table ud-tcode-table">
               <colgroup>
-                <col style={{ width: 72 }} />
                 <col style={{ width: 150 }} />
-                <col />
+                <col style={{ width: 170 }} />
                 <col style={{ width: 150 }} />
+                <col style={{ width: 170 }} />
+                <col style={{ width: 190 }} />
                 <col style={{ width: 170 }} />
               </colgroup>
               <thead>
                 <tr>
-                  <th className="th-center">#</th>
-                  <th>T-Code</th>
-                  <th>Activity</th>
-                  <th className="th-num">Executions</th>
-                  <th className="th-center">Last Used</th>
+                  <th>T-Codes</th>
+                  <th>Assignment Source</th>
+                  <th className="th-num">Execution Count</th>
+                  <th className="th-center">Last Execution Date</th>
+                  <th>Used / Unused Classification</th>
+                  <th>License Type</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredTcodes.map((t, i) => (
                   <tr key={t.code}>
-                    <td className="muted col-rank">{i + 1}</td>
-                    <td className="mono"><b>{t.code}</b></td>
-                    <td className="col-description">{t.desc}</td>
+                    <td className="mono" title={t.desc}><b>{t.code}</b></td>
+                    <td><TcodeAssignmentSourcePill value={i % 3 === 0 ? "Direct" : "Role"} /></td>
                     <td className="num">{t.executions.toLocaleString()}</td>
                     <td className="col-date">{t.lastUsed}</td>
+                    <td><TcodeUsagePill executions={t.executions} /></td>
+                    <td><LicensePill value={t.classification} /></td>
                   </tr>
                 ))}
                 {filteredTcodes.length === 0 && (
-                  <tr><td colSpan={5} className="empty-state">No transactions match your search.</td></tr>
+                  <tr><td colSpan={6} className="empty-state">No transactions match your search.</td></tr>
                 )}
               </tbody>
             </table>
           </div>
         </div>
       </div>
+
+      {redundantRolesOpen && (
+        <RedundantRolesModal roles={redundantRoles} onClose={() => setRedundantRolesOpen(false)} />
+      )}
     </div>
   );
 }
