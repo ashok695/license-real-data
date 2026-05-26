@@ -498,7 +498,7 @@ function UserDetails() {
     window.history.pushState({}, "", nextUrl);
   };
 
-  const goBack = () => { window.location.href = "index.html"; };
+  const goBack = () => { window.location.href = "license"; };
 
   return (
     <div className="lo-page ud-page">
@@ -509,9 +509,9 @@ function UserDetails() {
           Back to list
         </button>
         <div className="ud-breadcrumb">
-          <a className="bc-link" href="runs.html">Home</a>
+          <a className="bc-link" href="/">Home</a>
           <span className="bc-sep">/</span>
-          <a className="bc-link" href="runs.html">Analysis Runs</a>
+          <a className="bc-link" href="/">Analysis Runs</a>
           <span className="bc-sep">/</span>
           <span className="bc-link" onClick={goBack} style={{ cursor: "pointer" }}>License Optimization</span>
           <span className="bc-sep">/</span>

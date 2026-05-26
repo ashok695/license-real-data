@@ -696,7 +696,7 @@ function RunCard({ run, index }) {
         </div>
         <div className="rc-footer">
           {canOpen ? (
-            <a href={`index.html?system=${encodeURIComponent(run.sapSystem)}&run=${encodeURIComponent(run.name)}`} className="rc-open-btn"
+            <a href={`${run.target === "user-details.html" ? "user-details" : "license"}?system=${encodeURIComponent(run.sapSystem)}&run=${encodeURIComponent(run.name)}`} className="rc-open-btn"
               style={{ background: ac.soft, color: ac.accent, border: `1px solid ${ac.accent}40` }}
               aria-label={`Open ${run.name}`}>
               Open Report

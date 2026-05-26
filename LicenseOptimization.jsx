@@ -694,14 +694,14 @@ function LicenseOptimizationPage() {
     <div className="page">
       <div className="page-breadcrumb">
         <div className="crumbs">
-          <a className="crumb-home crumb-link" href="runs.html">
+          <a className="crumb-home crumb-link" href="/">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>
             </svg>
             Home
           </a>
           <span className="crumb-sep">/</span>
-          <a className="crumb-link" href="runs.html">Analysis Runs</a>
+          <a className="crumb-link" href="/">Analysis Runs</a>
           <span className="crumb-sep">/</span>
           <span className="crumb-current">License Optimization</span>
         </div>
@@ -1043,7 +1043,7 @@ function LicenseOptimizationPage() {
                       }
                     </td>} */}
                     <td className="col-action">
-                      <button className="view-btn" onClick={(e) => { e.stopPropagation(); window.location.href = `user-details.html?id=${u.id}`; }}>
+                      <button className="view-btn" onClick={(e) => { e.stopPropagation(); window.location.href = `user-details?id=${u.id}`; }}>
                         View
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
                       </button>

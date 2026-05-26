@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Analysis Runs — KTern</title>
+<title>License Optimization — KTern</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -18,16 +18,18 @@
 
 <script src="data.js"></script>
 <script type="text/babel" src="Sidebar.jsx"></script>
-<script type="text/babel" src="RunsPage.jsx"></script>
+<script type="text/babel" src="RoleClassificationCard.jsx"></script>
+<script type="text/babel" src="ColumnChooser.jsx"></script>
+<script type="text/babel" src="LicenseOptimization.jsx"></script>
 
 <script type="text/babel">
 function App() {
   const [collapsed, setCollapsed] = React.useState(false);
   return (
-    <div className={`app ${collapsed ? "sidebar-collapsed" : ""}`} data-screen-label="Analysis Runs">
+    <div className={`app ${collapsed ? "sidebar-collapsed" : ""}`} data-screen-label="License Optimization">
       <Sidebar collapsed={collapsed} onToggle={() => setCollapsed(c => !c)} />
       <main className="main">
-        <RunsPage />
+        <LicenseOptimizationPage />
       </main>
     </div>
   );
