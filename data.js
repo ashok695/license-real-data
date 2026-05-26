@@ -95,7 +95,11 @@ window.LICENSE_DATA = (function () {
           : (rand(i + j * 13 + k * 5) > 0.5 ? "NA" : pick(licenses, i + k));
         authObjs.push({ name: a.name, desc: a.desc, field: a.field, values: a.values, fieldStatus: fs, license: lic });
       }
-      const assignmentType = (j === 0 || rand(i * 29 + j * 31) > 0.35) ? "Directly Assigned" : "Indirectly Assigned";
+      // Every auth object reaches the user via a role wrapper, so the
+      // assignment source for the underlying auth is always "Indirect".
+      // Direct is reserved for standalone auth obj/field/value rows that
+      // are assigned to the user without going through a role.
+      const assignmentType = "Indirectly Assigned";
       roles.push({ name: roleName, type: j % 3 === 0 ? "Composite" : "Single", assignmentType, authObjs });
     }
 
@@ -181,9 +185,50 @@ window.LICENSE_DATA = (function () {
       userCounts.productivity += role.licenseCounts.productivity;
     });
 
+    // Direct auth obj/field/value assignments — granted to the user
+    // outside of any role. A small handful per user (deterministic).
+    const directPool = [
+      { name: "S_TCODE",     field: "TCD",    values: "SU01, SU3, SMEN",        desc: "Transaction code authorization" },
+      { name: "S_USER_GRP",  field: "ACTVT",  values: "03",                      desc: "User group display authorization" },
+      { name: "S_USER_GRP",  field: "CLASS",  values: "SUPER",                   desc: "User group classification" },
+      { name: "S_DEVELOP",   field: "ACTVT",  values: "03, 16",                  desc: "ABAP workbench display & execute" },
+      { name: "S_DEVELOP",   field: "OBJTYPE", values: "PROG, FUGR",             desc: "Development object type" },
+      { name: "S_TABU_DIS",  field: "DICBERCLS", values: "&NC&",                 desc: "Table maintenance display class" },
+      { name: "S_RFC",       field: "RFC_TYPE", values: "FUGR",                  desc: "Authorization for RFC access" },
+      { name: "S_RFC",       field: "RFC_NAME", values: "SYST, RFC1",            desc: "RFC function group name" },
+      { name: "S_BTCH_JOB",  field: "JOBACTION", values: "RELE, SHOW",           desc: "Background job operations" },
+      { name: "S_ADMI_FCD",  field: "S_ADMI_FCD", values: "PADM, NADM",          desc: "System administration functions" },
+      { name: "S_PROGRAM",   field: "P_ACTION", values: "SUBMIT",                desc: "ABAP program execution" },
+      { name: "S_SPO_DEV",   field: "SPODEVICE", values: "LOCL",                 desc: "Spool output device" }
+    ];
+    const directLicensePool = ["HD Productivity", "HD Functional", "HD Professional", "NA"];
+    const directStatusPool = ["Used", "Unused", "Used", "Used"]; // bias toward used
+    const numDirect = 1 + Math.floor(rand(i * 41 + 5) * 4); // 1–4 direct entries per user
+    const directAuthObjs = [];
+    for (let d = 0; d < numDirect; d++) {
+      const seed = i * 53 + d * 7;
+      const base = directPool[(seed) % directPool.length];
+      const fieldStatus = directStatusPool[(seed + 1) % directStatusPool.length];
+      const lic = directLicensePool[(seed + 2) % directLicensePool.length];
+      const lastUsedDays = 1 + Math.floor(rand(seed + 3) * 180);
+      const lastUsed = fieldStatus === "Unused"
+        ? "NA"
+        : new Date(Date.now() - lastUsedDays * 86400000).toISOString().slice(0, 10);
+      directAuthObjs.push({
+        name: base.name,
+        desc: base.desc,
+        field: base.field,
+        values: base.values,
+        fieldStatus,
+        license: lic,
+        lastUsed
+      });
+    }
+
     return {
       id: i, firstName: fn, lastName: ln, sapId: sap, email,
-      roleCount, authCount, license, status, sapUserType, roles, targetLicense, licenseCounts: userCounts
+      roleCount, authCount, license, status, sapUserType, roles, targetLicense, licenseCounts: userCounts,
+      directAuthObjs
     };
   }
 
@@ -286,7 +331,8 @@ window.LICENSE_DATA = (function () {
       ...t,
       executions: Math.floor((1200 - i * 80) * (0.6 + r() * 0.8)),
       lastUsed: new Date(Date.now() - Math.floor(r() * 60) * 86400000).toISOString().slice(0, 10),
-      classification: ["HD Professional", "HD Functional", "HD Productivity"][Math.floor(r() * 3)]
+      classification: ["HD Professional", "HD Functional", "HD Productivity"][Math.floor(r() * 3)],
+      assignmentSource: i % 3 === 0 ? "Direct" : "Indirect"
     })).sort((a, b) => b.executions - a.executions);
 
     const monthlyBase = Math.max(30, Math.round(u.topTcodes.reduce((sum, t) => sum + t.executions, 0) / 12));
@@ -332,6 +378,24 @@ window.LICENSE_DATA = (function () {
       if (v > agg._highest) { agg._highest = v; agg.targetLicense = role.targetLicense; }
     });
   });
+  // Attach the list of users assigned to each role
+  users.forEach(u => {
+    u.roles.forEach(role => {
+      const agg = roleAgg[role.name];
+      if (agg) {
+        if (!agg.userList) agg.userList = [];
+        agg.userList.push({
+          sapId: u.sapId,
+          firstName: u.firstName,
+          lastName: u.lastName,
+          email: u.email,
+          license: u.license,
+          status: u.status
+        });
+      }
+    });
+  });
+
   const rolesAggregated = Object.values(roleAgg).sort((a, b) => b.users - a.users);
 
   return {

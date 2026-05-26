@@ -131,7 +131,8 @@ function getAuthLastUsedOn(user, role, auth, index) {
 }
 
 function TcodeAssignmentSourcePill({ value }) {
-  return <span className={`pill ${value === "Role" ? "pill-blue" : "pill-green"}`}>{value}</span>;
+  const indirect = value === "Indirect";
+  return <span className={`pill ${indirect ? "pill-amber" : "pill-green"}`}>{indirect ? "Indirect" : "Direct"}</span>;
 }
 
 function TcodeUsagePill({ executions }) {
@@ -190,31 +191,55 @@ function getRedundantRoles(user) {
 function RedundantRolesModal({ roles, onClose }) {
   if (!roles.length) return null;
 
+  React.useEffect(() => {
+    const h = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", h);
+    return () => document.removeEventListener("keydown", h);
+  }, [onClose]);
+
+  function handleBackdrop(e) { if (e.target === e.currentTarget) onClose(); }
+
   return (
-    <div className="ud-modal-backdrop" role="presentation" onClick={onClose}>
-      <div className="ud-modal" role="dialog" aria-modal="true" aria-labelledby="redundant-roles-title" onClick={e => e.stopPropagation()}>
-        <div className="ud-modal-head">
+    <div className="modal-backdrop" role="presentation" onClick={handleBackdrop}>
+      <div className="modal-box" role="dialog" aria-modal="true" aria-labelledby="redundant-roles-title" style={{ maxWidth: 560 }}>
+        <div className="modal-header">
           <div>
-            <div className="ud-modal-title" id="redundant-roles-title">Redundant Roles</div>
-            <div className="ud-modal-subtitle">{roles.length.toLocaleString()} role{roles.length === 1 ? "" : "s"} flagged for review</div>
+            <h3 className="modal-title" id="redundant-roles-title">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 8, verticalAlign: "middle" }}>
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              Redundant Roles
+            </h3>
+            <p className="modal-sub">{roles.length} role{roles.length === 1 ? "" : "s"} flagged for review</p>
           </div>
-          <button type="button" className="ud-modal-close" onClick={onClose} aria-label="Close redundant roles modal">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          <button className="modal-close" onClick={onClose} aria-label="Close redundant roles modal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
         </div>
-        <div className="ud-modal-body">
-          <div className="ud-redundant-role-list">
-            {roles.map((role, index) => (
-              <div className="ud-redundant-role-item" key={`${role.name}-${index}`}>
-                <div className="ud-redundant-role-main">
-                  <span className="mono ud-redundant-role-name">{role.name}</span>
-                  <span className="pill pill-amber">{role.type || "Single"}</span>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div style={{ maxHeight: 380, overflowY: "auto", overflowX: "hidden", padding: "0 20px 16px" }}>
+          <table className="data-table modal-table" style={{ width: "100%", tableLayout: "fixed" }}>
+            <colgroup>
+              <col style={{ width: "70%" }} />
+              <col style={{ width: "30%" }} />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Role Name</th>
+                <th>Role Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              {roles.map((role, index) => (
+                <tr key={`${role.name}-${index}`}>
+                  <td className="mono link" style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{role.name}</td>
+                  <td><span className={`type-pill ${role.type === "Composite" ? "type-comp" : "type-single"}`}>{role.type || "Single"}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        <div className="ud-modal-foot">
+        <div className="modal-footer" style={{ padding: "12px 20px", borderTop: "1px solid var(--border)", display: "flex", justifyContent: "flex-end" }}>
           <button type="button" className="btn-secondary" onClick={onClose}>Close</button>
         </div>
       </div>
@@ -399,6 +424,9 @@ function UserDetails() {
   const user = data.users.find(u => u.id === selectedId) || data.users[0];
 
   const [tcodeFilter, setTcodeFilter] = React.useState("");
+  const [tcodeAssignmentFilter, setTcodeAssignmentFilter] = React.useState("All");
+  const [tcodeUsageFilter, setTcodeUsageFilter] = React.useState("All");
+  const [tcodeLicenseFilter, setTcodeLicenseFilter] = React.useState("All");
   const [expandedAuthSources, setExpandedAuthSources] = React.useState(new Set());
   const [expandedAuthRoles, setExpandedAuthRoles] = React.useState(new Set());
   const [redundantRolesOpen, setRedundantRolesOpen] = React.useState(false);
@@ -413,6 +441,9 @@ function UserDetails() {
     setExpandedAuthSources(new Set());
     setExpandedAuthRoles(new Set());
     setTcodeFilter("");
+    setTcodeAssignmentFilter("All");
+    setTcodeUsageFilter("All");
+    setTcodeLicenseFilter("All");
     setRedundantRolesOpen(false);
   }, [user.id]);
 
@@ -426,11 +457,16 @@ function UserDetails() {
   }, [redundantRolesOpen]);
 
   const ac = avatarColor(user.id);
-  const filteredTcodes = user.topTcodes.filter(t =>
-    !tcodeFilter ||
-    t.code.toLowerCase().includes(tcodeFilter.toLowerCase()) ||
-    t.desc.toLowerCase().includes(tcodeFilter.toLowerCase())
-  );
+  const filteredTcodes = user.topTcodes.filter((t) => {
+    const usageStatus = t.executions > 0 ? "Used" : "Unused";
+    const matchesSearch = !tcodeFilter ||
+      t.code.toLowerCase().includes(tcodeFilter.toLowerCase()) ||
+      t.desc.toLowerCase().includes(tcodeFilter.toLowerCase());
+    const matchesAssignment = tcodeAssignmentFilter === "All" || t.assignmentSource === tcodeAssignmentFilter;
+    const matchesUsage = tcodeUsageFilter === "All" || usageStatus === tcodeUsageFilter;
+    const matchesLicense = tcodeLicenseFilter === "All" || t.classification === tcodeLicenseFilter;
+    return matchesSearch && matchesAssignment && matchesUsage && matchesLicense;
+  });
   const assignedProfiles = user.roles.length;
   const authorizationFields = new Set(user.roles.flatMap(role => role.authObjs.map(a => a.field))).size;
   const authorizedTransactions = user.topTcodes.length;
@@ -473,7 +509,11 @@ function UserDetails() {
           Back to list
         </button>
         <div className="ud-breadcrumb">
-          <span className="bc-link" onClick={goBack}>License Optimization</span>
+          <a className="bc-link" href="runs.html">Home</a>
+          <span className="bc-sep">/</span>
+          <a className="bc-link" href="runs.html">Analysis Runs</a>
+          <span className="bc-sep">/</span>
+          <span className="bc-link" onClick={goBack} style={{ cursor: "pointer" }}>License Optimization</span>
           <span className="bc-sep">/</span>
           <span>User Details</span>
         </div>
@@ -555,11 +595,11 @@ function UserDetails() {
             </div>
           </div>
           <div className="ud-rail-item">
-            <div className="ud-rail-label">Inferred License</div>
+            <div className="ud-rail-label">Actual Assigned License</div>
             <div className="ud-rail-value"><LicensePill value={user.inferredLicense} /></div>
           </div>
           <div className="ud-rail-item">
-            <div className="ud-rail-label">Target License</div>
+            <div className="ud-rail-label">Recommended Target License</div>
             <div className="ud-rail-value"><LicensePill value={user.targetLicense} /></div>
           </div>
         </div>
@@ -615,8 +655,8 @@ function UserDetails() {
       {/* Role Authorization Breakdown */}
       <div className="ud-card ud-section">
         <div className="ud-card-head-block">
-          <div className="ud-card-heading">Role Authorization Breakdown</div>
-          <div className="ud-card-subtitle">Nested role and authorization object rows aligned to the license data structure</div>
+          <div className="ud-card-heading">Authorization Breakdown</div>
+          <div className="ud-card-subtitle">Authorization object rows aligned to the license data structure</div>
         </div>
         <div className="ud-card-body ud-no-pad">
           <div className="table-wrap">
@@ -641,7 +681,7 @@ function UserDetails() {
                   <th>Field Name</th>
                   <th>Field Value</th>
                   <th>Field Status</th>
-                  <th>Used Auth Objects Count</th>
+                  <th>Auth Usage Count</th>
                   <th>Last Used On</th>
                 </tr>
               </thead>
@@ -650,17 +690,27 @@ function UserDetails() {
                   {
                     key: "direct",
                     assignmentType: "Directly Assigned",
-                    roles: user.roles.filter(role => (role.assignmentType || "Directly Assigned") !== "Indirectly Assigned")
+                    // Standalone auth obj/field/value rows assigned to the user
+                    // without going through any role. None modeled today.
+                    directAuthObjs: user.directAuthObjs || [],
+                    roles: []
                   },
                   {
                     key: "indirect",
                     assignmentType: "Indirectly Assigned",
-                    roles: user.roles.filter(role => (role.assignmentType || "Directly Assigned") === "Indirectly Assigned")
+                    directAuthObjs: [],
+                    // All role-delivered auth is indirect by definition.
+                    roles: user.roles
                   }
-                ].filter(group => group.roles.length).map(group => {
+                ].filter(group => group.roles.length || group.directAuthObjs.length).map(group => {
                   const sourceOpen = expandedAuthSources.has(group.key);
-                  const groupAuthObjs = group.roles.flatMap(role => role.authObjs);
+                  const groupAuthObjs = group.key === "direct"
+                    ? group.directAuthObjs
+                    : group.roles.flatMap(role => role.authObjs);
                   const groupUsedAuthCount = groupAuthObjs.reduce((sum, auth) => sum + getUsedAuthObjectCount(auth), 0);
+                  const headLabel = group.key === "direct"
+                    ? `${group.directAuthObjs.length.toLocaleString()} auth obj${group.directAuthObjs.length === 1 ? "" : "s"}`
+                    : `${group.roles.length.toLocaleString()} role${group.roles.length === 1 ? "" : "s"}`;
                   const rows = [
                     <tr key={`auth-source-${group.key}`} className="ud-auth-source-row" onClick={() => toggleAuthSource(group.key)}>
                       <td>
@@ -669,7 +719,7 @@ function UserDetails() {
                           <RoleAssignmentPill value={group.assignmentType} />
                         </div>
                       </td>
-                      <td className="muted">{group.key === "direct" ? `${group.roles.length.toLocaleString()} role${group.roles.length === 1 ? "" : "s"}` : "-"}</td>
+                      <td className="muted">{headLabel}</td>
                       <td className="muted">{groupAuthObjs.length.toLocaleString()} auth fields</td>
                       <td className="muted">-</td>
                       <td className="muted">-</td>
@@ -683,6 +733,22 @@ function UserDetails() {
                   if (!sourceOpen) return rows;
 
                   if (group.key === "direct") {
+                    group.directAuthObjs.forEach((auth, index) => {
+                      rows.push(
+                        <tr key={`auth-direct-${auth.name}-${auth.field}-${index}`} className="ud-auth-field-row">
+                          <td></td>
+                          <td></td>
+                          <td className="link">{auth.name}</td>
+                          <td className="muted">{auth.desc || "-"}</td>
+                          <td>{auth.field}</td>
+                          <td>{auth.values}</td>
+                          <td><FieldUsagePill status={auth.fieldStatus} /></td>
+                          <td className="num">{getUsedAuthObjectCount(auth).toLocaleString()}</td>
+                          <td className="mono muted">{auth.lastUsed || "NA"}</td>
+                        </tr>
+                      );
+                    });
+                  } else {
                     group.roles.forEach(role => {
                       const open = expandedAuthRoles.has(role.name);
                       const usedAuthCount = getRoleUsedAuthObjectCount(role);
@@ -723,24 +789,6 @@ function UserDetails() {
                         });
                       }
                     });
-                  } else {
-                    group.roles.forEach(role => {
-                      role.authObjs.forEach((auth, index) => {
-                        rows.push(
-                          <tr key={`auth-${group.key}-${role.name}-${index}`} className="ud-auth-field-row">
-                            <td></td>
-                            <td></td>
-                            <td className="link">{auth.name}</td>
-                            <td className="muted">{auth.desc || "-"}</td>
-                            <td>{auth.field}</td>
-                            <td>{auth.values}</td>
-                            <td><FieldUsagePill status={auth.fieldStatus} /></td>
-                            <td className="num">{getUsedAuthObjectCount(auth).toLocaleString()}</td>
-                            <td className="mono muted">{getAuthLastUsedOn(user, role, auth, index)}</td>
-                          </tr>
-                        );
-                      });
-                    });
                   }
 
                   return rows;
@@ -760,6 +808,37 @@ function UserDetails() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
               <input value={tcodeFilter} onChange={e => setTcodeFilter(e.target.value)} placeholder="Search T-Code or description" />
             </div>
+            <select
+              className="ud-filter-select"
+              value={tcodeAssignmentFilter}
+              onChange={e => setTcodeAssignmentFilter(e.target.value)}
+              aria-label="Filter by assignment source"
+            >
+              <option value="All">Assignment Source: All</option>
+              <option value="Direct">Direct</option>
+              <option value="Role">Indirect</option>
+            </select>
+            <select
+              className="ud-filter-select"
+              value={tcodeUsageFilter}
+              onChange={e => setTcodeUsageFilter(e.target.value)}
+              aria-label="Filter by usage status"
+            >
+              <option value="All">Usage Status: All</option>
+              <option value="Used">Used</option>
+              <option value="Unused">Unused</option>
+            </select>
+            <select
+              className="ud-filter-select"
+              value={tcodeLicenseFilter}
+              onChange={e => setTcodeLicenseFilter(e.target.value)}
+              aria-label="Filter by recommended license type"
+            >
+              <option value="All">License Type: All</option>
+              {data.licenses.filter(l => l !== "NA").map(l => (
+                <option key={l} value={l}>{l}</option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="ud-card-body ud-no-pad">
@@ -778,16 +857,16 @@ function UserDetails() {
                   <th>T-Codes</th>
                   <th>Assignment Source</th>
                   <th className="th-num">Execution Count</th>
-                  <th className="th-center">Last Execution Date</th>
+                  <th className="th-center">Last Activity Date</th>
                   <th>Used / Unused Classification</th>
-                  <th>License Type</th>
+                  <th>Recommended Target License</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredTcodes.map((t, i) => (
                   <tr key={t.code}>
                     <td className="mono" title={t.desc}><b>{t.code}</b></td>
-                    <td><TcodeAssignmentSourcePill value={i % 3 === 0 ? "Direct" : "Role"} /></td>
+                    <td><TcodeAssignmentSourcePill value={t.assignmentSource} /></td>
                     <td className="num">{t.executions.toLocaleString()}</td>
                     <td className="col-date">{t.lastUsed}</td>
                     <td><TcodeUsagePill executions={t.executions} /></td>

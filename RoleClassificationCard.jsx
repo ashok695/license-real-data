@@ -1,5 +1,5 @@
-// Card 2 — Role-Based License Classification
-// Aggregated view: Role Name, Description, (Module/Type/Users), Target License Classification
+﻿// Card 2 — Role-Based License Classification
+// Aggregated view: Role Name, Description, (Module/Type/Users), Recommended Target License Classification
 
 (function () {
   const HIER = { "HD Professional": 3, "HD Functional": 2, "HD Productivity": 1 };
@@ -91,6 +91,113 @@
     return <span className={`pill ${map[license] || "pill-blue"}`}>{license}</span>;
   }
 
+  function UsersModal({ role, onClose }) {
+    const [search, setSearch] = React.useState("");
+    const users = role.userList || [];
+    const filtered = search
+      ? users.filter(u =>
+          u.sapId.toLowerCase().includes(search.toLowerCase()) ||
+          `${u.firstName} ${u.lastName}`.toLowerCase().includes(search.toLowerCase()) ||
+          u.email.toLowerCase().includes(search.toLowerCase())
+        )
+      : users;
+
+    // Close on backdrop click
+    function handleBackdrop(e) {
+      if (e.target === e.currentTarget) onClose();
+    }
+
+    // Close on Escape
+    React.useEffect(() => {
+      const h = (e) => { if (e.key === "Escape") onClose(); };
+      document.addEventListener("keydown", h);
+      return () => document.removeEventListener("keydown", h);
+    }, [onClose]);
+
+    const licenseColors = {
+      "HD Productivity": "pill-blue",
+      "HD Professional": "pill-violet",
+      "HD Functional": "pill-cyan",
+      "HD Developer": "pill-amber",
+      "HD Platform": "pill-rose",
+      "Employee": "pill-slate",
+      "NA": "pill-gray"
+    };
+
+    return (
+      <div className="modal-backdrop" onClick={handleBackdrop}>
+        <div className="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+          <div className="modal-header">
+            <div>
+              <h3 className="modal-title" id="modal-title">
+                <span className="role-icon" style={{ marginRight: 8 }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </span>
+                Users assigned to <span className="mono" style={{ color: "var(--primary-600)" }}>{role.name}</span>
+              </h3>
+              <p className="modal-sub">{filtered.length} of {users.length} user{users.length !== 1 ? "s" : ""} shown</p>
+            </div>
+            <button className="modal-close" onClick={onClose} aria-label="Close">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <div className="modal-search-wrap">
+            <div className="search" style={{ width: "100%" }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="Search by name, SAP ID or email…"
+                autoFocus
+              />
+            </div>
+          </div>
+
+          <div className="modal-table-wrap">
+            <table className="data-table modal-table">
+              <thead>
+                <tr>
+                  <th style={{ minWidth: 120 }}>SAP ID</th>
+                  <th style={{ minWidth: 160 }}>Name</th>
+                  <th style={{ minWidth: 200 }}>Email</th>
+                  <th style={{ width: 140 }}>License</th>
+                  <th style={{ width: 90 }}>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.length === 0 && (
+                  <tr><td colSpan={5} className="empty-state">No users match your search.</td></tr>
+                )}
+                {filtered.map((u, i) => (
+                  <tr key={i} className="row-user">
+                    <td className="mono link">{u.sapId}</td>
+                    <td>
+                      <div className="user-cell">
+                        <span className="avatar" style={{ background: "var(--primary-soft)", color: "var(--primary-600)", fontSize: 10 }}>
+                          {u.firstName[0]}{u.lastName[0]}
+                        </span>
+                        {u.firstName} {u.lastName}
+                      </div>
+                    </td>
+                    <td className="muted">{u.email}</td>
+                    <td><span className={`pill ${licenseColors[u.license] || "pill-gray"}`}>{u.license}</span></td>
+                    <td>
+                      <span className={`pill ${u.status === "Active" ? "pill-green" : "pill-gray"}`}>{u.status}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   function RoleClassificationCard() {
     const data = window.LICENSE_DATA;
 
@@ -104,18 +211,19 @@
     const [hidden, setHidden] = React.useState(new Set());
     const [chooserOpen, setChooserOpen] = React.useState(false);
     const [expanded, setExpanded] = React.useState(new Set());
+    const [usersModal, setUsersModal] = React.useState(null); // role object or null
 
     function toggleRole(name) {
       setExpanded(s => { const n = new Set(s); n.has(name) ? n.delete(name) : n.add(name); return n; });
     }
 
     const columns = [
-      { key: "name",   label: "Role Name",                    required: true },
+      { key: "name",   label: "Role Name",                   required: true },
+      { key: "target", label: "Recommended Target License",  required: true },
       { key: "desc",   label: "Role Description" },
       { key: "type",   label: "Role Type" },
       { key: "users",  label: "Users" },
       { key: "auth",   label: "Auth Objects" },
-      { key: "target", label: "Target License Classification", required: true }
     ];
 
     const filtered = React.useMemo(() => {
@@ -183,7 +291,7 @@
         <div className="card-head">
           <div>
             <h2 className="card-title">Role-Based License Classification</h2>
-            <p className="card-sub">Each SAP role mapped to its target license classification — surfaces the roles driving higher-tier license allocation.</p>
+            <p className="card-sub">Each SAP role mapped to its Recommended Target License — surfaces the roles driving higher-tier license allocation.</p>
           </div>
         </div>
 
@@ -194,7 +302,7 @@
               <input value={query} onChange={(e) => { setQuery(e.target.value); setPage(1); }} placeholder="Search role name or description…" />
             </div>
             <select className="select" value={target} onChange={(e) => { setTarget(e.target.value); setPage(1); }}>
-              <option value="All">All Target Licenses</option>
+              <option value="All">Recommended Target License</option>
               <option>HD Professional</option>
               <option>HD Functional</option>
               <option>HD Productivity</option>
@@ -229,11 +337,46 @@
               <tr>
                 <th style={{ width: 32 }}></th>
                 {show("name") && <th onClick={() => toggleSort("name")} className="sortable" style={{ minWidth: 220 }}>Role Name <SortIcon active={sort.key === "name"} dir={sort.dir} /></th>}
+                {show("target") && (
+                  <th onClick={() => toggleSort("target")} className="sortable" style={{ width: 220 }}>
+                    <span className="th-with-info">
+                      Recommended Target License
+                      <span className="th-info-wrap" role="tooltip" aria-label="Recommended Target License logic" onClick={e => e.stopPropagation()}>
+                        <svg className="th-info-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <circle cx="12" cy="12" r="10"/>
+                          <line x1="12" y1="8" x2="12" y2="12"/>
+                          <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <span className="th-tooltip">
+                          <span className="th-tooltip-title">How is this determined?</span>
+                          <span className="th-tooltip-row">
+                            <span>The recommended license is the <b>highest license tier</b> found across all authorization objects assigned to the role.</span>
+                          </span>
+                          <span className="th-tooltip-divider"/>
+                          <span className="th-tooltip-row">
+                            <span className="th-tooltip-tier th-tooltip-tier-pro">Pro</span>
+                            <span><b>HD Professional</b> — highest priority</span>
+                          </span>
+                          <span className="th-tooltip-row">
+                            <span className="th-tooltip-tier th-tooltip-tier-func">Func</span>
+                            <span><b>HD Functional</b></span>
+                          </span>
+                          <span className="th-tooltip-row">
+                            <span className="th-tooltip-tier th-tooltip-tier-prod">Prod</span>
+                            <span><b>HD Productivity</b> — lowest priority</span>
+                          </span>
+                          <span className="th-tooltip-divider"/>
+                          <span className="th-tooltip-note">If no licensed auth objects exist, the value is NA.</span>
+                        </span>
+                      </span>
+                      <SortIcon active={sort.key === "target"} dir={sort.dir} />
+                    </span>
+                  </th>
+                )}
                 {show("desc") && <th onClick={() => toggleSort("desc")} className="sortable" style={{ minWidth: 320 }}>Role Description <SortIcon active={sort.key === "desc"} dir={sort.dir} /></th>}
                 {show("type") && <th style={{ width: 110 }}>Type</th>}
                 {show("users") && <th onClick={() => toggleSort("users")} className="sortable num" style={{ width: 90 }}>Users <SortIcon active={sort.key === "users"} dir={sort.dir} /></th>}
                 {show("auth") && <th onClick={() => toggleSort("auth")} className="sortable num" style={{ width: 120 }}>Auth Objects <SortIcon active={sort.key === "auth"} dir={sort.dir} /></th>}
-                {show("target") && <th onClick={() => toggleSort("target")} className="sortable" style={{ width: 220 }}>Target License Classification <SortIcon active={sort.key === "target"} dir={sort.dir} /></th>}
               </tr>
             </thead>
             <tbody>
@@ -255,11 +398,11 @@
                         </div>
                       </td>
                     )}
+                    {show("target") && <td><TargetBadge license={r.targetLicense} /></td>}
                     {show("desc") && <td className="role-desc-cell">{highlight(r.description, query)}</td>}
                     {show("type") && <td><span className={`type-pill ${r.type === "Composite" ? "type-comp" : "type-single"}`}>{r.type}</span></td>}
-                    {show("users") && <td className="num"><span className="users-count">{r.users}</span></td>}
+                    {show("users") && <td className="num"><span className="users-count users-count-btn" onClick={e => { e.stopPropagation(); setUsersModal(r); }}>{r.users}</span></td>}
                     {show("auth") && <td className="num">{r.authObjsTotal.toLocaleString()}</td>}
-                    {show("target") && <td><TargetBadge license={r.targetLicense} /></td>}
                   </tr>
                 );
                 if (isOpen && r.authObjs && r.authObjs.length) {
@@ -316,6 +459,8 @@
             <button className="page-btn" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}>›</button>
           </div>
         </div>
+
+        {usersModal && <UsersModal role={usersModal} onClose={() => setUsersModal(null)} />}
       </div>
     );
   }

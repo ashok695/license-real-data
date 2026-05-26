@@ -114,12 +114,12 @@ function licenseDivisionFromAuthObjs(authObjs) {
 function LicenseDivision({ counts }) {
   const c = counts || { professional: 0, functional: 0, productivity: 0 };
   const parts = [
-    { key: "productivity", value: c.productivity || 0 },
+    { key: "professional", value: c.professional || 0 },
     { key: "functional", value: c.functional || 0 },
-    { key: "professional", value: c.professional || 0 }
+    { key: "productivity", value: c.productivity || 0 }
   ];
   return (
-    <span className="license-division" title="Productivity | Functional | Professional">
+    <span className="license-division" title="Professional | Functional | Productivity">
       {parts.map(part => (
         <span className={`license-division-chip license-division-${part.key}`} key={part.key}>
           <span className="license-division-value">{part.value.toLocaleString()}</span>
@@ -159,6 +159,121 @@ function authUsageCounts(items) {
   const total = items.length;
   const used = items.filter(item => item.fieldStatus !== "Unused").length;
   return { used, total };
+}
+
+// Returns the count of redundant roles for a user. A role is redundant if
+// the same role name is assigned more than once, or if its auth objects
+// are shared with at least one other assigned role.
+function getRedundantRoleCount(user) {
+  const roleNameCounts = {};
+  const authObjectRoleNames = {};
+  user.roles.forEach(role => {
+    roleNameCounts[role.name] = (roleNameCounts[role.name] || 0) + 1;
+    const uniqueAuthObjects = new Set(role.authObjs.map(a => a.name));
+    uniqueAuthObjects.forEach(authName => {
+      if (!authObjectRoleNames[authName]) authObjectRoleNames[authName] = new Set();
+      authObjectRoleNames[authName].add(role.name);
+    });
+  });
+  return user.roles.filter(role => {
+    if (roleNameCounts[role.name] > 1) return true;
+    return role.authObjs.some(a => {
+      const names = authObjectRoleNames[a.name];
+      return names && names.size > 1;
+    });
+  }).length;
+}
+
+function getRedundantRoles(user) {
+  const roleNameCounts = {};
+  const authObjectRoleNames = {};
+  user.roles.forEach(role => {
+    roleNameCounts[role.name] = (roleNameCounts[role.name] || 0) + 1;
+    const uniqueAuthObjects = new Set(role.authObjs.map(a => a.name));
+    uniqueAuthObjects.forEach(authName => {
+      if (!authObjectRoleNames[authName]) authObjectRoleNames[authName] = new Set();
+      authObjectRoleNames[authName].add(role.name);
+    });
+  });
+  return user.roles.map(role => {
+    const sameRoleAssigned = roleNameCounts[role.name] > 1;
+    const sharedAuthObjects = role.authObjs
+      .filter(a => { const names = authObjectRoleNames[a.name]; return names && names.size > 1; })
+      .map(a => a.name);
+    return {
+      ...role,
+      redundancyReason: sameRoleAssigned ? "Duplicate role assignment" : "Shared authorization objects",
+      sharedAuthObjects: Array.from(new Set(sharedAuthObjects))
+    };
+  }).filter(role => roleNameCounts[role.name] > 1 || role.sharedAuthObjects.length > 0);
+}
+
+function RedundantRolesModal({ roles, userName, onClose }) {
+  React.useEffect(() => {
+    const h = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", h);
+    return () => document.removeEventListener("keydown", h);
+  }, [onClose]);
+
+  function handleBackdrop(e) { if (e.target === e.currentTarget) onClose(); }
+
+  return (
+    <div className="modal-backdrop" onClick={handleBackdrop}>
+      <div className="modal-box" role="dialog" aria-modal="true" aria-labelledby="redundant-modal-title" style={{ maxWidth: 560 }}>
+        <div className="modal-header">
+          <div>
+            <h3 className="modal-title" id="redundant-modal-title">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 8, verticalAlign: "middle" }}>
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              Redundant Roles
+            </h3>
+            <p className="modal-sub">{userName} · {roles.length} role{roles.length !== 1 ? "s" : ""} flagged for review</p>
+          </div>
+          <button className="modal-close" onClick={onClose} aria-label="Close">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div style={{ maxHeight: 380, overflowY: "auto", overflowX: "hidden", padding: "0 20px 16px" }}>
+          <table className="data-table modal-table" style={{ width: "100%", tableLayout: "fixed" }}>
+            <colgroup>
+              <col style={{ width: "70%" }} />
+              <col style={{ width: "30%" }} />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Role Name</th>
+                <th>Role Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              {roles.map((role, i) => (
+                <tr key={`${role.name}-${i}`}>
+                  <td className="mono link" style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{role.name}</td>
+                  <td><span className={`type-pill ${role.type === "Composite" ? "type-comp" : "type-single"}`}>{role.type || "Single"}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="modal-footer" style={{ padding: "12px 20px", borderTop: "1px solid var(--border)", display: "flex", justifyContent: "flex-end" }}>
+          <button className="btn-secondary" onClick={onClose}>Close</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RedundantRolesPill({ count, onClick }) {
+  if (count > 0) {
+    return (
+      <button type="button" className="pill pill-red ud-clickable-pill" onClick={onClick}>
+        Yes ({count})
+      </button>
+    );
+  }
+  return <span className="pill pill-green">No</span>;
 }
 
 function getAuthLastUsedDate(user, role, auth, index) {
@@ -226,11 +341,118 @@ function highlight(text, query) {
   return (<>{String(text).slice(0, idx)}<mark>{String(text).slice(idx, idx + query.length)}</mark>{String(text).slice(idx + query.length)}</>);
 }
 
+function ExportPreviewModal({ onConfirm, onClose, columns, hidden, filters, rowCount }) {
+  const visibleCols = columns.filter(c => !hidden.has(c.key));
+  const hiddenCols  = columns.filter(c => hidden.has(c.key));
+
+  const activeFilters = filters.filter(f => f.active);
+
+  React.useEffect(() => {
+    const h = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", h);
+    return () => document.removeEventListener("keydown", h);
+  }, [onClose]);
+
+  function handleBackdrop(e) {
+    if (e.target === e.currentTarget) onClose();
+  }
+
+  return (
+    <div className="modal-backdrop" onClick={handleBackdrop}>
+      <div className="modal-box export-preview-modal" role="dialog" aria-modal="true" aria-labelledby="export-preview-title">
+
+        {/* Header */}
+        <div className="modal-header">
+          <div>
+            <h3 className="modal-title" id="export-preview-title">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 8, verticalAlign: "middle" }}>
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Export Preview
+            </h3>
+            <p className="modal-sub">Review your selection before downloading</p>
+          </div>
+          <button className="modal-close" onClick={onClose} aria-label="Close">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <div className="export-preview-body">
+
+          {/* Active filters */}
+          <div className="export-section">
+            <div className="export-section-head">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              Active Filters
+              {activeFilters.length === 0 && <span className="export-none-badge">None</span>}
+            </div>
+            {activeFilters.length > 0 && (
+              <div className="export-filter-list">
+                {activeFilters.map(f => (
+                  <div className="export-filter-chip" key={f.label}>
+                    <span className="export-filter-label">{f.label}</span>
+                    <span className="export-filter-value">{f.value}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Included columns */}
+          <div className="export-section">
+            <div className="export-section-head">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+              Included Columns
+              <span className="export-count-badge">{visibleCols.length}</span>
+            </div>
+            <div className="export-col-grid">
+              {visibleCols.map((c, i) => (
+                <div className="export-col-chip export-col-included" key={c.key}>
+                  <span className="export-col-num">{i + 1}</span>
+                  {c.label}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Excluded columns */}
+          {hiddenCols.length > 0 && (
+            <div className="export-section">
+              <div className="export-section-head export-section-head-muted">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                Excluded Columns
+                <span className="export-count-badge export-count-badge-muted">{hiddenCols.length}</span>
+              </div>
+              <div className="export-col-grid">
+                {hiddenCols.map(c => (
+                  <div className="export-col-chip export-col-excluded" key={c.key}>{c.label}</div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="export-preview-footer">
+          <button className="btn-secondary" onClick={onClose}>Cancel</button>
+          <button className="btn-primary" onClick={onConfirm}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download CSV
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function LicenseOptimizationPage() {
   const data = window.LICENSE_DATA;
   const [query, setQuery] = React.useState("");
-  const [licenseFilter, setLicenseFilter] = React.useState("All Licenses");
-  const [statusFilter, setStatusFilter] = React.useState("All Status");
+  const [licenseFilter, setLicenseFilter] = React.useState("All");
+
+  const [mismatchFilter, setMismatchFilter] = React.useState("All");
+  const [redundantFilter, setRedundantFilter] = React.useState("All");
+  const [authUsageFilter, setAuthUsageFilter] = React.useState("All");
   const [sort, setSort] = React.useState({ key: "firstName", dir: "asc" });
   const [expandedUsers, setExpandedUsers] = React.useState(new Set());
   const [expandedAssignments, setExpandedAssignments] = React.useState(new Set());
@@ -240,15 +462,18 @@ function LicenseOptimizationPage() {
   const [page, setPage] = React.useState(1);
   const [hidden, setHidden] = React.useState(() => new Set());
   const [chooserOpen, setChooserOpen] = React.useState(false);
+  const [exportPreviewOpen, setExportPreviewOpen] = React.useState(false);
+  const [redundantRolesModal, setRedundantRolesModal] = React.useState(null); // { user, roles }
 
   const allocColumns = [
     { key: "name",   label: "Name (First / Last)",            required: true },
     { key: "sapId",  label: "SAP ID" },
     { key: "email",  label: "Email" },
-    { key: "actual", label: "Actual License",                 required: true },
-    { key: "target", label: "Target License Classification",  required: true },
+    { key: "actual", label: "Actual Assigned License",                 required: true },
+    { key: "target", label: "Recommended Target License",  required: true },
     { key: "mismatch", label: "License Mismatch",             required: true },
     { key: "licenseDivision", label: "License Division" },
+    { key: "redundant", label: "Redundant Roles" },
     { key: "assignmentSource", label: "Assignment Source" },
     { key: "role",   label: "Roles" },
     { key: "roleType", label: "Role Type" },
@@ -257,7 +482,7 @@ function LicenseOptimizationPage() {
     { key: "field",  label: "Auth Field" },
     { key: "values", label: "Auth Value" },
     { key: "fstat",  label: "Field Status" },
-    { key: "usage", label: "Used Auth Objects Count" },
+    { key: "usage", label: "Auth Usage Count" },
     { key: "lastUsed", label: "Last Used Date" },
     { key: "lic",    label: "License" }
     // { key: "rec",    label: "Recommendation" }
@@ -314,8 +539,31 @@ function LicenseOptimizationPage() {
         u.email.toLowerCase().includes(q)
       );
     }
-    if (licenseFilter !== "All Licenses") list = list.filter(u => u.license === licenseFilter);
-    if (statusFilter !== "All Status") list = list.filter(u => u.status === statusFilter);
+    if (licenseFilter !== "All") list = list.filter(u => u.license === licenseFilter);
+
+    if (mismatchFilter !== "All") {
+      const wantMismatch = mismatchFilter === "Mismatch";
+      list = list.filter(u => {
+        const isMismatch = (u.license || "NA") !== (u.targetLicense || "NA");
+        return wantMismatch ? isMismatch : !isMismatch;
+      });
+    }
+    if (redundantFilter !== "All") {
+      const wantRedundant = redundantFilter === "Yes";
+      list = list.filter(u => {
+        const hasRedundant = getRedundantRoleCount(u) > 0;
+        return wantRedundant ? hasRedundant : !hasRedundant;
+      });
+    }
+    if (authUsageFilter !== "All") {
+      const wantUsed = authUsageFilter === "Used";
+      list = list.filter(u => {
+        const allAuthObjs = u.roles.flatMap(r => r.authObjs).concat(u.directAuthObjs || []);
+        return wantUsed
+          ? allAuthObjs.some(a => a.fieldStatus !== "Unused")
+          : allAuthObjs.every(a => a.fieldStatus === "Unused");
+      });
+    }
     list = [...list].sort((a, b) => {
       const k = sort.key, av = a[k], bv = b[k];
       if (av < bv) return sort.dir === "asc" ? -1 : 1;
@@ -323,7 +571,7 @@ function LicenseOptimizationPage() {
       return 0;
     });
     return list;
-  }, [data.users, query, licenseFilter, statusFilter, sort]);
+  }, [data.users, query, licenseFilter, mismatchFilter, redundantFilter, authUsageFilter, sort]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
   const visible = filtered.slice((page - 1) * pageSize, page * pageSize);
@@ -359,11 +607,11 @@ function LicenseOptimizationPage() {
     const a = new Set();
     const r = new Set();
     visible.forEach(x => {
-      if (x.roles.some(role => (role.assignmentType || "Directly Assigned") !== "Indirectly Assigned")) a.add(`${x.id}::direct`);
-      if (x.roles.some(role => (role.assignmentType || "Directly Assigned") === "Indirectly Assigned")) a.add(`${x.id}::indirect`);
-      x.roles
-        .filter(role => (role.assignmentType || "Directly Assigned") !== "Indirectly Assigned")
-        .forEach((role, roleIndex) => r.add(`${x.id}::direct::${role.name}::${roleIndex}`));
+      if ((x.directAuthObjs || []).length > 0) a.add(`${x.id}::direct`);
+      if (x.roles.length > 0) {
+        a.add(`${x.id}::indirect`);
+        x.roles.forEach((role, roleIndex) => r.add(`${x.id}::indirect::${role.name}::${roleIndex}`));
+      }
     });
     setExpandedUsers(u); setExpandedAssignments(a); setExpandedRoles(r);
   }
@@ -373,6 +621,18 @@ function LicenseOptimizationPage() {
   function userRecSummary(u) {
     const actionable = u.roles.filter(r => r.recommendation && r.recommendation.type !== "Retain").length;
     return actionable;
+  }
+
+  // Build active filter descriptors for the export preview
+  function buildActiveFilters() {
+    const f = [];
+    if (query) f.push({ label: "Search", value: `"${query}"` });
+    if (licenseFilter !== "All") f.push({ label: "Recommended User License", value: licenseFilter });
+    if (mismatchFilter !== "All") f.push({ label: "License Match", value: mismatchFilter });
+    if (redundantFilter !== "All") f.push({ label: "Redundant Roles", value: redundantFilter });
+    if (authUsageFilter !== "All") f.push({ label: "Auth Usage", value: authUsageFilter });
+    if (selectedInFilteredCount > 0) f.push({ label: "Selection", value: `${selectedInFilteredCount} users selected` });
+    return f.map(x => ({ ...x, active: true }));
   }
 
   // Export current view as CSV — only visible columns + filtered users
@@ -397,7 +657,11 @@ function LicenseOptimizationPage() {
           else if (c.key === "actual") row.push(u.license);
           else if (c.key === "target") row.push(u.targetLicense);
           else if (c.key === "mismatch") row.push(u.license === u.targetLicense ? "No Change" : "Mismatched");
-          else if (c.key === "licenseDivision") row.push(`${role.licenseCounts.productivity} | ${role.licenseCounts.functional} | ${role.licenseCounts.professional}`);
+          else if (c.key === "licenseDivision") row.push(`${u.licenseCounts.productivity} | ${u.licenseCounts.functional} | ${u.licenseCounts.professional}`);
+          else if (c.key === "redundant") {
+            const rc = getRedundantRoleCount(u);
+            row.push(rc > 0 ? `Yes (${rc})` : "No");
+          }
           else if (c.key === "role") row.push(role.name);
           else if (c.key === "roleType") row.push(role.type || "Single");
           else if (c.key === "assignmentSource") row.push("");
@@ -430,16 +694,38 @@ function LicenseOptimizationPage() {
     <div className="page">
       <div className="page-breadcrumb">
         <div className="crumbs">
-          <span className="crumb-home">
+          <a className="crumb-home crumb-link" href="runs.html">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>
             </svg>
             Home
-          </span>
+          </a>
+          <span className="crumb-sep">/</span>
+          <a className="crumb-link" href="runs.html">Analysis Runs</a>
           <span className="crumb-sep">/</span>
           <span className="crumb-current">License Optimization</span>
         </div>
-        <div className="live-indicator"><span className="live-dot" /> Live</div>
+        <div className="breadcrumb-right">
+          {(() => {
+            const params = new URLSearchParams(window.location.search);
+            const system = params.get("system");
+            const run    = params.get("run");
+            return (
+              <>
+                {system && (
+                  <div className="run-system-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="3" width="20" height="14" rx="2"/>
+                      <path d="M8 21h8M12 17v4"/>
+                    </svg>
+                    {system}
+                  </div>
+                )}
+                <div className="live-indicator"><span className="live-dot" /> Live</div>
+              </>
+            );
+          })()}
+        </div>
       </div>
 
       <div className="page-title-row">
@@ -481,7 +767,7 @@ function LicenseOptimizationPage() {
         <TopKpiCard
           tone="violet"
           label="License Classification"
-          sub="By target classification"
+          sub="By Recommended Target License"
           layout="chart"
           breakdown={[
             { label: "Professional", shortLabel: "PROF", value: topKpis.professional, tone: "violet" },
@@ -516,22 +802,33 @@ function LicenseOptimizationPage() {
           </div>
         </div>
 
-        <div className="card-toolbar">
-          <div className="toolbar-left">
+        <div className="card-toolbar card-toolbar-stacked">
+          <div className="toolbar-row toolbar-filters">
             <div className="search">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
               <input value={query} onChange={(e) => { setQuery(e.target.value); setPage(1); }} placeholder="Search first name, last name, SAP ID, email…" />
             </div>
             <select className="select" value={licenseFilter} onChange={(e) => { setLicenseFilter(e.target.value); setPage(1); }}>
-              <option>All Licenses</option>
+              <option value="All">Recommended User License</option>
               {data.licenses.map(l => <option key={l}>{l}</option>)}
             </select>
-            <select className="select" value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}>
-              <option>All Status</option>
-              {data.statuses.map(s => <option key={s}>{s}</option>)}
+            <select className="select" value={mismatchFilter} onChange={(e) => { setMismatchFilter(e.target.value); setPage(1); }}>
+              <option value="All">License Match</option>
+              <option value="Match">Match</option>
+              <option value="Mismatch">Mismatch</option>
+            </select>
+            <select className="select" value={redundantFilter} onChange={(e) => { setRedundantFilter(e.target.value); setPage(1); }}>
+              <option value="All">Redundant Roles</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+            <select className="select" value={authUsageFilter} onChange={(e) => { setAuthUsageFilter(e.target.value); setPage(1); }}>
+              <option value="All">Auth Usage</option>
+              <option value="Used">Used</option>
+              <option value="Unused">Unused</option>
             </select>
           </div>
-          <div className="toolbar-right">
+          <div className="toolbar-row toolbar-actions">
             <div className="col-chooser-wrap">
               <button className="btn-ghost" onClick={() => setChooserOpen(o => !o)}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
@@ -546,7 +843,7 @@ function LicenseOptimizationPage() {
                 onClose: () => setChooserOpen(false)
               }) : null}
             </div>
-            <button className="btn-ghost" onClick={exportCsv}>
+            <button className="btn-ghost" onClick={() => setExportPreviewOpen(true)}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               Export Excel{selectedInFilteredCount > 0 ? ` (${selectedInFilteredCount})` : ""}
             </button>
@@ -579,11 +876,95 @@ function LicenseOptimizationPage() {
                 {show("name")   && <th onClick={() => toggleSort("firstName")} className="sortable">Name <SortIcon active={sort.key === "firstName"} dir={sort.dir} /></th>}
                 {show("sapId")  && <th onClick={() => toggleSort("sapId")} className="sortable">SAP ID <SortIcon active={sort.key === "sapId"} dir={sort.dir} /></th>}
                 {show("email")  && <th>Email</th>}
-                {show("actual") && <th onClick={() => toggleSort("license")} className="sortable">Actual License <SortIcon active={sort.key === "license"} dir={sort.dir} /></th>}
-                {show("target") && <th onClick={() => toggleSort("targetLicense")} className="sortable">Target License Classification <SortIcon active={sort.key === "targetLicense"} dir={sort.dir} /></th>}
-                {show("mismatch") && <th>License Mismatch</th>}
+                {show("actual") && <th onClick={() => toggleSort("license")} className="sortable">Actual Assigned License <SortIcon active={sort.key === "license"} dir={sort.dir} /></th>}
+                {show("target") && (
+                  <th onClick={() => toggleSort("targetLicense")} className="sortable">
+                    <span className="th-with-info">
+                      Recommended Target License
+                      <SortIcon active={sort.key === "targetLicense"} dir={sort.dir} />
+                      <span className="th-info-wrap" role="tooltip" aria-label="Recommended Target License logic" onClick={e => e.stopPropagation()}>
+                        <svg className="th-info-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <circle cx="12" cy="12" r="10"/>
+                          <line x1="12" y1="8" x2="12" y2="12"/>
+                          <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <span className="th-tooltip">
+                          <span className="th-tooltip-title">How is this determined?</span>
+                          <span className="th-tooltip-row">
+                            <span>The recommended license is the <b>highest license tier</b> found across all authorization objects assigned to the user.</span>
+                          </span>
+                          <span className="th-tooltip-divider"/>
+                          <span className="th-tooltip-row">
+                            <span className="th-tooltip-tier th-tooltip-tier-pro">Pro</span>
+                            <span><b>HD Professional</b> — highest priority</span>
+                          </span>
+                          <span className="th-tooltip-row">
+                            <span className="th-tooltip-tier th-tooltip-tier-func">Func</span>
+                            <span><b>HD Functional</b></span>
+                          </span>
+                          <span className="th-tooltip-row">
+                            <span className="th-tooltip-tier th-tooltip-tier-prod">Prod</span>
+                            <span><b>HD Productivity</b> — lowest priority</span>
+                          </span>
+                          <span className="th-tooltip-divider"/>
+                          <span className="th-tooltip-note">If no licensed auth objects exist, the value is NA.</span>
+                        </span>
+                      </span>
+                    </span>
+                  </th>
+                )}
+                {show("mismatch") && (
+                  <th>
+                    <span className="th-with-info">
+                      License Mismatch
+                      <span className="th-info-wrap" role="tooltip" aria-label="License Mismatch logic">
+                        <svg className="th-info-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <circle cx="12" cy="12" r="10"/>
+                          <line x1="12" y1="8" x2="12" y2="12"/>
+                          <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <span className="th-tooltip">
+                          <span className="th-tooltip-title">License Mismatch Logic</span>
+                          <span className="th-tooltip-row">
+                            <span className="th-tooltip-dot th-tooltip-dot-green"/>
+                            <span><b>No Change</b> — Actual Assigned License matches Recommended Target License</span>
+                          </span>
+                          <span className="th-tooltip-row">
+                            <span className="th-tooltip-dot th-tooltip-dot-red"/>
+                            <span><b>Mismatched</b> — Actual Assigned License differs from Recommended Target License</span>
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                  </th>
+                )}
                 {show("licenseDivision") && <th>License Division</th>}
-                {show("assignmentSource") && <th>Assignment Source</th>}
+                {show("redundant") && <th>Redundant Roles</th>}
+                {show("assignmentSource") && (
+                  <th>
+                    <span className="th-with-info">
+                      Assignment Source
+                      <span className="th-info-wrap" role="tooltip" aria-label="Assignment Source logic">
+                        <svg className="th-info-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <circle cx="12" cy="12" r="10"/>
+                          <line x1="12" y1="8" x2="12" y2="12"/>
+                          <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <span className="th-tooltip">
+                          <span className="th-tooltip-title">Assignment Source Logic</span>
+                          <span className="th-tooltip-row">
+                            <span className="th-tooltip-dot th-tooltip-dot-green"/>
+                            <span><b>Direct</b> — Auth object is assigned to the user via a profile</span>
+                          </span>
+                          <span className="th-tooltip-row">
+                            <span className="th-tooltip-dot th-tooltip-dot-amber"/>
+                            <span><b>Indirect</b> — Auth object is assigned to the user via a role</span>
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                  </th>
+                )}
                 {show("role")   && <th onClick={() => toggleSort("roleCount")} className="sortable">Roles <SortIcon active={sort.key === "roleCount"} dir={sort.dir} /></th>}
                 {show("roleType") && <th>Role Type</th>}
                 {show("auth")   && <th>Auth Objects</th>}
@@ -591,7 +972,7 @@ function LicenseOptimizationPage() {
                 {show("field")  && <th>Auth Field</th>}
                 {show("values") && <th>Auth Value</th>}
                 {show("fstat")  && <th>Field Status</th>}
-                {show("usage") && <th>Used Auth Objects Count</th>}
+                {show("usage") && <th>Auth Usage Count</th>}
                 {show("lastUsed") && <th>Last Used Date</th>}
                 {show("lic")    && <th>License</th>}
                 {/* {show("rec")    && <th>Recommendation</th>} */}
@@ -637,6 +1018,7 @@ function LicenseOptimizationPage() {
                     {show("target") && <td><LicensePill license={u.targetLicense} /></td>}
                     {show("mismatch") && <td><LicenseMismatchPill actualLicense={u.license} targetLicense={u.targetLicense} /></td>}
                     {show("licenseDivision") && <td><LicenseDivision counts={u.licenseCounts} /></td>}
+                    {show("redundant") && <td onClick={e => e.stopPropagation()}><RedundantRolesPill count={getRedundantRoleCount(u)} onClick={() => { const roles = getRedundantRoles(u); if (roles.length) setRedundantRolesModal({ user: u, roles }); }} /></td>}
                     {show("assignmentSource") && <td></td>}
                     {show("role")   && <td className="num">{u.roleCount} {u.roleCount === 1 ? "role" : "roles"}</td>}
                     {show("roleType") && <td></td>}
@@ -670,15 +1052,17 @@ function LicenseOptimizationPage() {
                 );
 
                 if (userOpen) {
-                  const directRoles = u.roles.filter(role => (role.assignmentType || "Directly Assigned") !== "Indirectly Assigned");
-                  const indirectRoles = u.roles.filter(role => (role.assignmentType || "Directly Assigned") === "Indirectly Assigned");
+                  // Auth obj/field/value rows that are attached to the user
+                  // without going through a role are "Direct". Role-wrapped
+                  // auth is always "Indirect" by definition.
+                  const directAuthObjs = u.directAuthObjs || [];
+                  const indirectRoles = u.roles;
                   const directGroupKey = `${u.id}::direct`;
                   const indirectGroupKey = `${u.id}::indirect`;
                   const directOpen = expandedAssignments.has(directGroupKey);
                   const indirectOpen = expandedAssignments.has(indirectGroupKey);
 
-                  if (directRoles.length > 0) {
-                    const directAuthObjs = directRoles.flatMap(role => role.authObjs);
+                  if (directAuthObjs.length > 0) {
                     const directUsage = authUsageCounts(directAuthObjs);
                     rows.push(
                       <tr key={`g-${u.id}-direct`} className={`row-assignment ${directOpen ? "expanded" : ""}`}>
@@ -690,7 +1074,8 @@ function LicenseOptimizationPage() {
                         {show("actual") && <td></td>}
                         {show("target") && <td></td>}
                         {show("mismatch") && <td></td>}
-                        {show("licenseDivision") && <td><LicenseDivision counts={licenseDivisionFromAuthObjs(directAuthObjs)} /></td>}
+                        {show("licenseDivision") && <td></td>}
+                        {show("redundant") && <td></td>}
                         {show("assignmentSource") && <td>
                           <button type="button" className="assignment-toggle" onClick={() => toggleAssignment(directGroupKey)}>
                             <ChevDown open={directOpen} />
@@ -710,75 +1095,36 @@ function LicenseOptimizationPage() {
                         <td></td>
                       </tr>
                     );
+
+                    if (directOpen) directAuthObjs.forEach((a, ai) => {
+                      rows.push(
+                        <tr key={`a-${u.id}-direct-${a.name}-${a.field}-${ai}`} className="row-auth">
+                          <td></td>
+                          <td></td>
+                          {show("name")   && <td></td>}
+                          {show("sapId")  && <td></td>}
+                          {show("email")  && <td></td>}
+                          {show("actual") && <td></td>}
+                          {show("target") && <td></td>}
+                          {show("mismatch") && <td></td>}
+                          {show("licenseDivision") && <td></td>}
+                          {show("redundant") && <td></td>}
+                          {show("assignmentSource") && <td></td>}
+                          {show("role")   && <td></td>}
+                          {show("roleType") && <td></td>}
+                          {show("auth")   && <td className="link mono">{a.name}</td>}
+                          {show("authDesc") && <td className="muted">{a.desc || "-"}</td>}
+                          {show("field")  && <td className="mono muted">{a.field}</td>}
+                          {show("values") && <td className="mono muted">{a.values}</td>}
+                          {show("fstat")  && <td><FieldStatusPill status={a.fieldStatus} /></td>}
+                          {show("usage") && <td className="num">{a.fieldStatus === "Unused" ? 0 : 1}</td>}
+                          {show("lastUsed") && <td className="mono muted">{a.lastUsed || "NA"}</td>}
+                          {show("lic")    && <td><LicensePill license={a.license} /></td>}
+                          <td></td>
+                        </tr>
+                      );
+                    });
                   }
-
-                  if (directOpen) directRoles.forEach((role, roleIndex) => {
-                    const rkey = `${u.id}::direct::${role.name}::${roleIndex}`;
-                    const roleOpen = expandedRoles.has(rkey);
-                    const roleUsage = authUsageCounts(role.authObjs);
-
-                    rows.push(
-                      <tr key={`r-${rkey}`} className={`row-role ${roleOpen ? "expanded" : ""}`} onClick={() => toggleRole(rkey)}>
-                        <td></td>
-                        <td></td>
-                        {show("name")   && <td></td>}
-                        {show("sapId")  && <td></td>}
-                        {show("email")  && <td></td>}
-                        {show("actual") && <td></td>}
-                        {show("target") && <td></td>}
-                        {show("mismatch") && <td></td>}
-                        {show("licenseDivision") && <td><LicenseDivision counts={role.licenseCounts} /></td>}
-                        {show("assignmentSource") && <td></td>}
-                        {show("role")   && <td className="role-cell">
-                          <ChevDown open={roleOpen} />
-                          <span className="mono role-name">{role.name}</span>
-                          <span className="muted role-meta">· {role.authObjs.length} auth objs</span>
-                        </td>}
-                        {show("roleType") && <td><RoleTypePill value={role.type} /></td>}
-                        {show("auth")   && <td></td>}
-                        {show("authDesc") && <td></td>}
-                        {show("field")  && <td></td>}
-                        {show("values") && <td></td>}
-                        {show("fstat")  && <td></td>}
-                        {show("usage") && <td className="num">{roleUsage.used.toLocaleString()}</td>}
-                        {show("lastUsed") && <td></td>}
-                        {show("lic")    && <td></td>}
-                        {/* {show("rec")    && <td><RecommendationCell rec={role.recommendation} /></td>} */}
-                        <td></td>
-                      </tr>
-                    );
-
-                    if (roleOpen) {
-                      role.authObjs.forEach((a, ai) => {
-                        rows.push(
-                          <tr key={`a-${rkey}-${ai}`} className="row-auth">
-                            <td></td>
-                            <td></td>
-                            {show("name")   && <td></td>}
-                            {show("sapId")  && <td></td>}
-                            {show("email")  && <td></td>}
-                            {show("actual") && <td></td>}
-                            {show("target") && <td></td>}
-                            {show("mismatch") && <td></td>}
-                            {show("licenseDivision") && <td></td>}
-                            {show("assignmentSource") && <td></td>}
-                            {show("role")   && <td></td>}
-                            {show("roleType") && <td></td>}
-                            {show("auth")   && <td className="link mono">{a.name}</td>}
-                            {show("authDesc") && <td className="muted">{a.desc || "-"}</td>}
-                            {show("field")  && <td className="mono muted">{a.field}</td>}
-                            {show("values") && <td className="mono muted">{a.values}</td>}
-                            {show("fstat")  && <td><FieldStatusPill status={a.fieldStatus} /></td>}
-                            {show("usage") && <td className="num">{a.fieldStatus === "Unused" ? 0 : 1}</td>}
-                            {show("lastUsed") && <td className="mono muted">{getAuthLastUsedDate(u, role, a, ai)}</td>}
-                            {show("lic")    && <td><LicensePill license={a.license} /></td>}
-                            {/* {show("rec")    && <td><span className="muted">—</span></td>} */}
-                            <td></td>
-                          </tr>
-                        );
-                      });
-                    }
-                  });
 
                   if (indirectRoles.length > 0) {
                     const indirectAuthRows = indirectRoles.flatMap(role => role.authObjs.map((auth, authIndex) => ({ role, auth, authIndex })));
@@ -794,7 +1140,8 @@ function LicenseOptimizationPage() {
                         {show("actual") && <td></td>}
                         {show("target") && <td></td>}
                         {show("mismatch") && <td></td>}
-                        {show("licenseDivision") && <td><LicenseDivision counts={licenseDivisionFromAuthObjs(indirectAuthRows.map(row => row.auth))} /></td>}
+                        {show("licenseDivision") && <td></td>}
+                        {show("redundant") && <td></td>}
                         {show("assignmentSource") && <td>
                           <button type="button" className="assignment-toggle" onClick={() => toggleAssignment(indirectGroupKey)}>
                             <ChevDown open={indirectOpen} />
@@ -815,9 +1162,13 @@ function LicenseOptimizationPage() {
                       </tr>
                     );
 
-                    if (indirectOpen) indirectAuthRows.forEach(({ role, auth: a, authIndex }, rowIndex) => {
+                    if (indirectOpen) indirectRoles.forEach((role, roleIndex) => {
+                      const rkey = `${u.id}::indirect::${role.name}::${roleIndex}`;
+                      const roleOpen = expandedRoles.has(rkey);
+                      const roleUsage = authUsageCounts(role.authObjs);
+
                       rows.push(
-                        <tr key={`a-${u.id}-indirect-${role.name}-${authIndex}-${rowIndex}`} className="row-auth">
+                        <tr key={`r-${rkey}`} className={`row-role ${roleOpen ? "expanded" : ""}`} onClick={() => toggleRole(rkey)}>
                           <td></td>
                           <td></td>
                           {show("name")   && <td></td>}
@@ -827,20 +1178,56 @@ function LicenseOptimizationPage() {
                           {show("target") && <td></td>}
                           {show("mismatch") && <td></td>}
                           {show("licenseDivision") && <td></td>}
+                          {show("redundant") && <td></td>}
                           {show("assignmentSource") && <td></td>}
-                          {show("role")   && <td></td>}
-                          {show("roleType") && <td></td>}
-                          {show("auth")   && <td className="link mono">{a.name}</td>}
-                          {show("authDesc") && <td className="muted">{a.desc || "-"}</td>}
-                          {show("field")  && <td className="mono muted">{a.field}</td>}
-                          {show("values") && <td className="mono muted">{a.values}</td>}
-                          {show("fstat")  && <td><FieldStatusPill status={a.fieldStatus} /></td>}
-                          {show("usage") && <td className="num">{a.fieldStatus === "Unused" ? 0 : 1}</td>}
-                          {show("lastUsed") && <td className="mono muted">{getAuthLastUsedDate(u, role, a, authIndex)}</td>}
-                          {show("lic")    && <td><LicensePill license={a.license} /></td>}
+                          {show("role")   && <td className="role-cell">
+                            <ChevDown open={roleOpen} />
+                            <span className="mono role-name">{role.name}</span>
+                            <span className="muted role-meta">· {role.authObjs.length} auth objs</span>
+                          </td>}
+                          {show("roleType") && <td><RoleTypePill value={role.type} /></td>}
+                          {show("auth")   && <td></td>}
+                          {show("authDesc") && <td></td>}
+                          {show("field")  && <td></td>}
+                          {show("values") && <td></td>}
+                          {show("fstat")  && <td></td>}
+                          {show("usage") && <td className="num">{roleUsage.used.toLocaleString()}</td>}
+                          {show("lastUsed") && <td></td>}
+                          {show("lic")    && <td></td>}
                           <td></td>
                         </tr>
                       );
+
+                      if (roleOpen) {
+                        role.authObjs.forEach((a, ai) => {
+                          rows.push(
+                            <tr key={`a-${rkey}-${ai}`} className="row-auth">
+                              <td></td>
+                              <td></td>
+                              {show("name")   && <td></td>}
+                              {show("sapId")  && <td></td>}
+                              {show("email")  && <td></td>}
+                              {show("actual") && <td></td>}
+                              {show("target") && <td></td>}
+                              {show("mismatch") && <td></td>}
+                              {show("licenseDivision") && <td></td>}
+                              {show("redundant") && <td></td>}
+                              {show("assignmentSource") && <td></td>}
+                              {show("role")   && <td></td>}
+                              {show("roleType") && <td></td>}
+                              {show("auth")   && <td className="link mono">{a.name}</td>}
+                              {show("authDesc") && <td className="muted">{a.desc || "-"}</td>}
+                              {show("field")  && <td className="mono muted">{a.field}</td>}
+                              {show("values") && <td className="mono muted">{a.values}</td>}
+                              {show("fstat")  && <td><FieldStatusPill status={a.fieldStatus} /></td>}
+                              {show("usage") && <td className="num">{a.fieldStatus === "Unused" ? 0 : 1}</td>}
+                              {show("lastUsed") && <td className="mono muted">{getAuthLastUsedDate(u, role, a, ai)}</td>}
+                              {show("lic")    && <td><LicensePill license={a.license} /></td>}
+                              <td></td>
+                            </tr>
+                          );
+                        });
+                      }
                     });
                   }
                 }
@@ -879,6 +1266,24 @@ function LicenseOptimizationPage() {
       <div className="section-divider"><span>ROLE LICENSE DETAILS</span></div>
 
       {window.RoleClassificationCard ? React.createElement(window.RoleClassificationCard) : null}
+
+      {exportPreviewOpen && (
+        <ExportPreviewModal
+          columns={allocColumns}
+          hidden={hidden}
+          filters={buildActiveFilters()}
+          rowCount={selectedInFilteredCount > 0 ? selectedInFilteredCount : filtered.length}
+          onConfirm={() => { setExportPreviewOpen(false); exportCsv(); }}
+          onClose={() => setExportPreviewOpen(false)}
+        />
+      )}
+      {redundantRolesModal && (
+        <RedundantRolesModal
+          roles={redundantRolesModal.roles}
+          userName={`${redundantRolesModal.user.firstName} ${redundantRolesModal.user.lastName}`}
+          onClose={() => setRedundantRolesModal(null)}
+        />
+      )}
     </div>
   );
 }
