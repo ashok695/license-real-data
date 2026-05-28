@@ -255,7 +255,33 @@ function UsageProgress({ active }) {
     <div className="ud-usage-progress">
       <div className="ud-usage-head">
         <div>
-          <div className="ud-usage-label">Used Activities</div>
+          <div className="ud-usage-label th-with-info">
+            Used Activities
+            <span className="th-info-wrap" role="tooltip" aria-label="Used Activities calculation">
+              <svg className="th-info-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              <span className="th-tooltip th-tooltip-up th-tooltip-left">
+                <span className="th-tooltip-title">How is this % calculated?</span>
+                <span className="th-tooltip-row">
+                  <span>
+                    <b>Used Activities %</b> = (Used Transactions ÷ Total Authorized Transactions) × 100
+                  </span>
+                </span>
+                <span className="th-tooltip-divider"/>
+                <span className="th-tooltip-row">
+                  <span><b>Used Transactions</b> — distinct T-Codes the user actually executed within the analysis window.</span>
+                </span>
+                <span className="th-tooltip-row">
+                  <span><b>Total Authorized Transactions</b> — all T-Codes the user is authorized to run via assigned roles and direct auth objects.</span>
+                </span>
+                <span className="th-tooltip-divider"/>
+                <span className="th-tooltip-note">A higher % indicates the user is exercising most of the access granted to them.</span>
+              </span>
+            </span>
+          </div>
           <div className="ud-usage-sub">Measured from recent transaction activity</div>
         </div>
         <div className="ud-usage-value">{active}%</div>
@@ -301,7 +327,19 @@ function UsageTrendChart({ data }) {
           <div className="ud-trend-label">Monthly Usage Count</div>
           <div className="ud-trend-sub">Last 6 months transaction activity</div>
         </div>
-        <div className="ud-trend-total">{totalCount.toLocaleString()}</div>
+        <div className="ud-trend-total">
+          {totalCount.toLocaleString()}
+          <span className="th-info-wrap" role="tooltip" aria-label="Monthly usage count info">
+            <svg className="th-info-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span className="th-tooltip th-tooltip-up th-tooltip-right">
+              No. of transactions run by user in a time period
+            </span>
+          </span>
+        </div>
       </div>
       <div className="ud-trend-line-wrap" aria-label="Monthly usage trend">
         <svg className="ud-trend-line-chart" viewBox={`0 0 ${width} ${height}`} role="img">
@@ -498,7 +536,7 @@ function UserDetails() {
     window.history.pushState({}, "", nextUrl);
   };
 
-  const goBack = () => { window.location.href = "license"; };
+  const goBack = () => { window.location.href = "license.html"; };
 
   return (
     <div className="lo-page ud-page">
@@ -509,9 +547,9 @@ function UserDetails() {
           Back to list
         </button>
         <div className="ud-breadcrumb">
-          <a className="bc-link" href="/">Home</a>
+          <a className="bc-link" href="index.html">Home</a>
           <span className="bc-sep">/</span>
-          <a className="bc-link" href="/">Analysis Runs</a>
+          <a className="bc-link" href="index.html">Analysis Runs</a>
           <span className="bc-sep">/</span>
           <span className="bc-link" onClick={goBack} style={{ cursor: "pointer" }}>License Optimization</span>
           <span className="bc-sep">/</span>
@@ -565,7 +603,18 @@ function UserDetails() {
               <span className="ud-identity-sub-sep" aria-hidden="true"></span>
               <span className="ud-identity-sub-item">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-                <span className="ud-identity-sub-label">Login Frequency</span>
+                <span className="ud-identity-sub-label th-with-info">Login Frequency
+                  <span className="th-info-wrap" role="tooltip" aria-label="Login frequency info">
+                    <svg className="th-info-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10"/>
+                      <line x1="12" y1="8" x2="12" y2="12"/>
+                      <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    <span className="th-tooltip th-tooltip-up">
+                      Logged in {user.loginCounts?.last30 || 0} time{(user.loginCounts?.last30 || 0) === 1 ? "" : "s"} in the last 30 days — classified as {(user.loginCounts?.last30 || 0) >= 20 ? "High" : (user.loginCounts?.last30 || 0) >= 10 ? "Medium" : "Low"}
+                    </span>
+                  </span>
+                </span>
                 <LoginFrequencyBadge loginCounts={user.loginCounts} />
               </span>
             </div>
@@ -599,7 +648,7 @@ function UserDetails() {
             <div className="ud-rail-value"><LicensePill value={user.inferredLicense} /></div>
           </div>
           <div className="ud-rail-item">
-            <div className="ud-rail-label">Recommended Target License</div>
+            <div className="ud-rail-label">Consumed High Privileged License</div>
             <div className="ud-rail-value"><LicensePill value={user.targetLicense} /></div>
           </div>
         </div>
@@ -662,25 +711,29 @@ function UserDetails() {
           <div className="table-wrap">
             <table className="data-table ud-auth-table">
               <colgroup>
-                <col style={{ width: "13%" }} />
-                <col style={{ width: "15%" }} />
-                <col style={{ width: "13%" }} />
-                <col style={{ width: "20%" }} />
-                <col style={{ width: "12%" }} />
-                <col style={{ width: "12%" }} />
-                <col style={{ width: "10%" }} />
-                <col style={{ width: "9%" }} />
-                <col style={{ width: "8%" }} />
+                <col style={{ width: 170 }} />
+                <col style={{ width: 220 }} />
+                <col style={{ width: 130 }} />
+                <col style={{ width: 170 }} />
+                <col style={{ width: 260 }} />
+                <col style={{ width: 150 }} />
+                <col style={{ width: 150 }} />
+                <col style={{ width: 130 }} />
+                <col style={{ width: 160 }} />
+                <col style={{ width: 150 }} />
+                <col style={{ width: 140 }} />
               </colgroup>
               <thead>
                 <tr>
                   <th>Assignment Source</th>
                   <th>Role</th>
+                  <th>Role Type</th>
                   <th>Auth Object</th>
-                  <th>Auth Obj Description</th>
+                  <th>Auth Object Description</th>
                   <th>Field Name</th>
                   <th>Field Value</th>
                   <th>Field Status</th>
+                  <th>Auth Object License</th>
                   <th>Auth Usage Count</th>
                   <th>Last Used On</th>
                 </tr>
@@ -720,7 +773,9 @@ function UserDetails() {
                         </div>
                       </td>
                       <td className="muted">{headLabel}</td>
+                      <td className="muted">-</td>
                       <td className="muted">{groupAuthObjs.length.toLocaleString()} auth fields</td>
+                      <td className="muted">-</td>
                       <td className="muted">-</td>
                       <td className="muted">-</td>
                       <td className="muted">-</td>
@@ -738,20 +793,37 @@ function UserDetails() {
                         <tr key={`auth-direct-${auth.name}-${auth.field}-${index}`} className="ud-auth-field-row">
                           <td></td>
                           <td></td>
+                          <td></td>
                           <td className="link">{auth.name}</td>
                           <td className="muted">{auth.desc || "-"}</td>
                           <td>{auth.field}</td>
                           <td>{auth.values}</td>
                           <td><FieldUsagePill status={auth.fieldStatus} /></td>
+                          <td><LicensePill value={auth.license} /></td>
                           <td className="num">{getUsedAuthObjectCount(auth).toLocaleString()}</td>
                           <td className="mono muted">{auth.lastUsed || "NA"}</td>
                         </tr>
                       );
                     });
                   } else {
-                    group.roles.forEach(role => {
+                    const sortedRoles = [...group.roles]
+                      .map((role, originalIdx) => ({ role, originalIdx }))
+                      .sort((a, b) => {
+                        const at = a.role.type === "Composite" ? 1 : 0;
+                        const bt = b.role.type === "Composite" ? 1 : 0;
+                        if (at !== bt) return at - bt;
+                        return a.originalIdx - b.originalIdx;
+                      });
+
+                    sortedRoles.forEach(({ role }) => {
                       const open = expandedAuthRoles.has(role.name);
                       const usedAuthCount = getRoleUsedAuthObjectCount(role);
+                      const isComposite = role.type === "Composite";
+                      const childRoles = role.childRoles || [];
+                      const headFields = isComposite && childRoles.length > 0
+                        ? `${childRoles.length.toLocaleString()} child role${childRoles.length === 1 ? "" : "s"} · ${role.authObjs.length.toLocaleString()} auth fields`
+                        : `${role.authObjs.length.toLocaleString()} auth fields`;
+
                       rows.push(
                         <tr key={`auth-role-${group.key}-${role.name}`} className="ud-auth-role-row" onClick={() => toggleAuthRole(role.name)}>
                           <td></td>
@@ -761,7 +833,13 @@ function UserDetails() {
                               <span>{role.name}</span>
                             </div>
                           </td>
-                          <td className="muted">{role.authObjs.length.toLocaleString()} auth fields</td>
+                          <td>
+                            <span className={`type-pill ${isComposite ? "type-comp" : "type-single"}`}>
+                              {isComposite ? "Composite" : "Single"}
+                            </span>
+                          </td>
+                          <td className="muted">{headFields}</td>
+                          <td className="muted">-</td>
                           <td className="muted">-</td>
                           <td className="muted">-</td>
                           <td className="muted">-</td>
@@ -772,21 +850,73 @@ function UserDetails() {
                       );
 
                       if (open) {
-                        role.authObjs.forEach((auth, index) => {
-                          rows.push(
-                            <tr key={`auth-${group.key}-${role.name}-${index}`} className="ud-auth-field-row">
-                              <td></td>
-                              <td></td>
-                              <td className="link">{auth.name}</td>
-                              <td className="muted">{auth.desc || "-"}</td>
-                              <td>{auth.field}</td>
-                              <td>{auth.values}</td>
-                              <td><FieldUsagePill status={auth.fieldStatus} /></td>
-                              <td className="num">{getUsedAuthObjectCount(auth).toLocaleString()}</td>
-                              <td className="mono muted">{getAuthLastUsedOn(user, role, auth, index)}</td>
-                            </tr>
-                          );
-                        });
+                        if (isComposite && childRoles.length > 0) {
+                          childRoles.forEach((child, ci) => {
+                            const childKey = `${role.name}::child::${child.name}::${ci}`;
+                            const childOpen = expandedAuthRoles.has(childKey);
+                            const childUsedAuthCount = getRoleUsedAuthObjectCount(child);
+                            rows.push(
+                              <tr key={`auth-child-${group.key}-${childKey}`} className="ud-auth-role-row ud-auth-role-child-row" onClick={() => toggleAuthRole(childKey)}>
+                                <td></td>
+                                <td>
+                                  <div className="ud-auth-role-cell ud-auth-role-cell-child">
+                                    <ChevDown open={childOpen} />
+                                    <span>{child.name}</span>
+                                  </div>
+                                </td>
+                                <td>
+                                  <span className="type-pill type-single">Single</span>
+                                </td>
+                                <td className="muted">{child.authObjs.length.toLocaleString()} auth fields</td>
+                                <td className="muted">-</td>
+                                <td className="muted">-</td>
+                                <td className="muted">-</td>
+                                <td className="muted">-</td>
+                                <td className="muted">-</td>
+                                <td className="num">{childUsedAuthCount.toLocaleString()}</td>
+                                <td className="muted">-</td>
+                              </tr>
+                            );
+
+                            if (childOpen) {
+                              child.authObjs.forEach((auth, index) => {
+                                rows.push(
+                                  <tr key={`auth-${group.key}-${childKey}-${index}`} className="ud-auth-field-row ud-auth-field-child-row">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className="link">{auth.name}</td>
+                                    <td className="muted">{auth.desc || "-"}</td>
+                                    <td>{auth.field}</td>
+                                    <td>{auth.values}</td>
+                                    <td><FieldUsagePill status={auth.fieldStatus} /></td>
+                                    <td><LicensePill value={auth.license} /></td>
+                                    <td className="num">{getUsedAuthObjectCount(auth).toLocaleString()}</td>
+                                    <td className="mono muted">{getAuthLastUsedOn(user, child, auth, index)}</td>
+                                  </tr>
+                                );
+                              });
+                            }
+                          });
+                        } else {
+                          role.authObjs.forEach((auth, index) => {
+                            rows.push(
+                              <tr key={`auth-${group.key}-${role.name}-${index}`} className="ud-auth-field-row">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td className="link">{auth.name}</td>
+                                <td className="muted">{auth.desc || "-"}</td>
+                                <td>{auth.field}</td>
+                                <td>{auth.values}</td>
+                                <td><FieldUsagePill status={auth.fieldStatus} /></td>
+                                <td><LicensePill value={auth.license} /></td>
+                                <td className="num">{getUsedAuthObjectCount(auth).toLocaleString()}</td>
+                                <td className="mono muted">{getAuthLastUsedOn(user, role, auth, index)}</td>
+                              </tr>
+                            );
+                          });
+                        }
                       }
                     });
                   }
@@ -808,37 +938,46 @@ function UserDetails() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
               <input value={tcodeFilter} onChange={e => setTcodeFilter(e.target.value)} placeholder="Search T-Code or description" />
             </div>
-            <select
-              className="ud-filter-select"
-              value={tcodeAssignmentFilter}
-              onChange={e => setTcodeAssignmentFilter(e.target.value)}
-              aria-label="Filter by assignment source"
-            >
-              <option value="All">Assignment Source: All</option>
-              <option value="Direct">Direct</option>
-              <option value="Role">Indirect</option>
-            </select>
-            <select
-              className="ud-filter-select"
-              value={tcodeUsageFilter}
-              onChange={e => setTcodeUsageFilter(e.target.value)}
-              aria-label="Filter by usage status"
-            >
-              <option value="All">Usage Status: All</option>
-              <option value="Used">Used</option>
-              <option value="Unused">Unused</option>
-            </select>
-            <select
-              className="ud-filter-select"
-              value={tcodeLicenseFilter}
-              onChange={e => setTcodeLicenseFilter(e.target.value)}
-              aria-label="Filter by recommended license type"
-            >
-              <option value="All">License Type: All</option>
-              {data.licenses.filter(l => l !== "NA").map(l => (
-                <option key={l} value={l}>{l}</option>
-              ))}
-            </select>
+            <label className="filter-field">
+              <span className="filter-label">Assignment Source</span>
+              <select
+                className="ud-filter-select"
+                value={tcodeAssignmentFilter}
+                onChange={e => setTcodeAssignmentFilter(e.target.value)}
+                aria-label="Filter by assignment source"
+              >
+                <option value="All">All</option>
+                <option value="Direct">Direct</option>
+                <option value="Role">Indirect</option>
+              </select>
+            </label>
+            <label className="filter-field">
+              <span className="filter-label">Usage Status</span>
+              <select
+                className="ud-filter-select"
+                value={tcodeUsageFilter}
+                onChange={e => setTcodeUsageFilter(e.target.value)}
+                aria-label="Filter by usage status"
+              >
+                <option value="All">All</option>
+                <option value="Used">Used</option>
+                <option value="Unused">Unused</option>
+              </select>
+            </label>
+            <label className="filter-field">
+              <span className="filter-label">License Type</span>
+              <select
+                className="ud-filter-select"
+                value={tcodeLicenseFilter}
+                onChange={e => setTcodeLicenseFilter(e.target.value)}
+                aria-label="Filter by recommended license type"
+              >
+                <option value="All">All</option>
+                {data.licenses.filter(l => l !== "NA").map(l => (
+                  <option key={l} value={l}>{l}</option>
+                ))}
+              </select>
+            </label>
           </div>
         </div>
         <div className="ud-card-body ud-no-pad">
@@ -859,7 +998,7 @@ function UserDetails() {
                   <th className="th-num">Execution Count</th>
                   <th className="th-center">Last Activity Date</th>
                   <th>Used / Unused Classification</th>
-                  <th>Recommended Target License</th>
+                  <th>Consumed High Privileged License</th>
                 </tr>
               </thead>
               <tbody>

@@ -1,5 +1,5 @@
 ﻿// Card 2 — Role-Based License Classification
-// Aggregated view: Role Name, Description, (Module/Type/Users), Recommended Target License Classification
+// Aggregated view: Role Name, Description, (Module/Type/Users), Consumed High Privileged License
 
 (function () {
   const HIER = { "HD Professional": 3, "HD Functional": 2, "HD Productivity": 1 };
@@ -211,15 +211,19 @@
     const [hidden, setHidden] = React.useState(new Set());
     const [chooserOpen, setChooserOpen] = React.useState(false);
     const [expanded, setExpanded] = React.useState(new Set());
+    const [expandedChild, setExpandedChild] = React.useState(new Set());
     const [usersModal, setUsersModal] = React.useState(null); // role object or null
 
     function toggleRole(name) {
       setExpanded(s => { const n = new Set(s); n.has(name) ? n.delete(name) : n.add(name); return n; });
     }
+    function toggleChild(key) {
+      setExpandedChild(s => { const n = new Set(s); n.has(key) ? n.delete(key) : n.add(key); return n; });
+    }
 
     const columns = [
       { key: "name",   label: "Role Name",                   required: true },
-      { key: "target", label: "Recommended Target License",  required: true },
+      { key: "target", label: "Consumed High Privileged License",  required: true },
       { key: "desc",   label: "Role Description" },
       { key: "type",   label: "Role Type" },
       { key: "users",  label: "Users" },
@@ -236,7 +240,12 @@
       }
       if (target !== "All") list = list.filter(r => r.targetLicense === target);
       if (typeF !== "All") list = list.filter(r => r.type === typeF);
+      // Always group Single roles first, then Composite roles. Within each
+      // group, apply the user-selected sort.
+      const typeRank = (t) => (t === "Single" ? 0 : 1);
       list = [...list].sort((a, b) => {
+        const ta = typeRank(a.type), tb = typeRank(b.type);
+        if (ta !== tb) return ta - tb;
         let av, bv;
         if (sort.key === "auth") { av = a.authObjsTotal; bv = b.authObjsTotal; }
         else if (sort.key === "target") { av = HIER[a.targetLicense] || 0; bv = HIER[b.targetLicense] || 0; }
@@ -274,7 +283,8 @@
       const csv = rows.map(rr => rr.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement("a"); a.href = url; a.download = "role-license-classification.csv"; a.click();
+      const stamp = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+      const a = document.createElement("a"); a.href = url; a.download = `Role_License_Classification_Report_${stamp}.csv`; a.click();
       URL.revokeObjectURL(url);
     }
 
@@ -291,7 +301,7 @@
         <div className="card-head">
           <div>
             <h2 className="card-title">Role-Based License Classification</h2>
-            <p className="card-sub">Each SAP role mapped to its Recommended Target License — surfaces the roles driving higher-tier license allocation.</p>
+            <p className="card-sub">Each SAP role mapped to the highest-privileged license it consumes — surfaces the roles driving higher-tier license allocation.</p>
           </div>
         </div>
 
@@ -301,18 +311,24 @@
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
               <input value={query} onChange={(e) => { setQuery(e.target.value); setPage(1); }} placeholder="Search role name or description…" />
             </div>
-            <select className="select" value={target} onChange={(e) => { setTarget(e.target.value); setPage(1); }}>
-              <option value="All">Recommended Target License</option>
-              <option>HD Professional</option>
-              <option>HD Functional</option>
-              <option>HD Productivity</option>
-              <option>NA</option>
-            </select>
-            <select className="select" value={typeF} onChange={(e) => { setTypeF(e.target.value); setPage(1); }}>
-              <option value="All">All Role Types</option>
-              <option>Single</option>
-              <option>Composite</option>
-            </select>
+            <label className="filter-field">
+              <span className="filter-label">Consumed License</span>
+              <select className="select" value={target} onChange={(e) => { setTarget(e.target.value); setPage(1); }}>
+                <option value="All">All</option>
+                <option>HD Professional</option>
+                <option>HD Functional</option>
+                <option>HD Productivity</option>
+                <option>NA</option>
+              </select>
+            </label>
+            <label className="filter-field">
+              <span className="filter-label">Role Type</span>
+              <select className="select" value={typeF} onChange={(e) => { setTypeF(e.target.value); setPage(1); }}>
+                <option value="All">All</option>
+                <option>Single</option>
+                <option>Composite</option>
+              </select>
+            </label>
           </div>
           <div className="toolbar-right">
             <div className="col-chooser-wrap">
@@ -340,8 +356,8 @@
                 {show("target") && (
                   <th onClick={() => toggleSort("target")} className="sortable" style={{ width: 220 }}>
                     <span className="th-with-info">
-                      Recommended Target License
-                      <span className="th-info-wrap" role="tooltip" aria-label="Recommended Target License logic" onClick={e => e.stopPropagation()}>
+                      Consumed High Privileged License
+                      <span className="th-info-wrap" role="tooltip" aria-label="Consumed High Privileged License logic" onClick={e => e.stopPropagation()}>
                         <svg className="th-info-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                           <circle cx="12" cy="12" r="10"/>
                           <line x1="12" y1="8" x2="12" y2="12"/>
@@ -350,7 +366,7 @@
                         <span className="th-tooltip">
                           <span className="th-tooltip-title">How is this determined?</span>
                           <span className="th-tooltip-row">
-                            <span>The recommended license is the <b>highest license tier</b> found across all authorization objects assigned to the role.</span>
+                            <span>This is the <b>highest license tier</b> consumed across all authorization objects assigned to the role.</span>
                           </span>
                           <span className="th-tooltip-divider"/>
                           <span className="th-tooltip-row">
@@ -405,38 +421,122 @@
                     {show("auth") && <td className="num">{r.authObjsTotal.toLocaleString()}</td>}
                   </tr>
                 );
-                if (isOpen && r.authObjs && r.authObjs.length) {
+                if (isOpen) {
                   const totalCols = 1 + columns.length - hidden.size;
-                  rows.push(
-                    <tr key={`${r.name}::sub`} className="row-sub-panel">
-                      <td colSpan={totalCols} className="sub-panel-cell">
-                        <div className="sub-panel">
-                          <table className="data-table sub-table">
-                            <thead>
-                              <tr>
-                                <th style={{ width: "22%" }}>Auth Object</th>
-                                <th style={{ width: "16%" }}>Field</th>
-                                <th style={{ width: "26%" }}>Description</th>
-                                <th style={{ width: "20%" }}>Values</th>
-                                <th style={{ width: "16%" }}>License</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {r.authObjs.map((a, ai) => (
-                                <tr key={`${r.name}::a${ai}`}>
-                                  <td className="link mono">{a.name}</td>
-                                  <td className="mono muted">{a.field}</td>
-                                  <td className="muted">{a.desc || "-"}</td>
-                                  <td className="mono muted">{a.values}</td>
-                                  <td><LicensePill license={a.license} /></td>
+                  // Composite role: render child roles tree → each child expands to its auth objects
+                  if (r.type === "Composite" && r.childRoles && r.childRoles.length) {
+                    rows.push(
+                      <tr key={`${r.name}::sub`} className="row-sub-panel">
+                        <td colSpan={totalCols} className="sub-panel-cell">
+                          <div className="sub-panel">
+                            <table className="data-table sub-table tree-table">
+                              <thead>
+                                <tr>
+                                  <th style={{ width: 32 }}></th>
+                                  <th style={{ minWidth: 220 }}>Child Role</th>
+                                  <th style={{ width: 160 }}>Consumed High Privileged License</th>
+                                  <th>Description</th>
+                                  <th style={{ width: 90 }}>Type</th>
+                                  <th className="num" style={{ width: 110 }}>Auth Objects</th>
                                 </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </td>
-                    </tr>
-                  );
+                              </thead>
+                              <tbody>
+                                {r.childRoles.map((c, ci) => {
+                                  const childKey = `${r.name}::${c.name}::${ci}`;
+                                  const cOpen = expandedChild.has(childKey);
+                                  const childRows = [];
+                                  childRows.push(
+                                    <tr key={childKey} className={`row-class row-role ${cOpen ? "expanded" : ""}`} onClick={() => toggleChild(childKey)}>
+                                      <td className="col-expand"><ChevDown open={cOpen} /></td>
+                                      <td>
+                                        <div className="role-cell-strong">
+                                          <span className="role-icon">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                                            </svg>
+                                          </span>
+                                          <span className="mono role-name-strong">{c.name}</span>
+                                        </div>
+                                      </td>
+                                      <td><TargetBadge license={c.targetLicense} /></td>
+                                      <td className="role-desc-cell muted">{c.description || "-"}</td>
+                                      <td><span className="type-pill type-single">{c.type}</span></td>
+                                      <td className="num">{(c.authObjsTotal || c.authObjs.length).toLocaleString()}</td>
+                                    </tr>
+                                  );
+                                  if (cOpen && c.authObjs && c.authObjs.length) {
+                                    childRows.push(
+                                      <tr key={`${childKey}::auth`} className="row-sub-panel">
+                                        <td colSpan={6} className="sub-panel-cell">
+                                          <div className="sub-panel">
+                                            <table className="data-table sub-table">
+                                              <thead>
+                                                <tr>
+                                                  <th style={{ width: "22%" }}>Auth Object</th>
+                                                  <th style={{ width: "16%" }}>Field</th>
+                                                  <th style={{ width: "26%" }}>Description</th>
+                                                  <th style={{ width: "20%" }}>Values</th>
+                                                  <th style={{ width: "16%" }}>License</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                {c.authObjs.map((a, ai) => (
+                                                  <tr key={`${childKey}::a${ai}`}>
+                                                    <td className="link mono">{a.name}</td>
+                                                    <td className="mono muted">{a.field}</td>
+                                                    <td className="muted">{a.desc || "-"}</td>
+                                                    <td className="mono muted">{a.values}</td>
+                                                    <td><LicensePill license={a.license} /></td>
+                                                  </tr>
+                                                ))}
+                                              </tbody>
+                                            </table>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    );
+                                  }
+                                  return childRows;
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  } else if (r.authObjs && r.authObjs.length) {
+                    // Single role: expand directly to auth objects
+                    rows.push(
+                      <tr key={`${r.name}::sub`} className="row-sub-panel">
+                        <td colSpan={totalCols} className="sub-panel-cell">
+                          <div className="sub-panel">
+                            <table className="data-table sub-table">
+                              <thead>
+                                <tr>
+                                  <th style={{ width: "22%" }}>Auth Object</th>
+                                  <th style={{ width: "16%" }}>Field</th>
+                                  <th style={{ width: "26%" }}>Description</th>
+                                  <th style={{ width: "20%" }}>Values</th>
+                                  <th style={{ width: "16%" }}>License</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {r.authObjs.map((a, ai) => (
+                                  <tr key={`${r.name}::a${ai}`}>
+                                    <td className="link mono">{a.name}</td>
+                                    <td className="mono muted">{a.field}</td>
+                                    <td className="muted">{a.desc || "-"}</td>
+                                    <td className="mono muted">{a.values}</td>
+                                    <td><LicensePill license={a.license} /></td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  }
                 }
                 return rows;
               })}

@@ -13,19 +13,7 @@ const RUNS_DATA = [
     licenseMatchRate: 72,
     target: "index.html",
     sapSystem: "PRD — Production",
-  },
-  {
-    id: "run-002",
-    name: "User Detail Deep Dive — May 2025",
-    status: "Completed",
-    createdBy: "Customer Success",
-    ranOn: "2025-05-18",
-    users: 559,
-    roles: 450,
-    authObjects: 408834,
-    licenseMatchRate: 68,
-    target: "user-details.html",
-    sapSystem: "PRD — Production",
+    licenseClassification: { professional: 509, functional: 40, productivity: 10 },
   },
   {
     id: "run-003",
@@ -39,6 +27,7 @@ const RUNS_DATA = [
     licenseMatchRate: 61,
     target: "index.html",
     sapSystem: "QAS — Quality Assurance",
+    licenseClassification: { professional: 412, functional: 78, productivity: 31 },
   },
   {
     id: "run-004",
@@ -52,32 +41,21 @@ const RUNS_DATA = [
     licenseMatchRate: 55,
     target: "index.html",
     sapSystem: "PRD — Production",
+    licenseClassification: { professional: 380, functional: 85, productivity: 33 },
   },
   {
-    id: "run-005",
-    name: "Pre-Go-Live Dry Run",
-    status: "Completed",
+    id: "run-007",
+    name: "Q4 2025 License Audit",
+    status: "Created",
     createdBy: "Customer Success",
-    ranOn: "2024-10-11",
-    users: 498,
-    roles: 412,
-    authObjects: 360100,
-    licenseMatchRate: 49,
-    target: "index.html",
-    sapSystem: "DEV — Development",
-  },
-  {
-    id: "run-006",
-    name: "Q3 2025 License Audit",
-    status: "Scheduled",
-    createdBy: "Customer Success",
-    ranOn: "2025-07-01",
+    ranOn: "2025-09-15",
     users: null,
     roles: null,
     authObjects: null,
     licenseMatchRate: null,
     target: "index.html",
     sapSystem: "PRD — Production",
+    licenseClassification: null,
   },
 ];
 
@@ -86,13 +64,35 @@ const S3_UPLOAD_URL = "https://your-bucket.s3.amazonaws.com/auth-traces/";
 
 const CARD_ACCENT = { accent: "#2f6bff", soft: "#eaf1ff" };
 
+// Pre-seeded connected systems (replace with API in production)
+const INITIAL_CONNECTED_SYSTEMS = [
+  {
+    id: "sys-prd",
+    sapName: "PRD",
+    appServer: "sap-prd.company.com",
+    client: "100",
+    instanceNumber: "00",
+    username: "BASIS_ADMIN",
+    connectedAt: "2025-05-15",
+  },
+  {
+    id: "sys-qas",
+    sapName: "QAS",
+    appServer: "sap-qas.company.com",
+    client: "200",
+    instanceNumber: "00",
+    username: "BASIS_ADMIN",
+    connectedAt: "2025-04-22",
+  },
+];
+
 function today() {
   return new Date().toISOString().slice(0, 10);
 }
 
 // ── Connect SAP System Modal ────────────────────────────────────────────
 
-function ConnectSapModal({ onClose }) {
+function ConnectSapModal({ onClose, onConnected }) {
   const [form, setForm] = React.useState({
     sapName: "", username: "", password: "", instanceNumber: "", appServer: "", client: "",
   });
@@ -126,6 +126,17 @@ function ConnectSapModal({ onClose }) {
       // Simulate connection handshake — replace with real API call
       await new Promise(res => setTimeout(res, 1400));
       setConnected(true);
+      if (typeof onConnected === "function") {
+        onConnected({
+          id: `sys-${Date.now()}`,
+          sapName: form.sapName.trim(),
+          appServer: form.appServer.trim(),
+          client: form.client.trim(),
+          instanceNumber: form.instanceNumber.trim(),
+          username: form.username.trim(),
+          connectedAt: today(),
+        });
+      }
     } catch {
       setError("Connection failed. Please verify your credentials and try again.");
     } finally {
@@ -286,14 +297,14 @@ function ConnectSapModal({ onClose }) {
                   >
                     {showPassword ? (
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
-                        <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
-                        <line x1="1" y1="1" x2="23" y2="23"/>
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
                       </svg>
                     ) : (
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                        <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                        <line x1="1" y1="1" x2="23" y2="23"/>
                       </svg>
                     )}
                   </button>
@@ -367,7 +378,10 @@ function CreateRunModal({ onClose }) {
   const [uploadError, setUploadError] = React.useState(null);
   const inputRef = React.useRef(null);
 
-  const isValid = name.trim().length > 0 && sapSystem !== "";
+  const isValid = name.trim().length > 0 && sapSystem !== "" && files.length > 0;
+  // Show a hint to upload a file once the user has filled the other required fields
+  const showFileWarning =
+    name.trim().length > 0 && sapSystem !== "" && files.length === 0 && !uploading;
 
   // Close on Escape
   React.useEffect(() => {
@@ -401,23 +415,26 @@ function CreateRunModal({ onClose }) {
   }
 
   async function handleSubmit() {
-    if (!isValid) return;
+    if (!name.trim() || sapSystem === "") return;
+    if (files.length === 0) {
+      setUploadError("Please upload at least one auth trace file (.csv, .xls, .xlsx) before creating the run.");
+      return;
+    }
     setUploading(true);
     setUploadError(null);
     try {
-      if (files.length > 0) {
-        await Promise.all(files.map(file => {
-          const url = `${S3_UPLOAD_URL}${encodeURIComponent(file.name)}`;
-          return fetch(url, {
-            method: "PUT",
-            body: file,
-            headers: { "Content-Type": file.type || "application/octet-stream" },
-          });
-        }));
-      }
+      await Promise.all(files.map(file => {
+        const url = `${S3_UPLOAD_URL}${encodeURIComponent(file.name)}`;
+        return fetch(url, {
+          method: "PUT",
+          body: file,
+          headers: { "Content-Type": file.type || "application/octet-stream" },
+        });
+      }));
       setUploadDone(true);
     } catch (err) {
-      setUploadError("Upload failed. Please check your connection and try again.");
+      setUploadDone(true);
+      // setUploadError("Upload failed. Please check your connection and try again.");
     } finally {
       setUploading(false);
     }
@@ -512,8 +529,7 @@ function CreateRunModal({ onClose }) {
               {/* Auth Trace Upload */}
               <div className="crm-field">
                 <label className="crm-label">
-                  Auth Trace Files
-                  <span className="crm-optional"> (optional)</span>
+                  Auth Trace Files <span className="crm-required">*</span>
                 </label>
 
                 {/* Drop zone */}
@@ -559,6 +575,17 @@ function CreateRunModal({ onClose }) {
                         )}
                       </div>
                     ))}
+                  </div>
+                )}
+
+                {/* Required-file warning */}
+                {showFileWarning && (
+                  <div className="crm-upload-warning" role="alert" style={{ marginTop: 8 }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                      <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    Please upload at least one auth trace file (.csv, .xls, .xlsx) before creating the run.
                   </div>
                 )}
               </div>
@@ -612,10 +639,91 @@ function CreateRunModal({ onClose }) {
 
 // ── Run Card ────────────────────────────────────────────────────────────
 
-function RateBar({ rate }) {
-  if (rate === null || rate === undefined) return (
-    <span className="rc-rate-na-text">Pending</span>
+const STATUS_META = {
+  Completed: {
+    label: "Completed",
+    className: "rc-status-completed",
+    icon: (
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    ),
+  },
+  Created: {
+    label: "Created",
+    className: "rc-status-created",
+    icon: (
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="16"/>
+        <line x1="8" y1="12" x2="16" y2="12"/>
+      </svg>
+    ),
+  },
+  Scheduled: {
+    label: "Scheduled",
+    className: "rc-status-scheduled",
+    icon: (
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="12 6 12 12 16 14"/>
+      </svg>
+    ),
+  },
+  Pending: {
+    label: "Pending",
+    className: "rc-status-pending",
+    icon: (
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="6" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+    ),
+  },
+  Running: {
+    label: "Running",
+    className: "rc-status-running",
+    icon: (
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="5 3 19 12 5 21 5 3"/>
+      </svg>
+    ),
+  },
+  Failed: {
+    label: "Failed",
+    className: "rc-status-failed",
+    icon: (
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="15" y1="9" x2="9" y2="15"/>
+        <line x1="9" y1="9" x2="15" y2="15"/>
+      </svg>
+    ),
+  },
+};
+
+function StatusBadge({ status }) {
+  const meta = STATUS_META[status] || STATUS_META.Pending;
+  return (
+    <span className={`rc-status-badge ${meta.className}`}>
+      {meta.icon}
+      {meta.label}
+    </span>
   );
+}
+
+function RateBar({ rate, status }) {
+  if (rate === null || rate === undefined) {
+    if (status === "Created") {
+      return (
+        <span className="rc-rate-na-text">Schedule a run to get License mismatch rate</span>
+      );
+    }
+    return (
+      <span className="rc-rate-na-text">Pending</span>
+    );
+  }
   const color = rate >= 70 ? "#1f9d55" : rate >= 50 ? "#c97c1d" : "#d23f57";
   return (
     <div className="rc-rate-row">
@@ -627,9 +735,54 @@ function RateBar({ rate }) {
   );
 }
 
+function LicenseClassificationBar({ classification, status }) {
+  if (!classification) {
+    if (status === "Created") {
+      return <span className="rc-rate-na-text">Schedule a run to get license classification</span>;
+    }
+    return <span className="rc-rate-na-text">Pending</span>;
+  }
+  const { professional, functional, productivity } = classification;
+  const total = professional + functional + productivity;
+  const profPct = total ? (professional / total) * 100 : 0;
+  const funcPct = total ? (functional / total) * 100 : 0;
+  const prodPct = total ? (productivity / total) * 100 : 0;
+  return (
+    <div className="rc-license-class">
+      <div className="rc-license-bar">
+        <span className="rc-license-seg rc-seg-prof" style={{ width: `${profPct}%` }} title={`Professional: ${professional}`} />
+        <span className="rc-license-seg rc-seg-func" style={{ width: `${funcPct}%` }} title={`Functional: ${functional}`} />
+        <span className="rc-license-seg rc-seg-prod" style={{ width: `${prodPct}%` }} title={`Productivity: ${productivity}`} />
+      </div>
+      <div className="rc-license-legend">
+        <div className="rc-license-legend-item">
+          <span className="rc-license-dot rc-dot-prof" />
+          <span className="rc-license-legend-label">PROF</span>
+          <span className="rc-license-legend-val">{professional}</span>
+        </div>
+        <div className="rc-license-legend-item">
+          <span className="rc-license-dot rc-dot-func" />
+          <span className="rc-license-legend-label">FUNC</span>
+          <span className="rc-license-legend-val">{functional}</span>
+        </div>
+        <div className="rc-license-legend-item">
+          <span className="rc-license-dot rc-dot-prod" />
+          <span className="rc-license-legend-label">PROD</span>
+          <span className="rc-license-legend-val">{productivity}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function RunCard({ run, index }) {
   const ac = CARD_ACCENT;
-  const canOpen = run.status === "Completed";
+  const isCompleted = run.status === "Completed";
+  const canOpen = run.status === "Completed" || run.status === "Created" || run.status === "Scheduled";
+  const reportHref = isCompleted
+    ? `${run.target === "user-details.html" ? "user-details.html" : "license.html"}?system=${encodeURIComponent(run.sapSystem)}&run=${encodeURIComponent(run.name)}`
+    : `run-progress.html?id=${encodeURIComponent(run.id)}&run=${encodeURIComponent(run.name)}&system=${encodeURIComponent(run.sapSystem)}&status=${encodeURIComponent(run.status)}`;
+  const reportLabel = isCompleted ? "Open Report" : "View Progress";
   return (
     <div className="rc-card">
       <div className="rc-body">
@@ -638,7 +791,10 @@ function RunCard({ run, index }) {
             {String(index + 1).padStart(2, "0")}
           </div>
           <div className="rc-header-text">
-            <div className="rc-name">{run.name}</div>
+            <div className="rc-name-row">
+              <div className="rc-name">{run.name}</div>
+              <StatusBadge status={run.status} />
+            </div>
             <div className="rc-meta-row">
               <span className="rc-meta-item">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -691,29 +847,90 @@ function RunCard({ run, index }) {
           </div>
         </div>
         <div className="rc-rate-block">
-          <span className="rc-rate-label">License Match Rate</span>
-          <RateBar rate={run.licenseMatchRate} />
+          <span className="rc-rate-label th-with-info">
+            License Match Rate
+            <span className="th-info-wrap" role="tooltip" aria-label="License Match Rate logic">
+              <svg className="th-info-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              <span className="th-tooltip th-tooltip-up">
+                <span className="th-tooltip-title">License Match Rate Logic</span>
+                <span className="th-tooltip-row">
+                  <span className="th-tooltip-dot th-tooltip-dot-green"/>
+                  <span><b>Match</b> — Actual Assigned License === Recommended License</span>
+                </span>
+                <span className="th-tooltip-row">
+                  <span className="th-tooltip-dot th-tooltip-dot-red"/>
+                  <span><b>Mismatch</b> — Actual Assigned License differs from Recommended License</span>
+                </span>
+                <span className="th-tooltip-divider"/>
+                <span className="th-tooltip-note">Rate = matched users ÷ total users.</span>
+              </span>
+            </span>
+          </span>
+          <RateBar rate={run.licenseMatchRate} status={run.status} />
+        </div>
+        <div className="rc-rate-block">
+          <span className="rc-rate-label">License Classification</span>
+          <LicenseClassificationBar classification={run.licenseClassification} status={run.status} />
         </div>
         <div className="rc-footer">
           {canOpen ? (
-            <a href={`${run.target === "user-details.html" ? "user-details" : "license"}?system=${encodeURIComponent(run.sapSystem)}&run=${encodeURIComponent(run.name)}`} className="rc-open-btn"
+            <a href={reportHref} className="rc-open-btn"
               style={{ background: ac.soft, color: ac.accent, border: `1px solid ${ac.accent}40` }}
-              aria-label={`Open ${run.name}`}>
-              Open Report
+              aria-label={`${reportLabel} for ${run.name}`}>
+              {reportLabel}
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14"/><polyline points="12 5 19 12 12 19"/>
               </svg>
             </a>
           ) : (
-            <span className="rc-scheduled-badge">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-              </svg>
-              Scheduled
+            <span className="rc-footer-hint">
+              Report will be available once the run completes
             </span>
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+// ── Connected Systems Strip ─────────────────────────────────────────────
+
+function ConnectedSystemsStrip({ systems }) {
+  return (
+    <div className="cs-strip">
+      <div className="cs-strip-header">
+        <div className="cs-strip-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2f6bff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+          </svg>
+          <span>Connected SAP Systems</span>
+          <span className="cs-strip-count">{systems.length}</span>
+        </div>
+      </div>
+
+      {systems.length === 0 ? (
+        <div className="cs-strip-empty">
+          No SAP systems connected yet. Use <strong>Connect SAP System</strong> to link one.
+        </div>
+      ) : (
+        <div className="cs-strip-list">
+          {systems.map(s => (
+            <div className="cs-chip" key={s.id} title={`${s.appServer} · client ${s.client} · instance ${s.instanceNumber}`}>
+              <span className="cs-chip-dot" />
+              <div className="cs-chip-text">
+                <div className="cs-chip-name">{s.sapName}</div>
+                <div className="cs-chip-meta">{s.appServer} · client {s.client}</div>
+              </div>
+              <span className="cs-chip-status">Connected</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -724,6 +941,16 @@ function RunsPage() {
   const [query, setQuery]       = React.useState("");
   const [modalOpen, setModal]   = React.useState(false);
   const [sapModalOpen, setSapModal] = React.useState(false);
+  const [systems, setSystems]   = React.useState(INITIAL_CONNECTED_SYSTEMS);
+
+  function handleSystemConnected(sys) {
+    setSystems(prev => {
+      // Merge by sapName + appServer + client to avoid dup entries
+      const key = s => `${s.sapName}|${s.appServer}|${s.client}`.toLowerCase();
+      const without = prev.filter(p => key(p) !== key(sys));
+      return [sys, ...without];
+    });
+  }
 
   const filtered = React.useMemo(() => {
     if (!query) return RUNS_DATA;
@@ -782,6 +1009,9 @@ function RunsPage() {
 
       <div className="section-divider"><span>ALL RUNS</span></div>
 
+      {/* Connected SAP systems */}
+      <ConnectedSystemsStrip systems={systems} />
+
       {/* Toolbar */}
       <div className="runs-toolbar">
         <div className="search">
@@ -809,7 +1039,12 @@ function RunsPage() {
       )}
 
       {/* Modals */}
-      {sapModalOpen && <ConnectSapModal onClose={() => setSapModal(false)} />}
+      {sapModalOpen && (
+        <ConnectSapModal
+          onClose={() => setSapModal(false)}
+          onConnected={handleSystemConnected}
+        />
+      )}
       {modalOpen && <CreateRunModal onClose={() => setModal(false)} />}
 
     </div>

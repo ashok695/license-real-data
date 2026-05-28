@@ -15,6 +15,10 @@ window.LICENSE_DATA = (function () {
     "Holland", "Sharma", "Mansour", "Lefevre", "Ivanov", "Achebe", "Nasser", "Conti"
   ];
   const licenses = ["HD Productivity", "HD Professional", "HD Functional", "HD Developer", "HD Platform", "Employee", "NA"];
+  // Actual Assigned License values for users are restricted to the three
+  // High-Discount license tiers. Other entries above are still used for
+  // auth-object license tagging.
+  const userLicenses = ["HD Professional", "HD Functional", "HD Productivity"];
   const fieldStatuses = ["Used", "Unused", "Partial"];
   const statuses = ["Active", "Inactive"];
   const sapUserTypes = ["Dialog", "System", "Communication", "Service", "Reference"];
@@ -75,7 +79,7 @@ window.LICENSE_DATA = (function () {
     const email = hasEmail
       ? `${fn.toLowerCase()}.${ln.toLowerCase().replace(/[^a-z0-9]/g, "")}@${domain}`
       : "NA";
-    const license = pick(licenses, i + Math.floor(r * licenses.length));
+    const license = pick(userLicenses, i + Math.floor(r * userLicenses.length));
     const status = pick(statuses, i + Math.floor(r2 * 4));
     let sapUserType = pick(sapUserTypes, i + Math.floor(r3 * sapUserTypes.length));
     if (/ADAPTER|AGENT/.test(sap)) sapUserType = "System";
@@ -100,7 +104,32 @@ window.LICENSE_DATA = (function () {
       // Direct is reserved for standalone auth obj/field/value rows that
       // are assigned to the user without going through a role.
       const assignmentType = "Indirectly Assigned";
-      roles.push({ name: roleName, type: j % 3 === 0 ? "Composite" : "Single", assignmentType, authObjs });
+      const isComposite = j % 3 === 0;
+
+      // Composite roles bundle 2–3 single child roles. Split this role's
+      // auth objects evenly across child roles so the composite's
+      // aggregated counts continue to add up to its children.
+      let childRoles = null;
+      if (isComposite && authObjs.length >= 2) {
+        const numChildren = 2 + Math.floor(rand(i * 23 + j * 5) * 2); // 2 or 3
+        const usedNames = new Set([roleName]);
+        childRoles = [];
+        let attempt = 0;
+        while (childRoles.length < numChildren && attempt < sampleRoles.length * 3) {
+          const cName = pick(sampleRoles, i + j * 7 + attempt * 11 + 4);
+          if (!usedNames.has(cName)) {
+            usedNames.add(cName);
+            childRoles.push({ name: cName, type: "Single", assignmentType, authObjs: [] });
+          }
+          attempt++;
+        }
+        authObjs.forEach((auth, k2) => {
+          childRoles[k2 % childRoles.length].authObjs.push(auth);
+        });
+        childRoles = childRoles.filter(c => c.authObjs.length > 0);
+      }
+
+      roles.push({ name: roleName, type: isComposite ? "Composite" : "Single", assignmentType, authObjs, childRoles });
     }
 
     // Target License Classification
@@ -368,6 +397,27 @@ window.LICENSE_DATA = (function () {
           authObjs: role.authObjs.slice(),
           _highest: 0
         };
+        // For composite roles, surface their underlying child (single) roles
+        // so the UI can render a roles → auth-objects tree.
+        if (role.type === "Composite" && Array.isArray(role.childRoles) && role.childRoles.length) {
+          agg.childRoles = role.childRoles.map(c => {
+            let cHighest = 0, cTarget = "NA";
+            c.authObjs.forEach(a => {
+              const lv = HIER2[a.license] || 0;
+              if (lv > cHighest) { cHighest = lv; cTarget = a.license; }
+            });
+            const meta = roleDescriptions[c.name] || { desc: "—", module: "—" };
+            return {
+              name: c.name,
+              type: "Single",
+              description: meta.desc,
+              module: meta.module,
+              authObjs: c.authObjs.slice(),
+              authObjsTotal: c.authObjs.length,
+              targetLicense: cTarget
+            };
+          });
+        }
       }
       agg.users++;
       agg.authObjsTotal += role.authObjs.length;
@@ -402,7 +452,7 @@ window.LICENSE_DATA = (function () {
     users,
     rolesAggregated,
     totals: { users: 559, authObjects: 408834, roles: 450 },
-    licenses,
+    licenses: userLicenses,
     statuses,
     sapUserTypes,
     modules: ["FI", "MM", "SD", "HR", "BC", "PM"]
