@@ -805,6 +805,239 @@ function ExportPreviewModal({ onConfirm, onClose, columns, hidden, filters, rowC
   );
 }
 
+// ── License Distribution — drill-down modal ──────────────────────────────────
+function LicenseUserListModal({ tierLabel, mode, users, onClose }) {
+  // mode = "assigned" | "target"
+  const [search, setSearch] = React.useState("");
+
+  React.useEffect(() => {
+    const h = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", h);
+    return () => document.removeEventListener("keydown", h);
+  }, [onClose]);
+
+  function handleBackdrop(e) { if (e.target === e.currentTarget) onClose(); }
+
+  const filtered = search
+    ? users.filter(u =>
+        `${u.firstName} ${u.lastName}`.toLowerCase().includes(search.toLowerCase()) ||
+        u.sapId.toLowerCase().includes(search.toLowerCase())
+      )
+    : users;
+
+  const title = mode === "assigned"
+    ? `Assigned — ${tierLabel}`
+    : `Target — ${tierLabel}`;
+
+  return (
+    <div className="modal-backdrop" onClick={handleBackdrop}>
+      <div className="modal-box" role="dialog" aria-modal="true" aria-labelledby="lm-modal-title" style={{ maxWidth: 580 }}>
+        <div className="modal-header">
+          <div>
+            <h3 className="modal-title" id="lm-modal-title">{title}</h3>
+            <p className="modal-sub">
+              {users.length.toLocaleString()} user{users.length !== 1 ? "s" : ""} ·{" "}
+              {mode === "assigned" ? "currently holding this license" : "recommended for this license"}
+            </p>
+          </div>
+          <button className="modal-close" onClick={onClose} aria-label="Close">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        {/* Search */}
+        <div style={{ padding: "10px 20px 0" }}>
+          <div className="search" style={{ width: "100%" }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search name or SAP ID…"
+              autoFocus
+            />
+          </div>
+        </div>
+
+        <div style={{ maxHeight: 400, overflowY: "auto", padding: "10px 20px 16px" }}>
+          <table className="data-table modal-table" style={{ width: "100%", tableLayout: "fixed", minWidth: "unset" }}>
+            <colgroup>
+              <col style={{ width: "38%" }} />
+              <col style={{ width: "22%" }} />
+              <col style={{ width: "22%" }} />
+              <col style={{ width: "18%" }} />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>SAP ID</th>
+                <th>{mode === "assigned" ? "Assigned License" : "Target License"}</th>
+                <th>Match</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.map(u => {
+                const isMatch = u.license === u.targetLicense;
+                return (
+                  <tr key={u.id}>
+                    <td style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      <span style={{ fontWeight: 600, color: "#0f172a" }}>{u.firstName} {u.lastName}</span>
+                    </td>
+                    <td className="mono muted">{u.sapId}</td>
+                    <td>
+                      <LicensePill license={mode === "assigned" ? u.license : u.targetLicense} />
+                    </td>
+                    <td>
+                      <span className={`pill ${isMatch ? "pill-green" : "pill-red"}`}>
+                        {isMatch ? "Matched" : "Mismatched"}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
+              {filtered.length === 0 && (
+                <tr><td colSpan={4} className="empty-state" style={{ padding: "24px" }}>No users found.</td></tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="modal-footer" style={{ padding: "12px 20px", borderTop: "1px solid var(--border)", display: "flex", justifyContent: "flex-end" }}>
+          <button className="btn-secondary" onClick={onClose}>Close</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── License Distribution Card ─────────────────────────────────────────────────
+function LicenseMatrixCard({ users }) {
+  const tiers = [
+    { key: "HD Professional", label: "Professional", accentCls: "lm-pro" },
+    { key: "HD Functional",   label: "Functional",   accentCls: "lm-func" },
+    { key: "HD Productivity", label: "Productivity", accentCls: "lm-prod" },
+  ];
+
+  const [modal, setModal] = React.useState(null); // { tierKey, tierLabel, mode }
+
+  // Per-tier counts
+  const assigned = {}, target = {};
+  tiers.forEach(t => { assigned[t.key] = 0; target[t.key] = 0; });
+
+  let totalUsers = 0;
+  users.forEach(u => {
+    if (assigned[u.license]     !== undefined) { assigned[u.license]++;     totalUsers++; }
+    if (target[u.targetLicense] !== undefined)   target[u.targetLicense]++;
+  });
+
+  const matchCount    = users.filter(u => tiers.some(t => t.key === u.license) && u.license === u.targetLicense).length;
+  const mismatchCount = users.filter(u => tiers.some(t => t.key === u.license) && tiers.some(t => t.key === u.targetLicense) && u.license !== u.targetLicense).length;
+
+  // Build the user list for the modal
+  const modalUsers = React.useMemo(() => {
+    if (!modal) return [];
+    return modal.mode === "assigned"
+      ? users.filter(u => u.license === modal.tierKey)
+      : users.filter(u => u.targetLicense === modal.tierKey);
+  }, [modal, users]);
+
+  return (
+    <>
+      <div className="lm-card">
+        {/* Header */}
+        <div className="lm-header">
+          <div>
+            <div className="lm-title">License Distribution</div>
+            <div className="lm-sub">Assigned (current) vs. Target (recommended) — click any count to see users</div>
+          </div>
+          <div className="lm-header-badges">
+            <span className="lm-badge lm-badge-green">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              {matchCount.toLocaleString()} Matched
+            </span>
+            <span className="lm-badge lm-badge-red">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              {mismatchCount.toLocaleString()} Mismatched
+            </span>
+          </div>
+        </div>
+
+        {/* Column labels */}
+        <div className="lm-col-labels">
+          <div className="lm-col-label-tier">License Tier</div>
+          <div className="lm-col-label-stat">Assigned</div>
+          <div className="lm-col-label-stat">Target</div>
+          <div className="lm-col-label-bar">Match Rate</div>
+        </div>
+
+        {/* Rows */}
+        <div className="lm-rows">
+          {tiers.map(tier => {
+            const a = assigned[tier.key] || 0;
+            const t = target[tier.key]   || 0;
+            const m = users.filter(u => u.license === tier.key && u.targetLicense === tier.key).length;
+            const matchPct = a > 0 ? Math.round((m / a) * 100) : 0;
+            const diff = t - a;
+
+            return (
+              <div key={tier.key} className={`lm-row ${tier.accentCls}`}>
+                {/* Tier label */}
+                <div className="lm-row-tier">
+                  <span className={`lm-dot ${tier.accentCls}`} />
+                  <span className="lm-row-label">{tier.label}</span>
+                </div>
+
+                {/* Assigned count — clickable */}
+                <div className="lm-row-stat">
+                  <button
+                    className="lm-stat-btn"
+                    onClick={() => setModal({ tierKey: tier.key, tierLabel: tier.label, mode: "assigned" })}
+                    title={`View ${a} users assigned ${tier.label}`}
+                  >
+                    <span className="lm-stat-value">{a.toLocaleString()}</span>
+                    <span className="lm-stat-sub">users</span>
+                  </button>
+                </div>
+
+                {/* Target count — clickable */}
+                <div className="lm-row-stat">
+                  <button
+                    className="lm-stat-btn"
+                    onClick={() => setModal({ tierKey: tier.key, tierLabel: tier.label, mode: "target" })}
+                    title={`View ${t} users targeted for ${tier.label}`}
+                  >
+                    <span className="lm-stat-value">{t.toLocaleString()}</span>
+                    {diff !== 0
+                      ? <span className={`lm-delta ${diff > 0 ? "lm-delta-up" : "lm-delta-down"}`}>{diff > 0 ? `+${diff}` : diff}</span>
+                      : <span className="lm-stat-sub">on target</span>
+                    }
+                  </button>
+                </div>
+
+                {/* Match rate bar */}
+                <div className="lm-row-bar">
+                  <div className="lm-bar-track">
+                    <div className={`lm-bar-fill ${tier.accentCls}`} style={{ width: `${matchPct}%` }} />
+                  </div>
+                  <span className="lm-bar-pct">{matchPct}%</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {modal && (
+        <LicenseUserListModal
+          tierLabel={modal.tierLabel}
+          mode={modal.mode}
+          users={modalUsers}
+          onClose={() => setModal(null)}
+        />
+      )}
+    </>
+  );
+}
+
 function LicenseOptimizationPage() {
   const data = window.LICENSE_DATA;
   const [query, setQuery] = React.useState("");
@@ -1114,7 +1347,7 @@ function LicenseOptimizationPage() {
                     {system}
                   </div>
                 )}
-                <div className="live-indicator"><span className="live-dot" /> Live</div>
+                {/* <div className="live-indicator"><span className="live-dot" /> Live</div> */}
               </>
             );
           })()}
@@ -1150,8 +1383,15 @@ function LicenseOptimizationPage() {
           tone="amber"
           label="Total Roles Created"
           value={topKpis.rolesCreated}
-          sub={`${topKpis.assignedRoles.toLocaleString()} assigned roles`}
+          sub={`${topKpis.rolesCreated.toLocaleString()} assigned roles`}
           icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 14l9 5 9-5"/><path d="M3 11l9 5 9-5"/></svg>}
+        />
+        <TopKpiCard
+          tone="amber"
+          label="Total Auth Objects Created"
+          value={topKpis.totalAuthObjects}
+          sub={`${topKpis.totalAuthObjects.toLocaleString()} assigned auth Objects`}
+          icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M9 4v16"/></svg>}
         />
         <TopKpiCard
           tone="green"
@@ -1183,19 +1423,10 @@ function LicenseOptimizationPage() {
           ]}
           icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 14l9 5 9-5"/><path d="M3 11l9 5 9-5"/></svg>}
         />
-        <TopKpiCard
-          tone="cyan"
-          label="Total Auth Objects"
-          
-          sub="Across all assignment sources"
-          layout="chart"
-          breakdown={[
-            { label: "Direct", value: topKpis.directAuthObjects, tone: "green" },
-            { label: "Indirect", value: topKpis.indirectAuthObjects, tone: "amber" }
-          ]}
-          icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M9 4v16"/></svg>}
-        />
+       
       </div>
+
+      <LicenseMatrixCard users={data.users} />
 
       <div className="section-divider"><span>USER LICENSE DETAILS</span></div>
 
@@ -1421,7 +1652,7 @@ function LicenseOptimizationPage() {
                   </th>
                 )}
                 {/* {show("rec")    && <th>Recommendation</th>} */}
-                {show("objectCleansing") && (
+                {/* {show("objectCleansing") && (
                   <th>
                     <span className="th-with-info">
                       Object-Level Cleansing
@@ -1455,7 +1686,7 @@ function LicenseOptimizationPage() {
                       </span>
                     </span>
                   </th>
-                )}
+                )} */}
                 {show("roleCleansing") && (
                   <th>
                     <span className="th-with-info">
@@ -1547,10 +1778,7 @@ function LicenseOptimizationPage() {
                     {show("lastUsed") && <td></td>}
                     {show("lic")    && <td></td>}
                     {show("target") && <td><LicensePill license={u.targetLicense} /></td>}
-                    {show("objectCleansing") && <td onClick={e => e.stopPropagation()}>{(() => {
-                      const summary = getObjectCleansingSummary(u);
-                      return <ObjectCleansingPill summary={summary} onClick={() => setObjectCleansingModal({ user: u, summary })} />;
-                    })()}</td>}
+                    
                     {show("roleCleansing") && <td onClick={e => e.stopPropagation()}>{(() => {
                       const summary = getRoleCleansingSummary(u);
                       return <RoleCleansingPill summary={summary} onClick={() => setRoleCleansingModal({ user: u, summary })} />;
