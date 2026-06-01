@@ -448,6 +448,14 @@ window.LICENSE_DATA = (function () {
 
   const rolesAggregated = Object.values(roleAgg).sort((a, b) => b.users - a.users);
 
+  // Compute Role Utilization % — share of auth objects that are Used or Partial
+  rolesAggregated.forEach(r => {
+    const objs = r.authObjs || [];
+    if (objs.length === 0) { r.utilization = 0; return; }
+    const usedCount = objs.filter(a => a.fieldStatus === "Used" || a.fieldStatus === "Partial").length;
+    r.utilization = Math.round((usedCount / objs.length) * 100);
+  });
+
   return {
     users,
     rolesAggregated,

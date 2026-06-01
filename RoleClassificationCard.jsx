@@ -91,16 +91,18 @@
     return <span className={`pill ${map[license] || "pill-blue"}`}>{license}</span>;
   }
 
-  function UsersModal({ role, onClose }) {
+  function UsersModal({ role, onClose, statusFilter }) {
     const [search, setSearch] = React.useState("");
-    const users = role.userList || [];
+    const baseUsers = statusFilter
+      ? (role.userList || []).filter(u => u.status === statusFilter)
+      : (role.userList || []);
     const filtered = search
-      ? users.filter(u =>
+      ? baseUsers.filter(u =>
           u.sapId.toLowerCase().includes(search.toLowerCase()) ||
           `${u.firstName} ${u.lastName}`.toLowerCase().includes(search.toLowerCase()) ||
           u.email.toLowerCase().includes(search.toLowerCase())
         )
-      : users;
+      : baseUsers;
 
     // Close on backdrop click
     function handleBackdrop(e) {
@@ -137,8 +139,11 @@
                   </svg>
                 </span>
                 Users assigned to <span className="mono" style={{ color: "var(--primary-600)" }}>{role.name}</span>
+                {statusFilter && (
+                  <span className={`pill ${statusFilter === "Active" ? "pill-green" : "pill-gray"}`} style={{ marginLeft: 8, fontSize: 11 }}>{statusFilter}</span>
+                )}
               </h3>
-              <p className="modal-sub">{filtered.length} of {users.length} user{users.length !== 1 ? "s" : ""} shown</p>
+              <p className="modal-sub">{filtered.length} of {baseUsers.length} user{baseUsers.length !== 1 ? "s" : ""} shown</p>
             </div>
             <button className="modal-close" onClick={onClose} aria-label="Close">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -198,6 +203,20 @@
     );
   }
 
+  function UtilizationBar({ value }) {
+    const pct = value ?? 0;
+    const color = pct >= 70 ? "var(--success)" : pct >= 40 ? "var(--warn)" : "var(--danger)";
+    const bgColor = pct >= 70 ? "var(--success-soft)" : pct >= 40 ? "var(--warn-soft)" : "var(--danger-soft)";
+    return (
+      <div className="util-bar-wrap">
+        <div className="util-bar-track">
+          <div className="util-bar-fill" style={{ width: `${pct}%`, background: color }} />
+        </div>
+        <span className="util-bar-label" style={{ color }}>{pct}%</span>
+      </div>
+    );
+  }
+
   function RoleClassificationCard() {
     const data = window.LICENSE_DATA;
 
@@ -212,7 +231,7 @@
     const [chooserOpen, setChooserOpen] = React.useState(false);
     const [expanded, setExpanded] = React.useState(new Set());
     const [expandedChild, setExpandedChild] = React.useState(new Set());
-    const [usersModal, setUsersModal] = React.useState(null); // role object or null
+    const [usersModal, setUsersModal] = React.useState(null); // { role, statusFilter } or null
 
     function toggleRole(name) {
       setExpanded(s => { const n = new Set(s); n.has(name) ? n.delete(name) : n.add(name); return n; });
@@ -222,12 +241,15 @@
     }
 
     const columns = [
-      { key: "name",   label: "Role Name",                   required: true },
-      { key: "target", label: "Consumed High Privileged License",  required: true },
-      { key: "desc",   label: "Role Description" },
-      { key: "type",   label: "Role Type" },
-      { key: "users",  label: "Users" },
-      { key: "auth",   label: "Auth Objects" },
+      { key: "name",            label: "Role Name",                        required: true },
+      { key: "target",          label: "Consumed High Privileged License",   required: true },
+      { key: "desc",            label: "Role Description" },
+      { key: "type",            label: "Role Type" },
+      { key: "users",           label: "Users" },
+      { key: "activeUsers",     label: "Active Users" },
+      { key: "inactiveUsers",   label: "Inactive Users" },
+      { key: "utilization",     label: "Role Utilization" },
+      { key: "auth",            label: "Auth Objects" },
     ];
 
     const filtered = React.useMemo(() => {
@@ -250,6 +272,15 @@
         if (sort.key === "auth") { av = a.authObjsTotal; bv = b.authObjsTotal; }
         else if (sort.key === "target") { av = HIER[a.targetLicense] || 0; bv = HIER[b.targetLicense] || 0; }
         else if (sort.key === "desc") { av = a.description; bv = b.description; }
+        else if (sort.key === "activeUsers") {
+          av = (a.userList || []).filter(u => u.status === "Active").length;
+          bv = (b.userList || []).filter(u => u.status === "Active").length;
+        }
+        else if (sort.key === "inactiveUsers") {
+          av = (a.userList || []).filter(u => u.status === "Inactive").length;
+          bv = (b.userList || []).filter(u => u.status === "Inactive").length;
+        }
+        else if (sort.key === "utilization") { av = a.utilization; bv = b.utilization; }
         else { av = a[sort.key]; bv = b[sort.key]; }
         if (av < bv) return sort.dir === "asc" ? -1 : 1;
         if (av > bv) return sort.dir === "asc" ? 1 : -1;
@@ -275,6 +306,9 @@
           else if (c.key === "desc") row.push(r.description);
           else if (c.key === "type") row.push(r.type);
           else if (c.key === "users") row.push(r.users);
+          else if (c.key === "activeUsers") row.push((r.userList || []).filter(u => u.status === "Active").length);
+          else if (c.key === "inactiveUsers") row.push((r.userList || []).filter(u => u.status === "Inactive").length);
+          else if (c.key === "utilization") row.push(`${r.utilization}%`);
           else if (c.key === "auth") row.push(r.authObjsTotal);
           else if (c.key === "target") row.push(r.targetLicense);
         });
@@ -283,8 +317,13 @@
       const csv = rows.map(rr => rr.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
       const url = URL.createObjectURL(blob);
-      const stamp = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-      const a = document.createElement("a"); a.href = url; a.download = `Role_License_Classification_Report_${stamp}.csv`; a.click();
+      const now = new Date();
+      const day = now.getDate();
+      const suffix = day % 10 === 1 && day !== 11 ? "st" : day % 10 === 2 && day !== 12 ? "nd" : day % 10 === 3 && day !== 13 ? "rd" : "th";
+      const month = now.toLocaleString("en-GB", { month: "long" });
+      const year = now.getFullYear();
+      const stamp = `${day}${suffix} ${month} ${year}`;
+      const a = document.createElement("a"); a.href = url; a.download = `Role Optimization Report - ${stamp}.csv`; a.click();
       URL.revokeObjectURL(url);
     }
 
@@ -392,6 +431,9 @@
                 {show("desc") && <th onClick={() => toggleSort("desc")} className="sortable" style={{ minWidth: 320 }}>Role Description <SortIcon active={sort.key === "desc"} dir={sort.dir} /></th>}
                 {show("type") && <th style={{ width: 110 }}>Type</th>}
                 {show("users") && <th onClick={() => toggleSort("users")} className="sortable num" style={{ width: 90 }}>Users <SortIcon active={sort.key === "users"} dir={sort.dir} /></th>}
+                {show("activeUsers") && <th onClick={() => toggleSort("activeUsers")} className="sortable num" style={{ width: 110 }}>Active Users <SortIcon active={sort.key === "activeUsers"} dir={sort.dir} /></th>}
+                {show("inactiveUsers") && <th onClick={() => toggleSort("inactiveUsers")} className="sortable num" style={{ width: 120 }}>Inactive Users <SortIcon active={sort.key === "inactiveUsers"} dir={sort.dir} /></th>}
+                {show("utilization") && <th onClick={() => toggleSort("utilization")} className="sortable num" style={{ width: 140 }}>Role Utilization <SortIcon active={sort.key === "utilization"} dir={sort.dir} /></th>}
                 {show("auth") && <th onClick={() => toggleSort("auth")} className="sortable num" style={{ width: 120 }}>Auth Objects <SortIcon active={sort.key === "auth"} dir={sort.dir} /></th>}
               </tr>
             </thead>
@@ -417,7 +459,26 @@
                     {show("target") && <td><TargetBadge license={r.targetLicense} /></td>}
                     {show("desc") && <td className="role-desc-cell">{highlight(r.description, query)}</td>}
                     {show("type") && <td><span className={`type-pill ${r.type === "Composite" ? "type-comp" : "type-single"}`}>{r.type}</span></td>}
-                    {show("users") && <td className="num"><span className="users-count users-count-btn" onClick={e => { e.stopPropagation(); setUsersModal(r); }}>{r.users}</span></td>}
+                    {show("users") && <td className="num"><span className="users-count users-count-btn" onClick={e => { e.stopPropagation(); setUsersModal({ role: r, statusFilter: null }); }}>{r.users}</span></td>}
+                    {show("activeUsers") && (
+                      <td className="num" onClick={e => e.stopPropagation()}>
+                        <span className="users-count users-count-btn pill pill-green" onClick={e => { e.stopPropagation(); setUsersModal({ role: r, statusFilter: "Active" }); }}>
+                          {(r.userList || []).filter(u => u.status === "Active").length}
+                        </span>
+                      </td>
+                    )}
+                    {show("inactiveUsers") && (
+                      <td className="num" onClick={e => e.stopPropagation()}>
+                        <span className="users-count users-count-btn pill pill-gray" onClick={e => { e.stopPropagation(); setUsersModal({ role: r, statusFilter: "Inactive" }); }}>
+                          {(r.userList || []).filter(u => u.status === "Inactive").length}
+                        </span>
+                      </td>
+                    )}
+                    {show("utilization") && (
+                      <td className="num" onClick={e => e.stopPropagation()}>
+                        <UtilizationBar value={r.utilization} />
+                      </td>
+                    )}
                     {show("auth") && <td className="num">{r.authObjsTotal.toLocaleString()}</td>}
                   </tr>
                 );
@@ -560,7 +621,7 @@
           </div>
         </div>
 
-        {usersModal && <UsersModal role={usersModal} onClose={() => setUsersModal(null)} />}
+        {usersModal && <UsersModal role={usersModal.role} statusFilter={usersModal.statusFilter} onClose={() => setUsersModal(null)} />}
       </div>
     );
   }

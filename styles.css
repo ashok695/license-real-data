@@ -1434,9 +1434,9 @@ mark { background: #fff3a3; color: inherit; padding: 0 1px; border-radius: 2px; 
 }
 
 /* Card 2 — Role classification specific */
-.classification-table { min-width: 0; }
+.classification-table { min-width: 1100px; }
 .classification-table .row-class td { padding: 14px 12px; }
-.card:has(.classification-table) .table-wrap { overflow-x: visible; }
+.card:has(.classification-table) .table-wrap { overflow-x: auto; }
 .role-cell-strong {
   display: inline-flex;
   align-items: center;
@@ -1753,6 +1753,7 @@ mark { background: #fff3a3; color: inherit; padding: 0 1px; border-radius: 2px; 
   gap: 6px;
 }
 .th-num { text-align: right; }
+.data-table thead th.th-num { text-align: right; }
 .lic-dot {
   width: 7px;
   height: 7px;
@@ -4571,4 +4572,34 @@ mark { background: #fff3a3; color: inherit; padding: 0 1px; border-radius: 2px; 
 }
 .rp-completion-footer {
   justify-content: flex-end;
+}
+
+
+/* ── Role Utilization bar ── */
+.util-bar-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 100px;
+}
+.util-bar-track {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: #eef2f7;
+  overflow: hidden;
+  min-width: 60px;
+}
+.util-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width .3s ease;
+}
+.util-bar-label {
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  min-width: 32px;
+  text-align: right;
 }
