@@ -1580,9 +1580,9 @@ function LicenseOptimizationPage() {
           sub="By Recommended Target License"
           layout="chart"
           breakdown={[
-            { label: "Professional", shortLabel: "PROF", value: topKpis.professional, tone: "violet" },
-            { label: "Functional", shortLabel: "FUNC", value: topKpis.functional, tone: "cyan" },
-            { label: "Productivity", shortLabel: "PROD", value: topKpis.productivity, tone: "blue" }
+            { label: "Professional", shortLabel: "PROF", value: licenseCounts.target["HD Professional"] || 0, tone: "violet" },
+            { label: "Functional", shortLabel: "FUNC", value: licenseCounts.target["HD Functional"] || 0, tone: "cyan" },
+            { label: "Productivity", shortLabel: "PROD", value: licenseCounts.target["HD Productivity"] || 0, tone: "blue" }
           ]}
           icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 14l9 5 9-5"/><path d="M3 11l9 5 9-5"/></svg>}
         />
