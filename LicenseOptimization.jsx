@@ -829,6 +829,10 @@ function LicenseUserListModal({ tierLabel, mode, users, onClose }) {
     ? `Assigned — ${tierLabel}`
     : `Target — ${tierLabel}`;
 
+  const subLabel = mode === "assigned"
+    ? "currently holding this license"
+    : "recommended for this license";
+
   return (
     <div className="modal-backdrop" onClick={handleBackdrop}>
       <div className="modal-box" role="dialog" aria-modal="true" aria-labelledby="lm-modal-title" style={{ maxWidth: 580 }}>
@@ -837,7 +841,7 @@ function LicenseUserListModal({ tierLabel, mode, users, onClose }) {
             <h3 className="modal-title" id="lm-modal-title">{title}</h3>
             <p className="modal-sub">
               {users.length.toLocaleString()} user{users.length !== 1 ? "s" : ""} ·{" "}
-              {mode === "assigned" ? "currently holding this license" : "recommended for this license"}
+              {subLabel}
             </p>
           </div>
           <button className="modal-close" onClick={onClose} aria-label="Close">
@@ -861,41 +865,29 @@ function LicenseUserListModal({ tierLabel, mode, users, onClose }) {
         <div style={{ maxHeight: 400, overflowY: "auto", padding: "10px 20px 16px" }}>
           <table className="data-table modal-table" style={{ width: "100%", tableLayout: "fixed", minWidth: "unset" }}>
             <colgroup>
-              <col style={{ width: "38%" }} />
-              <col style={{ width: "22%" }} />
-              <col style={{ width: "22%" }} />
-              <col style={{ width: "18%" }} />
+              <col style={{ width: "35%" }} />
+              <col style={{ width: "25%" }} />
+              <col style={{ width: "40%" }} />
             </colgroup>
             <thead>
               <tr>
                 <th>Name</th>
                 <th>SAP ID</th>
-                <th>{mode === "assigned" ? "Assigned License" : "Target License"}</th>
-                <th>Match</th>
+                <th>Email</th>
               </tr>
             </thead>
             <tbody>
-              {filtered.map(u => {
-                const isMatch = u.license === u.targetLicense;
-                return (
-                  <tr key={u.id}>
-                    <td style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                      <span style={{ fontWeight: 600, color: "#0f172a" }}>{u.firstName} {u.lastName}</span>
-                    </td>
-                    <td className="mono muted">{u.sapId}</td>
-                    <td>
-                      <LicensePill license={mode === "assigned" ? u.license : u.targetLicense} />
-                    </td>
-                    <td>
-                      <span className={`pill ${isMatch ? "pill-green" : "pill-red"}`}>
-                        {isMatch ? "Matched" : "Mismatched"}
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })}
+              {filtered.map(u => (
+                <tr key={u.id}>
+                  <td style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    <span style={{ fontWeight: 600, color: "#0f172a" }}>{u.firstName} {u.lastName}</span>
+                  </td>
+                  <td className="mono muted">{u.sapId}</td>
+                  <td className={u.email === "NA" ? "muted" : "link"} style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{u.email}</td>
+                </tr>
+              ))}
               {filtered.length === 0 && (
-                <tr><td colSpan={4} className="empty-state" style={{ padding: "24px" }}>No users found.</td></tr>
+                <tr><td colSpan={3} className="empty-state" style={{ padding: "24px" }}>No users found.</td></tr>
               )}
             </tbody>
           </table>
@@ -909,8 +901,147 @@ function LicenseUserListModal({ tierLabel, mode, users, onClose }) {
   );
 }
 
-// ── License Distribution Card ─────────────────────────────────────────────────
-function LicenseMatrixCard({ users }) {
+// ── Shared helper: compute clamped assigned + target counts for the three HD tiers ──
+// Target is clamped so upgrades are not counted (optimization only moves downward).
+// Both assigned and target sum to the same total (all HD-licensed users).
+const HD_TIERS = ["HD Professional", "HD Functional", "HD Productivity"];
+const HD_TIER_RANK = { "HD Professional": 3, "HD Functional": 2, "HD Productivity": 1 };
+
+function computeLicenseCounts(users) {
+  const assigned = { "HD Professional": 0, "HD Functional": 0, "HD Productivity": 0 };
+  const target   = { "HD Professional": 0, "HD Functional": 0, "HD Productivity": 0 };
+  users.forEach(u => {
+    if (assigned[u.license] === undefined) return;
+    assigned[u.license]++;
+    // Clamp: only allow same-tier or downward moves
+    const tgt = (
+      target[u.targetLicense] !== undefined &&
+      (HD_TIER_RANK[u.targetLicense] || 0) <= (HD_TIER_RANK[u.license] || 0)
+    ) ? u.targetLicense : u.license;
+    target[tgt]++;
+  });
+  return { assigned, target };
+}
+
+// ── FUE Calculator Card ───────────────────────────────────────────────────────
+// FUE (Full Use Equivalent) ratios:
+//   HD Professional  → 1 FUE  per user  (1:1)
+//   HD Functional    → 0.2 FUE per user (1:5)
+//   HD Productivity  → 0.033 FUE per user (1:30)
+const FUE_RATES = {
+  "HD Professional": { ratio: "1:1",  multiplier: 1,          label: "Professional", cls: "fue-pro"  },
+  "HD Functional":   { ratio: "1:5",  multiplier: 1 / 5,      label: "Functional",   cls: "fue-func" },
+  "HD Productivity": { ratio: "1:30", multiplier: 1 / 30,     label: "Productivity", cls: "fue-prod" },
+};
+const FUE_BUFFER_LOW  = 0.05; // 5%
+const FUE_BUFFER_HIGH = 0.10; // 10%
+
+function FueCalculatorCard({ targetCounts }) {
+  const tiers = HD_TIERS;
+
+  // Per-tier FUE using the clamped target counts from LicenseMatrixCard
+  const tierFue = tiers.map(tier => ({
+    tier,
+    ...FUE_RATES[tier],
+    userCount: targetCounts[tier] || 0,
+    fue: (targetCounts[tier] || 0) * FUE_RATES[tier].multiplier
+  }));
+
+  const totalFue     = tierFue.reduce((s, t) => s + t.fue, 0);
+  const bufferLow    = totalFue * FUE_BUFFER_LOW;
+  const bufferHigh   = totalFue * FUE_BUFFER_HIGH;
+  const withBufLow   = totalFue + bufferLow;
+  const withBufHigh  = totalFue + bufferHigh;
+
+  // Bar widths relative to the highest per-tier FUE
+  const maxFue = Math.max(...tierFue.map(t => t.fue), 1);
+
+  function fmt(n) { return n % 1 === 0 ? n.toLocaleString() : n.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }
+
+  return (
+    <div className="fue-card">
+      <div className="fue-header">
+        <div>
+          <div className="fue-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: "middle", marginRight: 7 }}>
+              <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+            </svg>
+            FUE Consumption Estimate
+          </div>
+          <div className="fue-sub">Full Use Equivalent based on recommended target licenses</div>
+        </div>
+        <div className="fue-ratios">
+          {tierFue.map(t => (
+            <span key={t.tier} className={`fue-ratio-badge ${t.cls}`}>
+              {t.label} <span className="fue-ratio-val">{t.ratio}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Per-tier breakdown */}
+      <div className="fue-tiers">
+        {tierFue.map(t => (
+          <div key={t.tier} className={`fue-tier-row ${t.cls}`}>
+            <div className="fue-tier-label">
+              <span className={`fue-dot ${t.cls}`} />
+              {t.label}
+            </div>
+            <div className="fue-tier-users">{t.userCount.toLocaleString()} users</div>
+            <div className="fue-tier-bar-wrap">
+              <div className="fue-bar-track">
+                <div
+                  className={`fue-bar-fill ${t.cls}`}
+                  style={{ width: `${maxFue > 0 ? Math.max(2, (t.fue / maxFue) * 100) : 0}%` }}
+                />
+              </div>
+            </div>
+            <div className="fue-tier-fue">
+              <span className="fue-tier-val">{fmt(t.fue)}</span>
+              <span className="fue-tier-unit">FUE</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Totals + buffer */}
+      <div className="fue-totals">
+        <div className="fue-total-row fue-total-base">
+          <span className="fue-total-label">Total FUE Required</span>
+          <span className="fue-total-val">{fmt(totalFue)}</span>
+        </div>
+        <div className="fue-divider" />
+        <div className="fue-buffer-row">
+          <div className="fue-buffer-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            Recommended Buffer (5–10%)
+          </div>
+          <div className="fue-buffer-range">
+            <span className="fue-buffer-low">{fmt(bufferLow)}</span>
+            <span className="fue-buffer-sep">–</span>
+            <span className="fue-buffer-high">{fmt(bufferHigh)}</span>
+            <span className="fue-tier-unit">FUE</span>
+          </div>
+        </div>
+        <div className="fue-total-row fue-total-final">
+          <span className="fue-total-label">
+            FUE with Buffer
+            <span className="fue-total-label-note">inc. 5–10% buffer</span>
+          </span>
+          <div className="fue-final-range">
+            <span>{fmt(withBufLow)}</span>
+            <span className="fue-buffer-sep">–</span>
+            <span>{fmt(withBufHigh)}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LicenseMatrixCard({ users, counts }) {
   const tiers = [
     { key: "HD Professional", label: "Professional", accentCls: "lm-pro" },
     { key: "HD Functional",   label: "Functional",   accentCls: "lm-func" },
@@ -919,15 +1050,9 @@ function LicenseMatrixCard({ users }) {
 
   const [modal, setModal] = React.useState(null); // { tierKey, tierLabel, mode }
 
-  // Per-tier counts
-  const assigned = {}, target = {};
-  tiers.forEach(t => { assigned[t.key] = 0; target[t.key] = 0; });
-
-  let totalUsers = 0;
-  users.forEach(u => {
-    if (assigned[u.license]     !== undefined) { assigned[u.license]++;     totalUsers++; }
-    if (target[u.targetLicense] !== undefined)   target[u.targetLicense]++;
-  });
+  // Use pre-computed clamped counts passed from parent
+  const assigned = counts.assigned;
+  const target   = counts.target;
 
   const matchCount    = users.filter(u => tiers.some(t => t.key === u.license) && u.license === u.targetLicense).length;
   const mismatchCount = users.filter(u => tiers.some(t => t.key === u.license) && tiers.some(t => t.key === u.targetLicense) && u.license !== u.targetLicense).length;
@@ -935,10 +1060,51 @@ function LicenseMatrixCard({ users }) {
   // Build the user list for the modal
   const modalUsers = React.useMemo(() => {
     if (!modal) return [];
-    return modal.mode === "assigned"
-      ? users.filter(u => u.license === modal.tierKey)
-      : users.filter(u => u.targetLicense === modal.tierKey);
+    if (modal.mode === "assigned") {
+      return users.filter(u => u.license === modal.tierKey);
+    }
+    // Target: apply same clamping — upward moves stay at assigned tier
+    return users.filter(u => {
+      if (assigned[u.license] === undefined) return false;
+      let tgt = u.license;
+      if (
+        target[u.targetLicense] !== undefined &&
+        (TIER_RANK[u.targetLicense] || 0) <= (TIER_RANK[u.license] || 0)
+      ) {
+        tgt = u.targetLicense;
+      }
+      return tgt === modal.tierKey;
+    });
   }, [modal, users]);
+
+  function exportLicenseDistributionCsv() {
+    const head = ["Name", "SAP ID", "Email", "Assigned License", "Target License", "Match"];
+    const rows = [head];
+    users
+      .filter(u => tiers.some(t => t.key === u.license) || tiers.some(t => t.key === u.targetLicense))
+      .forEach(u => {
+        rows.push([
+          `${u.firstName} ${u.lastName}`,
+          u.sapId,
+          u.email,
+          u.license || "NA",
+          u.targetLicense || "NA",
+          u.license === u.targetLicense ? "Matched" : "Mismatched"
+        ]);
+      });
+    const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const now = new Date();
+    const day = now.getDate();
+    const suffix = day % 10 === 1 && day !== 11 ? "st" : day % 10 === 2 && day !== 12 ? "nd" : day % 10 === 3 && day !== 13 ? "rd" : "th";
+    const month = now.toLocaleString("en-GB", { month: "long" });
+    a.href = url;
+    a.download = `License Distribution - ${day}${suffix} ${month} ${now.getFullYear()}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
   return (
     <>
@@ -958,6 +1124,10 @@ function LicenseMatrixCard({ users }) {
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               {mismatchCount.toLocaleString()} Mismatched
             </span>
+            <button className="btn-ghost" onClick={exportLicenseDistributionCsv} title="Download License Distribution as CSV">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export Excel
+            </button>
           </div>
         </div>
 
@@ -966,7 +1136,6 @@ function LicenseMatrixCard({ users }) {
           <div className="lm-col-label-tier">License Tier</div>
           <div className="lm-col-label-stat">Assigned</div>
           <div className="lm-col-label-stat">Target</div>
-          <div className="lm-col-label-bar">Match Rate</div>
         </div>
 
         {/* Rows */}
@@ -974,8 +1143,6 @@ function LicenseMatrixCard({ users }) {
           {tiers.map(tier => {
             const a = assigned[tier.key] || 0;
             const t = target[tier.key]   || 0;
-            const m = users.filter(u => u.license === tier.key && u.targetLicense === tier.key).length;
-            const matchPct = a > 0 ? Math.round((m / a) * 100) : 0;
             const diff = t - a;
 
             return (
@@ -1003,23 +1170,18 @@ function LicenseMatrixCard({ users }) {
                   <button
                     className="lm-stat-btn"
                     onClick={() => setModal({ tierKey: tier.key, tierLabel: tier.label, mode: "target" })}
-                    title={`View ${t} users targeted for ${tier.label}`}
+                    title={`${t} users recommended for ${tier.label}`}
                   >
                     <span className="lm-stat-value">{t.toLocaleString()}</span>
                     {diff !== 0
-                      ? <span className={`lm-delta ${diff > 0 ? "lm-delta-up" : "lm-delta-down"}`}>{diff > 0 ? `+${diff}` : diff}</span>
-                      : <span className="lm-stat-sub">on target</span>
+                      ? <span className={`lm-delta ${diff > 0 ? "lm-delta-up" : "lm-delta-optimize"}`}>
+                          {diff > 0 ? `+${diff}` : `${diff}`}
+                        </span>
+                      : <span className="lm-stat-sub">no change</span>
                     }
                   </button>
                 </div>
 
-                {/* Match rate bar */}
-                <div className="lm-row-bar">
-                  <div className="lm-bar-track">
-                    <div className={`lm-bar-fill ${tier.accentCls}`} style={{ width: `${matchPct}%` }} />
-                  </div>
-                  <span className="lm-bar-pct">{matchPct}%</span>
-                </div>
               </div>
             );
           })}
@@ -1089,8 +1251,9 @@ function LicenseOptimizationPage() {
     setHidden(s => { const n = new Set(s); n.has(k) ? n.delete(k) : n.add(k); return n; });
   }
 
-  const topKpis = React.useMemo(() => {
-    const totals = {
+  const licenseCounts = React.useMemo(() => computeLicenseCounts(data.users), [data.users]);
+
+  const topKpis = React.useMemo(() => {    const totals = {
       users: data.users.length,
       activeUsers: 0,
       inactiveUsers: 0,
@@ -1426,7 +1589,10 @@ function LicenseOptimizationPage() {
        
       </div>
 
-      <LicenseMatrixCard users={data.users} />
+      <div className="lm-fue-grid">
+        <LicenseMatrixCard users={data.users} counts={licenseCounts} />
+        <FueCalculatorCard targetCounts={licenseCounts.target} />
+      </div>
 
       <div className="section-divider"><span>USER LICENSE DETAILS</span></div>
 

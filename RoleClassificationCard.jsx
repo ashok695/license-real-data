@@ -91,6 +91,111 @@
     return <span className={`pill ${map[license] || "pill-blue"}`}>{license}</span>;
   }
 
+  function AuthUsersModal({ authObj, kind, onClose }) {
+    // kind: "assigned" | "used" | "unused"
+    const [search, setSearch] = React.useState("");
+    const baseUsers = kind === "used"
+      ? (authObj.usedUserList || [])
+      : kind === "unused"
+        ? (authObj.unusedUserList || [])
+        : (authObj.assignedUserList || []);
+    const filtered = search
+      ? baseUsers.filter(u =>
+          u.sapId.toLowerCase().includes(search.toLowerCase()) ||
+          `${u.firstName} ${u.lastName}`.toLowerCase().includes(search.toLowerCase()) ||
+          u.email.toLowerCase().includes(search.toLowerCase())
+        )
+      : baseUsers;
+
+    function handleBackdrop(e) { if (e.target === e.currentTarget) onClose(); }
+    React.useEffect(() => {
+      const h = (e) => { if (e.key === "Escape") onClose(); };
+      document.addEventListener("keydown", h);
+      return () => document.removeEventListener("keydown", h);
+    }, [onClose]);
+
+    const licenseColors = {
+      "HD Productivity": "pill-blue", "HD Professional": "pill-violet",
+      "HD Functional": "pill-cyan", "HD Developer": "pill-amber",
+      "HD Platform": "pill-rose", "Employee": "pill-slate", "NA": "pill-gray"
+    };
+    const title = kind === "used" ? "Used By" : kind === "unused" ? "Unused By" : "Assigned To";
+    const pillClass = kind === "used" ? "pill-green" : kind === "unused" ? "pill-red" : "pill-blue";
+
+    return (
+      <div className="modal-backdrop" onClick={handleBackdrop}>
+        <div className="modal-box" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+          <div className="modal-header">
+            <div>
+              <h3 className="modal-title" id="auth-modal-title">
+                <span className="role-icon" style={{ marginRight: 8 }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </span>
+                {title}{" "}
+                <span className="mono" style={{ color: "var(--primary-600)" }}>{authObj.name}</span>
+                <span className="mono muted" style={{ fontSize: 12, marginLeft: 6 }}>/ {authObj.field}</span>
+              </h3>
+              <p className="modal-sub">{filtered.length} of {baseUsers.length} user{baseUsers.length !== 1 ? "s" : ""} shown</p>
+            </div>
+            <button className="modal-close" onClick={onClose} aria-label="Close">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          <div className="modal-search-wrap">
+            <div className="search" style={{ width: "100%" }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="Search by name, SAP ID or email…"
+                autoFocus
+              />
+            </div>
+          </div>
+          <div className="modal-table-wrap">
+            <table className="data-table modal-table">
+              <thead>
+                <tr>
+                  <th style={{ minWidth: 120 }}>SAP ID</th>
+                  <th style={{ minWidth: 160 }}>Name</th>
+                  <th style={{ minWidth: 200 }}>Email</th>
+                  <th style={{ width: 140 }}>License</th>
+                  <th style={{ width: 90 }}>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.length === 0 && (
+                  <tr><td colSpan={5} className="empty-state">No users match your search.</td></tr>
+                )}
+                {filtered.map((u, i) => (
+                  <tr key={i} className="row-user">
+                    <td className="mono link">{u.sapId}</td>
+                    <td>
+                      <div className="user-cell">
+                        <span className="avatar" style={{ background: "var(--primary-soft)", color: "var(--primary-600)", fontSize: 10 }}>
+                          {u.firstName[0]}{u.lastName[0]}
+                        </span>
+                        {u.firstName} {u.lastName}
+                      </div>
+                    </td>
+                    <td className="muted">{u.email}</td>
+                    <td><span className={`pill ${licenseColors[u.license] || "pill-gray"}`}>{u.license}</span></td>
+                    <td>
+                      <span className={`pill ${u.status === "Active" ? "pill-green" : "pill-gray"}`}>{u.status}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   function UsersModal({ role, onClose, statusFilter }) {
     const [search, setSearch] = React.useState("");
     const baseUsers = statusFilter
@@ -224,6 +329,8 @@
     const [target, setTarget] = React.useState("All");
     const [moduleF, setModuleF] = React.useState("All");
     const [typeF, setTypeF] = React.useState("All");
+    const [authLicenseF, setAuthLicenseF] = React.useState("All");
+    const [authUnusedF, setAuthUnusedF] = React.useState("All");
     const [sort, setSort] = React.useState({ key: "users", dir: "desc" });
     const [page, setPage] = React.useState(1);
     const [pageSize] = React.useState(8);
@@ -232,6 +339,7 @@
     const [expanded, setExpanded] = React.useState(new Set());
     const [expandedChild, setExpandedChild] = React.useState(new Set());
     const [usersModal, setUsersModal] = React.useState(null); // { role, statusFilter } or null
+    const [authModal, setAuthModal] = React.useState(null);   // { authObj, kind } or null
 
     function toggleRole(name) {
       setExpanded(s => { const n = new Set(s); n.has(name) ? n.delete(name) : n.add(name); return n; });
@@ -262,6 +370,27 @@
       }
       if (target !== "All") list = list.filter(r => r.targetLicense === target);
       if (typeF !== "All") list = list.filter(r => r.type === typeF);
+      // Auth License filter — role passes if any auth obj (across itself or child roles) matches
+      if (authLicenseF !== "All") {
+        list = list.filter(r => {
+          const allAuthObjs = r.type === "Composite" && r.childRoles
+            ? r.childRoles.flatMap(c => c.authObjs || [])
+            : (r.authObjs || []);
+          return allAuthObjs.some(a => a.license === authLicenseF);
+        });
+      }
+      // Auth Unused Users filter — "Has Unused" keeps roles where any auth obj has unusedUsers > 0
+      //                           "No Unused"  keeps roles where all auth objs have unusedUsers = 0
+      if (authUnusedF !== "All") {
+        list = list.filter(r => {
+          const allAuthObjs = r.type === "Composite" && r.childRoles
+            ? r.childRoles.flatMap(c => c.authObjs || [])
+            : (r.authObjs || []);
+          if (authUnusedF === "Has Unused") return allAuthObjs.some(a => (a.unusedUsers ?? 0) > 0);
+          if (authUnusedF === "No Unused")  return allAuthObjs.every(a => (a.unusedUsers ?? 0) === 0);
+          return true;
+        });
+      }
       // Always group Single roles first, then Composite roles. Within each
       // group, apply the user-selected sort.
       const typeRank = (t) => (t === "Single" ? 0 : 1);
@@ -287,7 +416,7 @@
         return 0;
       });
       return list;
-    }, [data.rolesAggregated, query, target, typeF, sort]);
+    }, [data.rolesAggregated, query, target, typeF, authLicenseF, authUnusedF, sort]);
 
     const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
     const visible = filtered.slice((page - 1) * pageSize, page * pageSize);
@@ -351,7 +480,7 @@
               <input value={query} onChange={(e) => { setQuery(e.target.value); setPage(1); }} placeholder="Search role name or description…" />
             </div>
             <label className="filter-field">
-              <span className="filter-label">Consumed License</span>
+              <span className="filter-label">Role License</span>
               <select className="select" value={target} onChange={(e) => { setTarget(e.target.value); setPage(1); }}>
                 <option value="All">All</option>
                 <option>HD Professional</option>
@@ -366,6 +495,24 @@
                 <option value="All">All</option>
                 <option>Single</option>
                 <option>Composite</option>
+              </select>
+            </label>
+            <label className="filter-field">
+              <span className="filter-label">Auth License</span>
+              <select className="select" value={authLicenseF} onChange={(e) => { setAuthLicenseF(e.target.value); setPage(1); }}>
+                <option value="All">All</option>
+                <option>HD Professional</option>
+                <option>HD Functional</option>
+                <option>HD Productivity</option>
+                <option>NA</option>
+              </select>
+            </label>
+            <label className="filter-field">
+              <span className="filter-label">Auth Unused Users</span>
+              <select className="select" value={authUnusedF} onChange={(e) => { setAuthUnusedF(e.target.value); setPage(1); }}>
+                <option value="All">All</option>
+                <option value="Has Unused">Has Unused</option>
+                <option value="No Unused">No Unused</option>
               </select>
             </label>
           </div>
@@ -533,11 +680,14 @@
                                             <table className="data-table sub-table">
                                               <thead>
                                                 <tr>
-                                                  <th style={{ width: "22%" }}>Auth Object</th>
-                                                  <th style={{ width: "16%" }}>Field</th>
-                                                  <th style={{ width: "26%" }}>Description</th>
-                                                  <th style={{ width: "20%" }}>Values</th>
-                                                  <th style={{ width: "16%" }}>License</th>
+                                                  <th style={{ width: "18%" }}>Auth Object</th>
+                                                  <th style={{ width: "12%" }}>Field</th>
+                                                  <th style={{ width: "22%" }}>Description</th>
+                                                  <th style={{ width: "16%" }}>Values</th>
+                                                  <th style={{ width: "13%" }}>License</th>
+                                                  <th className="num" style={{ width: "10%" }}>Assigned Users</th>
+                                                  <th className="num" style={{ width: "8%" }}>Used Users</th>
+                                                  <th className="num" style={{ width: "8%" }}>Unused Users</th>
                                                 </tr>
                                               </thead>
                                               <tbody>
@@ -548,6 +698,24 @@
                                                     <td className="muted">{a.desc || "-"}</td>
                                                     <td className="mono muted">{a.values}</td>
                                                     <td><LicensePill license={a.license} /></td>
+                                                    <td className="num">
+                                                      <span
+                                                        className="users-count users-count-btn"
+                                                        onClick={e => { e.stopPropagation(); setAuthModal({ authObj: a, kind: "assigned" }); }}
+                                                      >{a.assignedUsers ?? 0}</span>
+                                                    </td>
+                                                    <td className="num">
+                                                      <span
+                                                        className="users-count users-count-btn pill pill-green"
+                                                        onClick={e => { e.stopPropagation(); setAuthModal({ authObj: a, kind: "used" }); }}
+                                                      >{a.usedUsers ?? 0}</span>
+                                                    </td>
+                                                    <td className="num">
+                                                      <span
+                                                        className="users-count users-count-btn pill pill-red"
+                                                        onClick={e => { e.stopPropagation(); setAuthModal({ authObj: a, kind: "unused" }); }}
+                                                      >{a.unusedUsers ?? 0}</span>
+                                                    </td>
                                                   </tr>
                                                 ))}
                                               </tbody>
@@ -574,11 +742,14 @@
                             <table className="data-table sub-table">
                               <thead>
                                 <tr>
-                                  <th style={{ width: "22%" }}>Auth Object</th>
-                                  <th style={{ width: "16%" }}>Field</th>
-                                  <th style={{ width: "26%" }}>Description</th>
-                                  <th style={{ width: "20%" }}>Values</th>
-                                  <th style={{ width: "16%" }}>License</th>
+                                  <th style={{ width: "18%" }}>Auth Object</th>
+                                  <th style={{ width: "12%" }}>Field</th>
+                                  <th style={{ width: "22%" }}>Description</th>
+                                  <th style={{ width: "16%" }}>Values</th>
+                                  <th style={{ width: "13%" }}>License</th>
+                                  <th className="num" style={{ width: "10%" }}>Assigned Users</th>
+                                  <th className="num" style={{ width: "8%" }}>Used Users</th>
+                                  <th className="num" style={{ width: "8%" }}>Unused Users</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -589,6 +760,24 @@
                                     <td className="muted">{a.desc || "-"}</td>
                                     <td className="mono muted">{a.values}</td>
                                     <td><LicensePill license={a.license} /></td>
+                                    <td className="num">
+                                      <span
+                                        className="users-count users-count-btn"
+                                        onClick={e => { e.stopPropagation(); setAuthModal({ authObj: a, kind: "assigned" }); }}
+                                      >{a.assignedUsers ?? 0}</span>
+                                    </td>
+                                    <td className="num">
+                                      <span
+                                        className="users-count users-count-btn pill pill-green"
+                                        onClick={e => { e.stopPropagation(); setAuthModal({ authObj: a, kind: "used" }); }}
+                                      >{a.usedUsers ?? 0}</span>
+                                    </td>
+                                    <td className="num">
+                                      <span
+                                        className="users-count users-count-btn pill pill-red"
+                                        onClick={e => { e.stopPropagation(); setAuthModal({ authObj: a, kind: "unused" }); }}
+                                      >{a.unusedUsers ?? 0}</span>
+                                    </td>
                                   </tr>
                                 ))}
                               </tbody>
@@ -622,6 +811,7 @@
         </div>
 
         {usersModal && <UsersModal role={usersModal.role} statusFilter={usersModal.statusFilter} onClose={() => setUsersModal(null)} />}
+        {authModal && <AuthUsersModal authObj={authModal.authObj} kind={authModal.kind} onClose={() => setAuthModal(null)} />}
       </div>
     );
   }

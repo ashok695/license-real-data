@@ -428,22 +428,66 @@ window.LICENSE_DATA = (function () {
       if (v > agg._highest) { agg._highest = v; agg.targetLicense = role.targetLicense; }
     });
   });
-  // Attach the list of users assigned to each role
+  // Attach the list of users assigned to each role, and track per-auth-object user lists
   users.forEach(u => {
     u.roles.forEach(role => {
       const agg = roleAgg[role.name];
       if (agg) {
         if (!agg.userList) agg.userList = [];
-        agg.userList.push({
+        const userEntry = {
           sapId: u.sapId,
           firstName: u.firstName,
           lastName: u.lastName,
           email: u.email,
           license: u.license,
           status: u.status
+        };
+        agg.userList.push(userEntry);
+
+        // Track per-auth-object assigned/used user lists (keyed by "name|field")
+        if (!agg._authUserMap) agg._authUserMap = {};
+        role.authObjs.forEach(a => {
+          const k = `${a.name}|${a.field}`;
+          if (!agg._authUserMap[k]) agg._authUserMap[k] = { assigned: [], used: [] };
+          agg._authUserMap[k].assigned.push(userEntry);
+          if (a.fieldStatus === "Used" || a.fieldStatus === "Partial") {
+            agg._authUserMap[k].used.push(userEntry);
+          } else if (a.fieldStatus === "Unused") {
+            agg._authUserMap[k].unused = agg._authUserMap[k].unused || [];
+            agg._authUserMap[k].unused.push(userEntry);
+          }
         });
       }
     });
+  });
+
+  // Stamp authObj-level user counts onto each aggregated role's authObjs
+  Object.values(roleAgg).forEach(agg => {
+    const map = agg._authUserMap || {};
+    (agg.authObjs || []).forEach(a => {
+      const k = `${a.name}|${a.field}`;
+      const entry = map[k] || { assigned: [], used: [], unused: [] };
+      a.assignedUsers    = entry.assigned.length;
+      a.usedUsers        = entry.used.length;
+      a.unusedUsers      = (entry.unused || []).length;
+      a.assignedUserList = entry.assigned;
+      a.usedUserList     = entry.used;
+      a.unusedUserList   = entry.unused || [];
+    });
+    // Same for child role auth objects in composite roles
+    (agg.childRoles || []).forEach(child => {
+      (child.authObjs || []).forEach(a => {
+        const k = `${a.name}|${a.field}`;
+        const entry = map[k] || { assigned: [], used: [], unused: [] };
+        a.assignedUsers    = entry.assigned.length;
+        a.usedUsers        = entry.used.length;
+        a.unusedUsers      = (entry.unused || []).length;
+        a.assignedUserList = entry.assigned;
+        a.usedUserList     = entry.used;
+        a.unusedUserList   = entry.unused || [];
+      });
+    });
+    delete agg._authUserMap;
   });
 
   const rolesAggregated = Object.values(roleAgg).sort((a, b) => b.users - a.users);
