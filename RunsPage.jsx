@@ -370,18 +370,19 @@ const SAP_SYSTEMS = [
 ];
 
 function CreateRunModal({ onClose }) {
-  const [name, setName]           = React.useState("");
-  const [sapSystem, setSapSystem] = React.useState("");
-  const [files, setFiles]         = React.useState([]);
-  const [uploading, setUploading] = React.useState(false);
-  const [uploadDone, setUploadDone] = React.useState(false);
-  const [uploadError, setUploadError] = React.useState(null);
+  const [name, setName]                   = React.useState("");
+  const [sapSystem, setSapSystem]         = React.useState("");
+  const [deploymentType, setDeploymentType] = React.useState("");
+  const [files, setFiles]                 = React.useState([]);
+  const [uploading, setUploading]         = React.useState(false);
+  const [uploadDone, setUploadDone]       = React.useState(false);
+  const [uploadError, setUploadError]     = React.useState(null);
   const inputRef = React.useRef(null);
 
-  const isValid = name.trim().length > 0 && sapSystem !== "" && files.length > 0;
+  const isValid = name.trim().length > 0 && sapSystem !== "" && deploymentType !== "" && files.length > 0;
   // Show a hint to upload a file once the user has filled the other required fields
   const showFileWarning =
-    name.trim().length > 0 && sapSystem !== "" && files.length === 0 && !uploading;
+    name.trim().length > 0 && sapSystem !== "" && deploymentType !== "" && files.length === 0 && !uploading;
 
   // Close on Escape
   React.useEffect(() => {
@@ -479,6 +480,7 @@ function CreateRunModal({ onClose }) {
                 <div className="crm-upload-success-title">Run created successfully</div>
                 <div className="crm-upload-success-sub">
                   <strong>{name}</strong> on <strong>{SAP_SYSTEMS.find(s => s.id === sapSystem)?.label}</strong>
+                  {` · ${deploymentType === "rise" ? "RISE with SAP" : "On-Premise"}`}
                   {files.length > 0 && ` · ${files.length} file${files.length !== 1 ? "s" : ""} uploaded`}
                 </div>
               </div>
@@ -523,6 +525,67 @@ function CreateRunModal({ onClose }) {
                   <svg className="crm-select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="6 9 12 15 18 9"/>
                   </svg>
+                </div>
+              </div>
+
+              {/* Deployment Type */}
+              <div className="crm-field">
+                <label className="crm-label">
+                  Deployment Type <span className="crm-required">*</span>
+                </label>
+                <div className="crm-radio-group">
+                  {[
+                    {
+                      value: "on-prem",
+                      label: "On-Premise",
+                      description: "SAP system hosted on your own infrastructure",
+                      icon: (
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="2" y="3" width="20" height="14" rx="2"/>
+                          <path d="M8 21h8M12 17v4"/>
+                        </svg>
+                      ),
+                    },
+                    {
+                      value: "rise",
+                      label: "RISE with SAP",
+                      description: "SAP-managed cloud transformation offering",
+                      icon: (
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+                        </svg>
+                      ),
+                    },
+                  ].map(opt => (
+                    <label
+                      key={opt.value}
+                      className={`crm-radio-card${deploymentType === opt.value ? " crm-radio-card-selected" : ""}${uploading ? " crm-radio-card-disabled" : ""}`}
+                      htmlFor={`deploy-${opt.value}`}
+                    >
+                      <input
+                        id={`deploy-${opt.value}`}
+                        type="radio"
+                        name="deploymentType"
+                        value={opt.value}
+                        checked={deploymentType === opt.value}
+                        onChange={() => !uploading && setDeploymentType(opt.value)}
+                        disabled={uploading}
+                        style={{ display: "none" }}
+                      />
+                      <span className={`crm-radio-card-icon${deploymentType === opt.value ? " crm-radio-card-icon-selected" : ""}`}>
+                        {opt.icon}
+                      </span>
+                      <span className="crm-radio-card-body">
+                        <span className="crm-radio-card-label">{opt.label}</span>
+                        <span className="crm-radio-card-desc">{opt.description}</span>
+                      </span>
+                      <span className={`crm-radio-card-check${deploymentType === opt.value ? " crm-radio-card-check-visible" : ""}`}>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                      </span>
+                    </label>
+                  ))}
                 </div>
               </div>
 

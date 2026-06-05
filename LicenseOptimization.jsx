@@ -391,7 +391,7 @@ function RoleCleansingPill({ summary, onClick }) {
     : recommendation.tone === "amber"
       ? "pill-amber"
       : "pill-green";
-  if (total > 0 && recommendation.tone !== "green") {
+  if (total > 0) {
     return (
       <button type="button" className={`pill ${toneClass} ud-clickable-pill`} onClick={onClick} title={recommendation.detail}>
         {recommendation.label}
@@ -411,6 +411,8 @@ function RoleUsageStatusPill({ status }) {
 }
 
 function RoleCleansingModal({ summary, userName, onClose }) {
+  const [thresholdTipOpen, setThresholdTipOpen] = React.useState(false); // true while hovering ⓘ
+
   React.useEffect(() => {
     const h = (e) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", h);
@@ -440,27 +442,87 @@ function RoleCleansingModal({ summary, userName, onClose }) {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
         </div>
-        <div style={{ padding: "0 20px 12px", display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <div style={{ padding: "0 20px 12px", display: "flex", gap: 8, flexWrap: "wrap", alignItems: "flex-start", position: "relative", overflow: "visible" }}>
           <span className="pill pill-red">Unused: {summary.unused}</span>
           <span className="pill pill-amber">Low Usage: {summary.low}</span>
           <span className="pill pill-green">Healthy: {summary.healthy}</span>
-          <span className="pill pill-slate" title={`Roles with usage ratio below ${Math.round(ROLE_LOW_USAGE_THRESHOLD * 100)}% are flagged as Low Usage`}>Threshold: &lt; {Math.round(ROLE_LOW_USAGE_THRESHOLD * 100)}%</span>
+          <span style={{ position: "relative", display: "inline-flex", alignItems: "center" }}
+            onMouseEnter={() => setThresholdTipOpen(true)}
+            onMouseLeave={() => setThresholdTipOpen(false)}
+          >
+            <span className="pill pill-slate" style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
+              Threshold: &lt; {Math.round(ROLE_LOW_USAGE_THRESHOLD * 100)}%
+              <span
+                aria-label="Explain threshold"
+                style={{ display: "inline-flex", alignItems: "center", color: "inherit", opacity: 0.75 }}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="8" x2="12" y2="12"/>
+                  <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+              </span>
+            </span>
+            {thresholdTipOpen && (
+              <div
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  position: "absolute",
+                  top: "calc(100% + 8px)",
+                  left: 0,
+                  zIndex: 9999,
+                  background: "#1e293b",
+                  color: "#f1f5f9",
+                  borderRadius: 8,
+                  padding: "12px 14px",
+                  minWidth: 280,
+                  maxWidth: 320,
+                  boxShadow: "0 8px 32px rgba(0,0,0,0.28)",
+                  fontSize: 12,
+                  lineHeight: 1.55,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 7,
+                  whiteSpace: "normal",
+                  pointerEvents: "none",
+                }}
+              >
+                {/* arrow */}
+                <span style={{ position: "absolute", top: -8, left: 16, width: 0, height: 0, borderLeft: "6px solid transparent", borderRight: "6px solid transparent", borderBottom: "8px solid #1e293b" }} />
+                <span style={{ fontWeight: 700, fontSize: 11, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.06em" }}>How thresholds work</span>
+                <span style={{ display: "flex", gap: 7, alignItems: "flex-start" }}>
+                  <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#4ade80", flexShrink: 0, marginTop: 4 }} />
+                  <span><b>Healthy</b> — ≥ {Math.round(ROLE_LOW_USAGE_THRESHOLD * 100)}% of the role's auth objects were used.</span>
+                </span>
+                <span style={{ display: "flex", gap: 7, alignItems: "flex-start" }}>
+                  <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#fbbf24", flexShrink: 0, marginTop: 4 }} />
+                  <span><b>Low Usage</b> — At least 1 object used, but below the {Math.round(ROLE_LOW_USAGE_THRESHOLD * 100)}% threshold.</span>
+                </span>
+                <span style={{ display: "flex", gap: 7, alignItems: "flex-start" }}>
+                  <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#f87171", flexShrink: 0, marginTop: 4 }} />
+                  <span><b>Unused</b> — 0 auth objects used. Role is entirely inactive.</span>
+                </span>
+                <span style={{ height: 1, background: "rgba(255,255,255,0.1)", margin: "2px 0" }} />
+                <span style={{ color: "#94a3b8", fontStyle: "italic", fontSize: 11 }}>Threshold is applied per role, not across the user's full auth object set.</span>
+              </div>
+            )}
+          </span>
         </div>
         <div style={{ maxHeight: 380, overflowY: "auto", overflowX: "hidden", padding: "0 20px 16px" }}>
           <table className="data-table modal-table" style={{ width: "100%", tableLayout: "fixed" }}>
             <colgroup>
-              <col style={{ width: "40%" }} />
-              <col style={{ width: "15%" }} />
-              <col style={{ width: "15%" }} />
-              <col style={{ width: "15%" }} />
-              <col style={{ width: "15%" }} />
+              <col style={{ width: "28%" }} />
+              <col style={{ width: "14%" }} />
+              <col style={{ width: "14%" }} />
+              <col style={{ width: "24%" }} />
+              <col style={{ width: "10%" }} />
             </colgroup>
             <thead>
-              <tr>
+              <tr style={{ height: 56 }}>
                 <th>Role Name</th>
                 <th>Type</th>
                 <th>Status</th>
-                <th className="num">Used / Total</th>
+                <th className="num" style={{ whiteSpace: "normal", wordBreak: "break-word", verticalAlign: "middle", lineHeight: 1.3 }}>Used Auth Objects / Total Auth Objects</th>
                 <th className="num">Usage</th>
               </tr>
             </thead>
@@ -1069,7 +1131,7 @@ function LicenseMatrixCard({ users, counts }) {
       let tgt = u.license;
       if (
         target[u.targetLicense] !== undefined &&
-        (TIER_RANK[u.targetLicense] || 0) <= (TIER_RANK[u.license] || 0)
+        (HD_TIER_RANK[u.targetLicense] || 0) <= (HD_TIER_RANK[u.license] || 0)
       ) {
         tgt = u.targetLicense;
       }
@@ -1116,14 +1178,6 @@ function LicenseMatrixCard({ users, counts }) {
             <div className="lm-sub">Assigned (current) vs. Target (recommended) — click any count to see users</div>
           </div>
           <div className="lm-header-badges">
-            <span className="lm-badge lm-badge-green">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              {matchCount.toLocaleString()} Matched
-            </span>
-            <span className="lm-badge lm-badge-red">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-              {mismatchCount.toLocaleString()} Mismatched
-            </span>
             <button className="btn-ghost" onClick={exportLicenseDistributionCsv} title="Download License Distribution as CSV">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               Export Excel
@@ -1864,25 +1918,34 @@ function LicenseOptimizationPage() {
                           <line x1="12" y1="16" x2="12.01" y2="16"/>
                         </svg>
                         <span className="th-tooltip">
-                          <span className="th-tooltip-title">Role-Based Cleaning</span>
+                          <span className="th-tooltip-title">Role-Wise Cleansing</span>
                           <span className="th-tooltip-row">
-                            <span>Per-user recommendation rolled up from each assigned role's usage.</span>
+                            <span>Per-user recommendation rolled up from each assigned role's auth object usage.</span>
                           </span>
                           <span className="th-tooltip-divider"/>
+                          <span className="th-tooltip-section-label">Threshold</span>
+                          <span className="th-tooltip-row">
+                            <span>
+                              A role is classified as <b>Low Usage</b> when fewer than <b>{Math.round(ROLE_LOW_USAGE_THRESHOLD * 100)}%</b> of its
+                              authorization objects have been used. A role with <b>0%</b> usage is classified as <b>Unused</b>.
+                            </span>
+                          </span>
+                          <span className="th-tooltip-divider"/>
+                          <span className="th-tooltip-section-label">Classifications</span>
                           <span className="th-tooltip-row">
                             <span className="th-tooltip-dot th-tooltip-dot-red"/>
-                            <span><b>Cleanup Candidate</b> — Majority of roles unused. Remove unused role assignments.</span>
+                            <span><b>Cleanup Candidate</b> — More than half of assigned roles are unused. Recommend removing those role assignments.</span>
                           </span>
                           <span className="th-tooltip-row">
                             <span className="th-tooltip-dot th-tooltip-dot-amber"/>
-                            <span><b>Optimize</b> — Some roles unused or low-usage (&lt; {Math.round(ROLE_LOW_USAGE_THRESHOLD * 100)}% of objects used). Object-level cleanup advised.</span>
+                            <span><b>Optimize</b> — At least one role is unused or low-usage (&lt; {Math.round(ROLE_LOW_USAGE_THRESHOLD * 100)}% of objects used). Object-level cleanup advised.</span>
                           </span>
                           <span className="th-tooltip-row">
                             <span className="th-tooltip-dot th-tooltip-dot-green"/>
-                            <span><b>Healthy</b> — All assigned roles actively used.</span>
+                            <span><b>Healthy</b> — All assigned roles meet the usage threshold.</span>
                           </span>
                           <span className="th-tooltip-divider"/>
-                          <span className="th-tooltip-note">Click the pill for the role-by-role breakdown.</span>
+                          <span className="th-tooltip-note">Click the pill to see the role-by-role breakdown with per-role usage ratios.</span>
                         </span>
                       </span>
                     </span>

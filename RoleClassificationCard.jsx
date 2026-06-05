@@ -580,7 +580,40 @@
                 {show("users") && <th onClick={() => toggleSort("users")} className="sortable num" style={{ width: 90 }}>Users <SortIcon active={sort.key === "users"} dir={sort.dir} /></th>}
                 {show("activeUsers") && <th onClick={() => toggleSort("activeUsers")} className="sortable num" style={{ width: 110 }}>Active Users <SortIcon active={sort.key === "activeUsers"} dir={sort.dir} /></th>}
                 {show("inactiveUsers") && <th onClick={() => toggleSort("inactiveUsers")} className="sortable num" style={{ width: 120 }}>Inactive Users <SortIcon active={sort.key === "inactiveUsers"} dir={sort.dir} /></th>}
-                {show("utilization") && <th onClick={() => toggleSort("utilization")} className="sortable num" style={{ width: 140 }}>Role Utilization <SortIcon active={sort.key === "utilization"} dir={sort.dir} /></th>}
+                {show("utilization") && (
+                  <th onClick={() => toggleSort("utilization")} className="sortable num" style={{ width: 140 }}>
+                    <span className="th-with-info">
+                      Role Utilization
+                      <span className="th-info-wrap" role="tooltip" aria-label="Role Utilization logic" onClick={e => e.stopPropagation()}>
+                        <svg className="th-info-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <circle cx="12" cy="12" r="10"/>
+                          <line x1="12" y1="8" x2="12" y2="12"/>
+                          <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <span className="th-tooltip">
+                          <span className="th-tooltip-title">How is this calculated?</span>
+                          <span className="th-tooltip-row">
+                            <span>Percentage of assigned users who have <b>actively used</b> this role.</span>
+                          </span>
+                          <span className="th-tooltip-divider"/>
+                          <span className="th-tooltip-row">
+                            <span className="th-tooltip-tier" style={{ background: "var(--success-soft)", color: "var(--success)" }}>≥70%</span>
+                            <span>High utilization</span>
+                          </span>
+                          <span className="th-tooltip-row">
+                            <span className="th-tooltip-tier" style={{ background: "var(--warn-soft)", color: "var(--warn)" }}>40–69%</span>
+                            <span>Moderate utilization</span>
+                          </span>
+                          <span className="th-tooltip-row">
+                            <span className="th-tooltip-tier" style={{ background: "var(--danger-soft)", color: "var(--danger)" }}>&lt;40%</span>
+                            <span>Low utilization — review recommended</span>
+                          </span>
+                        </span>
+                      </span>
+                      <SortIcon active={sort.key === "utilization"} dir={sort.dir} />
+                    </span>
+                  </th>
+                )}
                 {show("auth") && <th onClick={() => toggleSort("auth")} className="sortable num" style={{ width: 120 }}>Auth Objects <SortIcon active={sort.key === "auth"} dir={sort.dir} /></th>}
               </tr>
             </thead>
