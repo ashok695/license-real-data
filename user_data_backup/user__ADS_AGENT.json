@@ -1,0 +1,437 @@
+{
+  "userInfo": {
+    "username": "ADS_AGENT",
+    "userType": "System",
+    "firstName": "",
+    "lastName": "ADS_AGENT",
+    "sapId": "ADS_AGENT",
+    "emailId": "",
+    "status": "Not Locked",
+    "lastLogin": "13-10-2022 05:57:23",
+    "license": "HD Productivity",
+    "inferredLicense": "HD Productivity",
+    "fueValue": 0
+  },
+  "authSummary": {
+    "totalRoles": 9,
+    "totalProfiles": 8,
+    "activeRoles": 0,
+    "totalAuthorizationObjects": 11,
+    "totalAuthorizationFields": 77,
+    "totalAuthorizedTransactions": 2
+  },
+  "roleActivityOverview": {
+    "totalTraceAuthObjects": 0,
+    "roleBreakdownBuckets": 9,
+    "assignedActivities": 6,
+    "unusedActivities": 6,
+    "assignedAuthorizationFields": 0,
+    "unusedAuthObjects": 11
+  },
+  "authorizationUsageRate": {
+    "percentage": 0,
+    "label": "0% of assigned activities (ACTVT) were used in the last 90 days"
+  },
+  "roleBreakdown": [
+    {
+      "role": "SAP_BC_FPADS_ICF",
+      "authObjects": [
+        {
+          "authObj": "S_DATASET",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "33",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_DATASET",
+          "field": "FILENAME",
+          "description": "S_DATASET",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_DATASET",
+          "field": "PROGRAM",
+          "description": "S_DATASET",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_FP_ICF",
+          "field": "FPICF",
+          "description": "S_FP_ICF",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        }
+      ]
+    },
+    {
+      "role": "SAP_ESH_BOS_RFC_ENDUSER",
+      "authObjects": [
+        {
+          "authObj": "S_DEVELOP",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "S_DEVELOP",
+          "field": "DEVCLASS",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "S_DEVELOP",
+          "field": "OBJNAME",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "S_DEVELOP",
+          "field": "OBJTYPE",
+          "description": "Display",
+          "value": "PROG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "S_DEVELOP",
+          "field": "P_GROUP",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "S_RFC",
+          "field": "ACTVT",
+          "description": "Execute",
+          "value": "16",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_RFC",
+          "field": "RFC_NAME",
+          "description": "Execute",
+          "value": "COM_SES_SEARCH",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_RFC",
+          "field": "RFC_TYPE",
+          "description": "Execute",
+          "value": "FUGR",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_START",
+          "field": "AUTHOBJNAM",
+          "description": "S_START",
+          "value": "ESH_SEARCH_RESULTS_UI",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_START",
+          "field": "AUTHOBJTYP",
+          "description": "S_START",
+          "value": "WDYA",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_START",
+          "field": "AUTHPGMID",
+          "description": "S_START",
+          "value": "R3TR",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_TCODE",
+          "field": "TCD",
+          "description": "Enterprise Search",
+          "value": "ESH_SEARCH",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_USER_GRP",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_USER_GRP",
+          "field": "CLASS",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        }
+      ]
+    },
+    {
+      "role": "SAP_ESH_SEARCH_CATEG",
+      "authObjects": [
+        {
+          "authObj": "S_ESH_CAT",
+          "field": "ESH_CATEG",
+          "description": "S_ESH_CAT",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        }
+      ]
+    },
+    {
+      "role": "SAP_ESH_SEARCH_USER",
+      "authObjects": [
+        {
+          "authObj": "S_ESH_CAT",
+          "field": "ESH_CATEG",
+          "description": "S_ESH_CAT",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "REQUEST",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "SCONN_ID",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "SYS_CLIENT",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "SYSTEM_ID",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "TEMPL_NAME",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "TEMPL_TYPE",
+          "description": "S_ESH_CONN",
+          "value": "BI",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_START",
+          "field": "AUTHOBJNAM",
+          "description": "S_START",
+          "value": "ESH_SEARCH_RESULTS_UI",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_START",
+          "field": "AUTHOBJTYP",
+          "description": "S_START",
+          "value": "WDYA",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_START",
+          "field": "AUTHPGMID",
+          "description": "S_START",
+          "value": "R3TR",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        }
+      ]
+    },
+    {
+      "role": "SAP_BC_FP_ICF",
+      "authObjects": [
+        {
+          "authObj": "S_FP_ICF",
+          "field": "FPICF",
+          "description": "S_FP_ICF",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        }
+      ]
+    },
+    {
+      "role": "SAP_BC_SEFS_RFC_ENDUSER",
+      "authObjects": [
+        {
+          "authObj": "S_LDAP",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_LDAP",
+          "field": "LDAP_SERV",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_RFC",
+          "field": "ACTVT",
+          "description": "Execute",
+          "value": "16",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_RFC",
+          "field": "RFC_NAME",
+          "description": "Execute",
+          "value": "COM_SES_SEARCH",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_RFC",
+          "field": "RFC_TYPE",
+          "description": "Execute",
+          "value": "FUGR",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        }
+      ]
+    },
+    {
+      "role": "SAP_BC_SES_RFC_ENDUSER",
+      "authObjects": [
+        {
+          "authObj": "S_RFC",
+          "field": "ACTVT",
+          "description": "Execute",
+          "value": "16",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_RFC",
+          "field": "RFC_NAME",
+          "description": "Execute",
+          "value": "COM_SES_SEARCH",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_RFC",
+          "field": "RFC_TYPE",
+          "description": "Execute",
+          "value": "FUGR",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        }
+      ]
+    },
+    {
+      "role": "SAP_ESH_SEARCH_CDS",
+      "authObjects": [
+        {
+          "authObj": "SDDLVIEW",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "SDDLVIEW",
+          "field": "DDLNAME",
+          "description": "Display",
+          "value": "NA",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "SDDLVIEW",
+          "field": "DDLSRCNAME",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        }
+      ]
+    }
+  ],
+  "topTransactions": [
+    {
+      "tCode": "SAPMHTTP",
+      "executionCount": 18285,
+      "activity": "Used in workload trace",
+      "source": "ST03N",
+      "confidence": "High"
+    },
+    {
+      "tCode": "<AD_CATALOG_SYNC>",
+      "executionCount": 1,
+      "activity": "Used in workload trace",
+      "source": "ST03N",
+      "confidence": "High"
+    }
+  ],
+  "authorizedTransactions": [
+    {
+      "tCode": "SAPMHTTP",
+      "executionCount": 18285,
+      "activity": "Used in workload trace",
+      "source": "ST03N",
+      "confidence": "High"
+    },
+    {
+      "tCode": "<AD_CATALOG_SYNC>",
+      "executionCount": 1,
+      "activity": "Used in workload trace",
+      "source": "ST03N",
+      "confidence": "High"
+    }
+  ]
+}

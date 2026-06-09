@@ -16,7 +16,7 @@
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
 
-<script src="data.js"></script>
+<script src="licenseDataLoader.js"></script>
 <script type="text/babel" src="Sidebar.jsx"></script>
 <script type="text/babel" src="RoleClassificationCard.jsx"></script>
 <script type="text/babel" src="ColumnChooser.jsx"></script>
@@ -36,7 +36,31 @@ function App() {
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<App />);
+
+// Wait for the user_data/ dataset to load before mounting, since the page
+// reads window.LICENSE_DATA synchronously during render.
+function mount() {
+  root.render(<App />);
+}
+function renderError(err) {
+  root.render(
+    <div style={{ padding: 40, fontFamily: "Figtree, sans-serif", color: "#b0234a" }}>
+      <h2>Failed to load license data</h2>
+      <p>{String(err && err.message ? err.message : err)}</p>
+      <p style={{ color: "#64748b" }}>
+        This page loads JSON from the <code>user_data/</code> folder, which requires
+        running over HTTP (not opening the file directly). Serve the folder, e.g.
+        <code> npx serve</code> or <code>python -m http.server</code>.
+      </p>
+    </div>
+  );
+}
+
+if (window.LICENSE_DATA_READY && typeof window.LICENSE_DATA_READY.then === "function") {
+  window.LICENSE_DATA_READY.then(mount).catch(renderError);
+} else {
+  mount();
+}
 </script>
 </body>
 </html>

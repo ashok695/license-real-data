@@ -1,0 +1,4217 @@
+{
+  "userInfo": {
+    "username": "ADAPTER.Q",
+    "userType": "Reference",
+    "firstName": "",
+    "lastName": "ADAPTER.Q",
+    "sapId": "ADAPTER.Q",
+    "emailId": "ADAPTER.QUICKBOOKS@lottechem.us",
+    "status": "Not Locked",
+    "lastLogin": "09-12-2020 00:00:00",
+    "license": "HB Professional",
+    "inferredLicense": "HB Professional",
+    "fueValue": 0
+  },
+  "authSummary": {
+    "totalRoles": 4,
+    "totalProfiles": 4,
+    "activeRoles": 0,
+    "totalAuthorizationObjects": 171,
+    "totalAuthorizationFields": 708,
+    "totalAuthorizedTransactions": 18
+  },
+  "roleActivityOverview": {
+    "totalTraceAuthObjects": 0,
+    "roleBreakdownBuckets": 4,
+    "assignedActivities": 137,
+    "unusedActivities": 137,
+    "assignedAuthorizationFields": 0,
+    "unusedAuthObjects": 171
+  },
+  "authorizationUsageRate": {
+    "percentage": 0,
+    "label": "0% of assigned activities (ACTVT) were used in the last 90 days"
+  },
+  "roleBreakdown": [
+    {
+      "role": "ZL_BR_CA_ALL_USERS",
+      "authObjects": [
+        {
+          "authObj": "/UI2/CHIP",
+          "field": "/UI2/CHIP",
+          "description": "Display",
+          "value": "X-SAP-UI2-CHIP*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "/UI2/CHIP",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "/UIF/FLEX",
+          "field": "/UIF/CHTY",
+          "description": "/UIF/FLEX",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "/UIF/FLEX",
+          "field": "/UIF/KEYU",
+          "description": "/UIF/FLEX",
+          "value": "' '",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "A_S_ANLKL",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "A_S_ANLKL",
+          "field": "ANLKL",
+          "description": "A_S_ANLKL",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "A_S_ANLKL",
+          "field": "BUKRS",
+          "description": "A_S_ANLKL",
+          "value": "$BUKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_GRP",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_GRP",
+          "field": "BEGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_RLT",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_RLT",
+          "field": "RLTYP",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_AFKO_ACT",
+          "field": "PS_ACTVT",
+          "description": "C_AFKO_ACT",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_AFKO_ATY",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_AFKO_ATY",
+          "field": "AUTYP",
+          "description": "C_AFKO_ATY",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_AFKO_AWA",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_AFKO_AWA",
+          "field": "AUFART",
+          "description": "C_AFKO_AWA",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_AFKO_AWA",
+          "field": "AUTYP",
+          "description": "C_AFKO_AWA",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_AFKO_AWA",
+          "field": "WERKS",
+          "description": "C_AFKO_AWA",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_AFKO_AWK",
+          "field": "AUFART",
+          "description": "C_AFKO_AWK",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_AFKO_AWK",
+          "field": "WERKS",
+          "description": "C_AFKO_AWK",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_AFVG_APL",
+          "field": "ARBPL",
+          "description": "C_AFVG_APL",
+          "value": "$ARBPL",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_AFVG_APL",
+          "field": "PS_ACTVT",
+          "description": "C_AFVG_APL",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_AFVG_APL",
+          "field": "WERKS",
+          "description": "C_AFVG_APL",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_AFVG_TYP",
+          "field": "PS_ACTVT",
+          "description": "C_AFVG_TYP",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_AFVG_TYP",
+          "field": "PS_VGTYP",
+          "description": "C_AFVG_TYP",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_ARPL_WRK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_ARPL_WRK",
+          "field": "WERKS",
+          "description": "Display",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_DRAD_OBJ",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_DRAD_OBJ",
+          "field": "DOKAR",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_DRAD_OBJ",
+          "field": "DOKOB",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_DRAD_OBJ",
+          "field": "STATUS",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_DRAW_APL",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_APL",
+          "field": "DOKAR",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_APL",
+          "field": "FILEXT",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_DOK",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "53",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_DOK",
+          "field": "DOKAR",
+          "description": "C_DRAW_DOK",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_TCD",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_TCD",
+          "field": "DOKAR",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_TCS",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_TCS",
+          "field": "DOKAR",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_TCS",
+          "field": "DOKST",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_PRPS_ART",
+          "field": "PS_ACTVT",
+          "description": "C_PRPS_ART",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_PRPS_ART",
+          "field": "PS_PRART",
+          "description": "C_PRPS_ART",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_PRPS_KOK",
+          "field": "KOKRS",
+          "description": "C_PRPS_KOK",
+          "value": "$KOKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_PRPS_KOK",
+          "field": "PS_ACTVT",
+          "description": "C_PRPS_KOK",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_PRPS_KST",
+          "field": "PS_ACTVT",
+          "description": "C_PRPS_KST",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_PRPS_KST",
+          "field": "PS_FKOKR",
+          "description": "C_PRPS_KST",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_PRPS_KST",
+          "field": "PS_FKSTL",
+          "description": "C_PRPS_KST",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_PRPS_PRC",
+          "field": "PRCTR",
+          "description": "C_PRPS_PRC",
+          "value": "$PRCTR",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_PRPS_PRC",
+          "field": "PS_ACTVT",
+          "description": "C_PRPS_PRC",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_PRPS_VNR",
+          "field": "PS_ACTVT",
+          "description": "C_PRPS_VNR",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_PRPS_VNR",
+          "field": "PS_VERNR",
+          "description": "C_PRPS_VNR",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_PSCVP_DB",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_BKPF_BEK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_BKPF_BEK",
+          "field": "BRGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_BKPF_BES",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_BKPF_BES",
+          "field": "BRGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_BKPF_BLA",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_BKPF_BLA",
+          "field": "BRGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_BKPF_BUK",
+          "field": "ACTVT",
+          "description": "Create",
+          "value": "01",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_BKPF_BUK",
+          "field": "BUKRS",
+          "description": "Create",
+          "value": "$BUKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_BKPF_BUP",
+          "field": "BRGRU",
+          "description": "F_BKPF_BUP",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_BKPF_GSB",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_BKPF_GSB",
+          "field": "GSBER",
+          "description": "Display",
+          "value": "$GSBER",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_BKPF_KOA",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_BKPF_KOA",
+          "field": "KOART",
+          "description": "Display",
+          "value": "$KOART",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_CNTXI_CX",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_CNTXI_CX",
+          "field": "EKGRP",
+          "description": "Display",
+          "value": "$EKGRP",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_CNTXI_TE",
+          "field": "TXI_TE_ACT",
+          "description": "F_CNTXI_TE",
+          "value": "04",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_CNTXI_TE",
+          "field": "TXI_TE_ID",
+          "description": "F_CNTXI_TE",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_CNTXI_TE",
+          "field": "TXI_TE_TYP",
+          "description": "F_CNTXI_TE",
+          "value": "TE",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FAGL_LDR",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_FAGL_LDR",
+          "field": "BUKRS",
+          "description": "Display",
+          "value": "$BUKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_FAGL_LDR",
+          "field": "GLRLDNR",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_FAGL_LDR",
+          "field": "GLRRCTY",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_FAGL_LDR",
+          "field": "GLRVERS",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_FAGL_SEG",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_FAGL_SEG",
+          "field": "GLRRCTY",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_FAGL_SEG",
+          "field": "SEGMENT",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_FICA_FOG",
+          "field": "FM_AUTHACT",
+          "description": "F_FICA_FOG",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FICA_FOG",
+          "field": "FM_AUTHGRF",
+          "description": "F_FICA_FOG",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FICA_FOG",
+          "field": "FM_FIKRS",
+          "description": "F_FICA_FOG",
+          "value": "$FIKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FICA_FPG",
+          "field": "FM_AUTHACT",
+          "description": "F_FICA_FPG",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FICA_FPG",
+          "field": "FM_AUTHGRP",
+          "description": "F_FICA_FPG",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FICA_FPG",
+          "field": "FM_FIKRS",
+          "description": "F_FICA_FPG",
+          "value": "$FIKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FICA_FSG",
+          "field": "FM_AUTHACT",
+          "description": "F_FICA_FSG",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FICA_FSG",
+          "field": "FM_AUTHGRC",
+          "description": "F_FICA_FSG",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FICA_FSG",
+          "field": "FM_FIKRS",
+          "description": "F_FICA_FSG",
+          "value": "$FIKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FICB_FKR",
+          "field": "FM_AUTHACT",
+          "description": "F_FICB_FKR",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FICB_FKR",
+          "field": "FM_FIKRS",
+          "description": "F_FICB_FKR",
+          "value": "$FIKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FIGM_GNT",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_FIGM_GNT",
+          "field": "GM_AUTHGR",
+          "description": "F_FIGM_GNT",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_FIGM_GNT",
+          "field": "GM_LIFESTA",
+          "description": "F_FIGM_GNT",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_FMMD_FAR",
+          "field": "FM_AUTHACT",
+          "description": "F_FMMD_FAR",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FMMD_FAR",
+          "field": "FM_FIKRS",
+          "description": "F_FMMD_FAR",
+          "value": "$FIKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FMMD_FAR",
+          "field": "FM_GRP_FAR",
+          "description": "F_FMMD_FAR",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FUND_PST",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_FUND_PST",
+          "field": "FM_AUTHGRF",
+          "description": "F_FUND_PST",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_FUND_PST",
+          "field": "FM_FIKRS",
+          "description": "F_FUND_PST",
+          "value": "$FIKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_FUNDSRES",
+          "field": "BUKRS",
+          "description": "F_FUNDSRES",
+          "value": "$BUKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FUNDSRES",
+          "field": "FMRE_AUTH",
+          "description": "F_FUNDSRES",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FUNDSRES",
+          "field": "FMRE_BLART",
+          "description": "F_FUNDSRES",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_FUNDSRES",
+          "field": "FMRE_BLTYP",
+          "description": "F_FUNDSRES",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_KNA1_BED",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_BED",
+          "field": "BRGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_BUK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_BUK",
+          "field": "BUKRS",
+          "description": "Display",
+          "value": "$BUKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_GEN",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_GRP",
+          "field": "ACTVT",
+          "description": "Create",
+          "value": "01",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_GRP",
+          "field": "KTOKD",
+          "description": "Create",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_BEK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_BEK",
+          "field": "BRGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_BUK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_BUK",
+          "field": "BUKRS",
+          "description": "Display",
+          "value": "$BUKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_GEN",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_GRP",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_GRP",
+          "field": "KTOKK",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_SKA1_BUK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_SKA1_BUK",
+          "field": "BUKRS",
+          "description": "Display",
+          "value": "$BUKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_SKA1_KTP",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_SKA1_KTP",
+          "field": "KTOPL",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "I_AUART",
+          "field": "AUFART",
+          "description": "I_AUART",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "I_AUART",
+          "field": "IWERK",
+          "description": "I_AUART",
+          "value": "$IWERK",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "K_CSLA",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "K_CSLA",
+          "field": "KOKRS",
+          "description": "K_CSLA",
+          "value": "$KOKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "K_PCAR_REP",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "K_PCAR_REP",
+          "field": "BUKRS",
+          "description": "K_PCAR_REP",
+          "value": "$BUKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "K_PCAR_REP",
+          "field": "KSTAR",
+          "description": "K_PCAR_REP",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "K_PCAR_REP",
+          "field": "PRCTR",
+          "description": "K_PCAR_REP",
+          "value": "$PRCTR",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ANFR_BSA",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ANFR_BSA",
+          "field": "BSART",
+          "description": "M_ANFR_BSA",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ANFR_EKG",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ANFR_EKG",
+          "field": "EKGRP",
+          "description": "M_ANFR_EKG",
+          "value": "$EKGRP",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ANFR_EKO",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ANFR_EKO",
+          "field": "EKORG",
+          "description": "M_ANFR_EKO",
+          "value": "$EKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ANFR_WRK",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ANFR_WRK",
+          "field": "WERKS",
+          "description": "M_ANFR_WRK",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ANGB_BSA",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ANGB_BSA",
+          "field": "BSART",
+          "description": "M_ANGB_BSA",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ANGB_EKG",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ANGB_EKG",
+          "field": "EKGRP",
+          "description": "M_ANGB_EKG",
+          "value": "$EKGRP",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ANGB_EKO",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ANGB_EKO",
+          "field": "EKORG",
+          "description": "M_ANGB_EKO",
+          "value": "$EKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ANGB_WRK",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ANGB_WRK",
+          "field": "WERKS",
+          "description": "M_ANGB_WRK",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BANF_BSA",
+          "field": "ACTVT",
+          "description": "Create",
+          "value": "01",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BANF_BSA",
+          "field": "BSART",
+          "description": "Create",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BANF_EKG",
+          "field": "ACTVT",
+          "description": "Create",
+          "value": "01",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BANF_EKG",
+          "field": "EKGRP",
+          "description": "Create",
+          "value": "$EKGRP",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BANF_EKO",
+          "field": "ACTVT",
+          "description": "Create",
+          "value": "01",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BANF_EKO",
+          "field": "EKORG",
+          "description": "Create",
+          "value": "$EKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BANF_WRK",
+          "field": "ACTVT",
+          "description": "Create",
+          "value": "01",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BANF_WRK",
+          "field": "WERKS",
+          "description": "Create",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BEST_BSA",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BEST_BSA",
+          "field": "BSART",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BEST_EKG",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BEST_EKG",
+          "field": "EKGRP",
+          "description": "Display",
+          "value": "$EKGRP",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BEST_EKO",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BEST_EKO",
+          "field": "EKORG",
+          "description": "Display",
+          "value": "$EKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BEST_WRK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BEST_WRK",
+          "field": "WERKS",
+          "description": "Display",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_CR_WERKS",
+          "field": "ACTVT",
+          "description": "Create",
+          "value": "01",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_CR_WERKS",
+          "field": "BE_SRC_SYS",
+          "description": "Create",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_CR_WERKS",
+          "field": "BUKRS_EXT",
+          "description": "Create",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_CR_WERKS",
+          "field": "WERKS_EXT",
+          "description": "Create",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_CTLG_ACC",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_CTLG_ACC",
+          "field": "WEB_SRV_ID",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_EINF_EKO",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_EINF_EKO",
+          "field": "EKORG",
+          "description": "M_EINF_EKO",
+          "value": "$EKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_EINF_WRK",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_EINF_WRK",
+          "field": "WERKS",
+          "description": "M_EINF_WRK",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_LFM1_EKO",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_LFM1_EKO",
+          "field": "EKORG",
+          "description": "Display",
+          "value": "$EKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MAR",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MAR",
+          "field": "BEGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MAT",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MAT",
+          "field": "BEGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_WGR",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_WGR",
+          "field": "BEGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_WRK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_WRK",
+          "field": "WERKS",
+          "description": "Display",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ORDR_WRK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_ORDR_WRK",
+          "field": "WERKS",
+          "description": "Display",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_QTN_BSA",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_QTN_BSA",
+          "field": "BSART",
+          "description": "M_QTN_BSA",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_QTN_EKG",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_QTN_EKG",
+          "field": "EKGRP",
+          "description": "M_QTN_EKG",
+          "value": "$EKGRP",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_QTN_EKO",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_QTN_EKO",
+          "field": "EKORG",
+          "description": "M_QTN_EKO",
+          "value": "$EKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_QTN_WRK",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_QTN_WRK",
+          "field": "WERKS",
+          "description": "M_QTN_WRK",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RAHM_BSA",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RAHM_BSA",
+          "field": "BSART",
+          "description": "M_RAHM_BSA",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RAHM_EKG",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RAHM_EKG",
+          "field": "EKGRP",
+          "description": "M_RAHM_EKG",
+          "value": "$EKGRP",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RAHM_EKO",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RAHM_EKO",
+          "field": "EKORG",
+          "description": "M_RAHM_EKO",
+          "value": "$EKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RAHM_WRK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RAHM_WRK",
+          "field": "WERKS",
+          "description": "Display",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RECH_BUK",
+          "field": "ACTVT",
+          "description": "Create",
+          "value": "01",
+          "fieldUsage": "Unused",
+          "licenseType": "HB Professional"
+        },
+        {
+          "authObj": "M_RECH_BUK",
+          "field": "BUKRS",
+          "description": "Create",
+          "value": "$BUKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HB Professional"
+        },
+        {
+          "authObj": "M_RECH_EKG",
+          "field": "ACTVT",
+          "description": "Change",
+          "value": "02",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RECH_EKG",
+          "field": "EKGRP",
+          "description": "Change",
+          "value": "$EKGRP",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RECH_WRK",
+          "field": "ACTVT",
+          "description": "Create",
+          "value": "01",
+          "fieldUsage": "Unused",
+          "licenseType": "HB Professional"
+        },
+        {
+          "authObj": "M_RECH_WRK",
+          "field": "WERKS",
+          "description": "Create",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HB Professional"
+        },
+        {
+          "authObj": "M_RFQ_BSA",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RFQ_BSA",
+          "field": "BSART",
+          "description": "M_RFQ_BSA",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RFQ_EKG",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RFQ_EKG",
+          "field": "EKGRP",
+          "description": "M_RFQ_EKG",
+          "value": "$EKGRP",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RFQ_EKO",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RFQ_EKO",
+          "field": "EKORG",
+          "description": "M_RFQ_EKO",
+          "value": "$EKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RFQ_WRK",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RFQ_WRK",
+          "field": "WERKS",
+          "description": "M_RFQ_WRK",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_SES_EKG",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_SES_EKG",
+          "field": "EKGRP",
+          "description": "M_SES_EKG",
+          "value": "$EKGRP",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_SES_EKO",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_SES_EKO",
+          "field": "EKORG",
+          "description": "M_SES_EKO",
+          "value": "$EKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_SES_WRK",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_SES_WRK",
+          "field": "WERKS",
+          "description": "M_SES_WRK",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_TEMPLATE",
+          "field": "ACTVT",
+          "description": "Create",
+          "value": "01",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_TEMPLATE",
+          "field": "J_BO_TYPE",
+          "description": "Create",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_USRDF_CC",
+          "field": "ACTVT",
+          "description": "Change",
+          "value": "02",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_USRDF_CC",
+          "field": "BUKRS",
+          "description": "Change",
+          "value": "$BUKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_XLS_INTG",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "64",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_XLS_INTG",
+          "field": "BUSOBJECT",
+          "description": "M_XLS_INTG",
+          "value": "USER DEFAULTS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "P_ORGIN",
+          "field": "AUTHC",
+          "description": "P_ORGIN",
+          "value": "R",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "P_ORGIN",
+          "field": "INFTY",
+          "description": "P_ORGIN",
+          "value": "0001",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "P_ORGIN",
+          "field": "PERSA",
+          "description": "P_ORGIN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "P_ORGIN",
+          "field": "PERSG",
+          "description": "P_ORGIN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "P_ORGIN",
+          "field": "PERSK",
+          "description": "P_ORGIN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "P_ORGIN",
+          "field": "SUBTY",
+          "description": "P_ORGIN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "P_ORGIN",
+          "field": "VDSK1",
+          "description": "P_ORGIN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ADMI_FCD",
+          "field": "S_ADMI_FCD",
+          "description": "S_ADMI_FCD",
+          "value": "SP01",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_BDS_DS",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_BDS_DS",
+          "field": "CLASSNAME",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_BDS_DS",
+          "field": "CLASSTYPE",
+          "description": "Display",
+          "value": "BO",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_DEVELOP",
+          "field": "ACTVT",
+          "description": "Execute",
+          "value": "16",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "S_DEVELOP",
+          "field": "DEVCLASS",
+          "description": "Execute",
+          "value": "' '",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "S_DEVELOP",
+          "field": "OBJNAME",
+          "description": "Execute",
+          "value": "X-SAP-UI2*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "S_DEVELOP",
+          "field": "OBJTYPE",
+          "description": "Execute",
+          "value": "WDCC",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "S_DEVELOP",
+          "field": "P_GROUP",
+          "description": "Execute",
+          "value": "' '",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "REQUEST",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "SCONN_ID",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "SYS_CLIENT",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "SYSTEM_ID",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "TEMPL_NAME",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "TEMPL_TYPE",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_QL",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "29",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_GOS_ATT",
+          "field": "ACTVT",
+          "description": "Change",
+          "value": "02",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "S_GOS_ATT",
+          "field": "BOROBJTYPE",
+          "description": "Change",
+          "value": "BUS2081",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "S_GUI",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "60",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_OC_DOC",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_PB_CHIP",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_PB_CHIP",
+          "field": "CHIP_NAME",
+          "description": "Display",
+          "value": "X-SAP-UI2-CHIP*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_SCOPE",
+          "field": "OA2_CLIENT",
+          "description": "S_SCOPE",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_SCOPE",
+          "field": "OA2_SCOPE",
+          "description": "S_SCOPE",
+          "value": "/IWFND/SG_MED_CATALOG_0001",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_SERVICE",
+          "field": "SRV_NAME",
+          "description": "S_SERVICE",
+          "value": "07A8221A0DF782B377411EFE7881DA",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_SERVICE",
+          "field": "SRV_TYPE",
+          "description": "S_SERVICE",
+          "value": "HT",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_SPO_ACT",
+          "field": "SPOACTION",
+          "description": "S_SPO_ACT",
+          "value": "ATTR",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_SPO_ACT",
+          "field": "SPOAUTH",
+          "description": "S_SPO_ACT",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_SPO_DEV",
+          "field": "SPODEVICE",
+          "description": "S_SPO_DEV",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_SPO_PAGE",
+          "field": "SPODEVICE",
+          "description": "S_SPO_PAGE",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_SPO_PAGE",
+          "field": "SPOPAGES",
+          "description": "S_SPO_PAGE",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_START",
+          "field": "AUTHOBJNAM",
+          "description": "S_START",
+          "value": "/IWNGW/NOTIFICATION",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_START",
+          "field": "AUTHOBJTYP",
+          "description": "S_START",
+          "value": "G4BA",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_START",
+          "field": "AUTHPGMID",
+          "description": "S_START",
+          "value": "R3TR",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_TC",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_TC",
+          "field": "STC_SCN",
+          "description": "Display",
+          "value": "' '",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_TCODE",
+          "field": "TCD",
+          "description": "SAP Gateway Traces",
+          "value": "/IWFND/TRACES",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_WF_WI",
+          "field": "TASK_CLASS",
+          "description": "S_WF_WI",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_WF_WI",
+          "field": "WFACTVT",
+          "description": "S_WF_WI",
+          "value": "25",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_WF_WI",
+          "field": "WI_TYPE",
+          "description": "S_WF_WI",
+          "value": "W",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_WFAR_OBJ",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_WFAR_OBJ",
+          "field": "OAARCHIV",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_WFAR_OBJ",
+          "field": "OADOKUMENT",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_WFAR_OBJ",
+          "field": "OAOBJEKTE",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "SDDLVIEW",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "SDDLVIEW",
+          "field": "DDLNAME",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "SDDLVIEW",
+          "field": "DDLSRCNAME",
+          "description": "Display",
+          "value": "ESH_N_INC_INVOICE",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "V_KNA1_VKO",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "V_KNA1_VKO",
+          "field": "SPART",
+          "description": "Display",
+          "value": "$SPART",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "V_KNA1_VKO",
+          "field": "VKORG",
+          "description": "Display",
+          "value": "$VKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "V_KNA1_VKO",
+          "field": "VTWEG",
+          "description": "Display",
+          "value": "$VTWEG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "V_VBAK_VKO",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "V_VBAK_VKO",
+          "field": "SPART",
+          "description": "V_VBAK_VKO",
+          "value": "$SPART",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "V_VBAK_VKO",
+          "field": "VKORG",
+          "description": "V_VBAK_VKO",
+          "value": "$VKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "V_VBAK_VKO",
+          "field": "VTWEG",
+          "description": "V_VBAK_VKO",
+          "value": "$VTWEG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        }
+      ]
+    },
+    {
+      "role": "ZL_BR_CA_BP_DIS",
+      "authObjects": [
+        {
+          "authObj": "B_BUPA_ADR",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_ADR",
+          "field": "SENSTVT",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_ATT",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_ATT",
+          "field": "AUTHTYP",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_ATT",
+          "field": "AUVAL1",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_ATT",
+          "field": "AUVAL2",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_BNK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_BNK",
+          "field": "SENSTVT",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_CRS",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_FDG",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_FDG",
+          "field": "FLDGR",
+          "description": "Display",
+          "value": "0001-0008",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_GRP",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_GRP",
+          "field": "BEGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_RAT",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_RAT",
+          "field": "BP_PER_IND",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_RLT",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPA_RLT",
+          "field": "RLTYP",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPR_BZT",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPR_BZT",
+          "field": "RELTYP",
+          "description": "Display",
+          "value": "BUR001",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPR_FDG",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_BUPR_FDG",
+          "field": "FLDGR",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "B_CCARD",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_DRAD_OBJ",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_DRAD_OBJ",
+          "field": "DOKAR",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_DRAD_OBJ",
+          "field": "DOKOB",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_DRAD_OBJ",
+          "field": "STATUS",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_DRAW_APL",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_APL",
+          "field": "DOKAR",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_APL",
+          "field": "FILEXT",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_DOK",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "53",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_DOK",
+          "field": "DOKAR",
+          "description": "C_DRAW_DOK",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_TCD",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_TCD",
+          "field": "DOKAR",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_TCS",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_TCS",
+          "field": "DOKAR",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_TCS",
+          "field": "DOKST",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_TCLA_BKA",
+          "field": "KLART",
+          "description": "C_TCLA_BKA",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_BKPF_BUK",
+          "field": "ACTVT",
+          "description": "Create",
+          "value": "01",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_BKPF_BUK",
+          "field": "BUKRS",
+          "description": "Create",
+          "value": "$BUKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_BNKA_MAN",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_BNKA_MAO",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_BNKA_MAO",
+          "field": "BBANKS",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_APP",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_APP",
+          "field": "APPKZ",
+          "description": "Display",
+          "value": "F",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_BED",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_BED",
+          "field": "BRGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_BUK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_BUK",
+          "field": "BUKRS",
+          "description": "Display",
+          "value": "$BUKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_GEN",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_GRP",
+          "field": "ACTVT",
+          "description": "Create",
+          "value": "01",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_GRP",
+          "field": "KTOKD",
+          "description": "Create",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_AEN",
+          "field": "VGRUP",
+          "description": "F_LFA1_AEN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "F_LFA1_APP",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_APP",
+          "field": "APPKZ",
+          "description": "Display",
+          "value": "F",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_BEK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_BEK",
+          "field": "BRGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_BUK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_BUK",
+          "field": "BUKRS",
+          "description": "Display",
+          "value": "$BUKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_GEN",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_GRP",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_GRP",
+          "field": "KTOKK",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_SKA1_BUK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_SKA1_BUK",
+          "field": "BUKRS",
+          "description": "Display",
+          "value": "$BUKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_SKA1_KTP",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_SKA1_KTP",
+          "field": "KTOPL",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_LFM1_EKO",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_LFM1_EKO",
+          "field": "EKORG",
+          "description": "Display",
+          "value": "$EKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_WRK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_WRK",
+          "field": "WERKS",
+          "description": "Display",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "S_SERVICE",
+          "field": "SRV_NAME",
+          "description": "S_SERVICE",
+          "value": "07A8221A0DF782B377411EFE7881DA",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_SERVICE",
+          "field": "SRV_TYPE",
+          "description": "S_SERVICE",
+          "value": "HT",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_TCODE",
+          "field": "TCD",
+          "description": "SAP Gateway Traces",
+          "value": "/IWFND/TRACES",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "V_KNA1_BRG",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "V_KNA1_BRG",
+          "field": "BRGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "V_KNA1_VKO",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "V_KNA1_VKO",
+          "field": "SPART",
+          "description": "Display",
+          "value": "$SPART",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "V_KNA1_VKO",
+          "field": "VKORG",
+          "description": "Display",
+          "value": "$VKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "V_KNA1_VKO",
+          "field": "VTWEG",
+          "description": "Display",
+          "value": "$VTWEG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        }
+      ]
+    },
+    {
+      "role": "ZL_BR_CA_STOCK_DIS",
+      "authObjects": [
+        {
+          "authObj": "C_AENR_BGR",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_AENR_BGR",
+          "field": "BEGRU",
+          "description": "C_AENR_BGR",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_AENR_ERW",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_AENR_ERW",
+          "field": "AEFUN",
+          "description": "C_AENR_ERW",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_AENR_ERW",
+          "field": "AENST",
+          "description": "C_AENR_ERW",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_AENR_ERW",
+          "field": "BEGRU",
+          "description": "C_AENR_ERW",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_AENR_ERW",
+          "field": "RLKEY",
+          "description": "C_AENR_ERW",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_CABN",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_CABN_GRP",
+          "field": "ATAUTH",
+          "description": "C_CABN_GRP",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_TCD",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_TCD",
+          "field": "DOKAR",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_TCS",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_TCS",
+          "field": "DOKAR",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_DRAW_TCS",
+          "field": "DOKST",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_KLAH_BKL",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_KLAH_BKL",
+          "field": "BGRKL",
+          "description": "C_KLAH_BKL",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_KLAH_BKP",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_KLAH_BKP",
+          "field": "BGRKP",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_KLAH_BSE",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_KLAH_BSE",
+          "field": "BGRSE",
+          "description": "C_KLAH_BSE",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_STUE_BER",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_STUE_BER",
+          "field": "BEGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_STUE_BER",
+          "field": "STLAN",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_STUE_BER",
+          "field": "STLTY",
+          "description": "Display",
+          "value": "M",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_STUE_WRK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_STUE_WRK",
+          "field": "CSWRK",
+          "description": "Display",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_TCLA_BKA",
+          "field": "KLART",
+          "description": "C_TCLA_BKA",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_TCLS_BER",
+          "field": "KLART",
+          "description": "C_TCLS_BER",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_TCLS_BER",
+          "field": "SICHT",
+          "description": "C_TCLS_BER",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_TCLS_MNT",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_TCLS_MNT",
+          "field": "KLART",
+          "description": "C_TCLS_MNT",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_TCLS_MNT",
+          "field": "SICHT",
+          "description": "C_TCLS_MNT",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "C_VC_MODEL",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_VC_MODEL",
+          "field": "LOV_OBJTYP",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_BED",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_BED",
+          "field": "BRGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_GEN",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_GRP",
+          "field": "ACTVT",
+          "description": "Create",
+          "value": "01",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_KNA1_GRP",
+          "field": "KTOKD",
+          "description": "Create",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_BEK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_BEK",
+          "field": "BRGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_GEN",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_GRP",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "F_LFA1_GRP",
+          "field": "KTOKK",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BEST_WRK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_BEST_WRK",
+          "field": "WERKS",
+          "description": "Display",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_INVVAL",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_INVVAL",
+          "field": "DISPINVVAL",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MAN",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MAR",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MAR",
+          "field": "BEGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MAT",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MAT",
+          "field": "BEGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_VKO",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_VKO",
+          "field": "VKORG",
+          "description": "Display",
+          "value": "$VKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_VKO",
+          "field": "VTWEG",
+          "description": "Display",
+          "value": "$VTWEG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_WGR",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_WGR",
+          "field": "BEGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_WRK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_WRK",
+          "field": "WERKS",
+          "description": "Display",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MRES_BWA",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MRES_BWA",
+          "field": "BWART",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MRES_WWA",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MRES_WWA",
+          "field": "WERKS",
+          "description": "Display",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MSEG_BMB",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MSEG_BMB",
+          "field": "BWART",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MSEG_WMB",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MSEG_WMB",
+          "field": "WERKS",
+          "description": "Display",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RAHM_WRK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_RAHM_WRK",
+          "field": "WERKS",
+          "description": "Display",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "REQUEST",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "SCONN_ID",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "SYS_CLIENT",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "SYSTEM_ID",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "TEMPL_NAME",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_ESH_CONN",
+          "field": "TEMPL_TYPE",
+          "description": "S_ESH_CONN",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_SERVICE",
+          "field": "SRV_NAME",
+          "description": "S_SERVICE",
+          "value": "07A8221A0DF782B377411EFE7881DA",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_SERVICE",
+          "field": "SRV_TYPE",
+          "description": "S_SERVICE",
+          "value": "HT",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "S_TCODE",
+          "field": "TCD",
+          "description": "SAP Gateway Traces",
+          "value": "/IWFND/TRACES",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "V_KONH_VKS",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "V_KONH_VKS",
+          "field": "KSCHL",
+          "description": "Display",
+          "value": "PR00",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "W_AUFT_BAA",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "W_AUFT_BAA",
+          "field": "AUFAR",
+          "description": "W_AUFT_BAA",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "W_BETR_USR",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "W_BETR_USR",
+          "field": "WERKS",
+          "description": "Display",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "W_WAKH_EKO",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "W_WAKH_EKO",
+          "field": "EKGRP",
+          "description": "W_WAKH_EKO",
+          "value": "$EKGRP",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "W_WAKH_EKO",
+          "field": "EKORG",
+          "description": "W_WAKH_EKO",
+          "value": "$EKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "W_WAKH_VKO",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "F4",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "W_WAKH_VKO",
+          "field": "VKORG",
+          "description": "W_WAKH_VKO",
+          "value": "$VKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "W_WAKH_VKO",
+          "field": "VTWEG",
+          "description": "W_WAKH_VKO",
+          "value": "$VTWEG",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        }
+      ]
+    },
+    {
+      "role": "ZL_BR_CA_MAT_MSTR_DIS",
+      "authObjects": [
+        {
+          "authObj": "C_DRAD_OBJ",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_DRAD_OBJ",
+          "field": "DOKAR",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_DRAD_OBJ",
+          "field": "DOKOB",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_DRAD_OBJ",
+          "field": "STATUS",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_KLAH_BKL",
+          "field": "ACTVT",
+          "description": "Assigned",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_KLAH_BKL",
+          "field": "BGRKL",
+          "description": "C_KLAH_BKL",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "C_TCLA_BKA",
+          "field": "KLART",
+          "description": "C_TCLA_BKA",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        },
+        {
+          "authObj": "K_KEKO",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "K_KEKO",
+          "field": "BUKRS",
+          "description": "Display",
+          "value": "$BUKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "K_KEKO",
+          "field": "KLVAR",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_BUK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_BUK",
+          "field": "BUKRS",
+          "description": "Display",
+          "value": "$BUKRS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_LGN",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_LGN",
+          "field": "LGNUM",
+          "description": "Display",
+          "value": "$LGNUM",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MAN",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MAR",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MAR",
+          "field": "BEGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MAT",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MAT",
+          "field": "BEGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MEX",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MZP",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_MZP",
+          "field": "WERKS",
+          "description": "Display",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_STA",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_STA",
+          "field": "STATM",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_VKO",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_VKO",
+          "field": "VKORG",
+          "description": "Display",
+          "value": "$VKORG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_VKO",
+          "field": "VTWEG",
+          "description": "Display",
+          "value": "$VTWEG",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_WGR",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_WGR",
+          "field": "BEGRU",
+          "description": "Display",
+          "value": "*",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_WRK",
+          "field": "ACTVT",
+          "description": "Display",
+          "value": "03",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "M_MATE_WRK",
+          "field": "WERKS",
+          "description": "Display",
+          "value": "$WERKS",
+          "fieldUsage": "Unused",
+          "licenseType": "HD Productivity"
+        },
+        {
+          "authObj": "S_TCODE",
+          "field": "TCD",
+          "description": "SAP Gateway Traces",
+          "value": "/IWFND/TRACES",
+          "fieldUsage": "Unused",
+          "licenseType": "NA"
+        }
+      ]
+    }
+  ],
+  "topTransactions": [
+    {
+      "tCode": "/IWFND/TRACES",
+      "executionCount": 1,
+      "activity": "SAP Gateway Traces",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "/SCMTMS/BP_NAV",
+      "executionCount": 1,
+      "activity": "Display Business Partner",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "BP",
+      "executionCount": 1,
+      "activity": "Maintain Business Partner",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "BUP3",
+      "executionCount": 1,
+      "activity": "Display Business Partner",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "IH09",
+      "executionCount": 1,
+      "activity": "Display Material",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "MB52",
+      "executionCount": 1,
+      "activity": "List of Warehouse Stocks on Hand",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "ME51N",
+      "executionCount": 1,
+      "activity": "Create Purchase Requisition",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "ME52N",
+      "executionCount": 1,
+      "activity": "Change Purchase Requisition",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "ME53N",
+      "executionCount": 1,
+      "activity": "Display Purchase Requisition",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "MK03",
+      "executionCount": 1,
+      "activity": "Display Vendor (Purchasing)",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "MM03",
+      "executionCount": 1,
+      "activity": "Display Material &",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "MM04",
+      "executionCount": 1,
+      "activity": "Display Material Change Documents",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "MM60",
+      "executionCount": 1,
+      "activity": "Materials List",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "MMBE",
+      "executionCount": 1,
+      "activity": "Stock Overview",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "SP01",
+      "executionCount": 1,
+      "activity": "Output Controller",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "SP02",
+      "executionCount": 1,
+      "activity": "Display Spool Requests",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "SU3",
+      "executionCount": 1,
+      "activity": "Maintain Users Own Data",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "SU53",
+      "executionCount": 1,
+      "activity": "Evaluate Authorization Check",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    }
+  ],
+  "authorizedTransactions": [
+    {
+      "tCode": "/IWFND/TRACES",
+      "executionCount": 1,
+      "activity": "SAP Gateway Traces",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "/SCMTMS/BP_NAV",
+      "executionCount": 1,
+      "activity": "Display Business Partner",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "BP",
+      "executionCount": 1,
+      "activity": "Maintain Business Partner",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "BUP3",
+      "executionCount": 1,
+      "activity": "Display Business Partner",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "IH09",
+      "executionCount": 1,
+      "activity": "Display Material",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "MB52",
+      "executionCount": 1,
+      "activity": "List of Warehouse Stocks on Hand",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "ME51N",
+      "executionCount": 1,
+      "activity": "Create Purchase Requisition",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "ME52N",
+      "executionCount": 1,
+      "activity": "Change Purchase Requisition",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "ME53N",
+      "executionCount": 1,
+      "activity": "Display Purchase Requisition",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "MK03",
+      "executionCount": 1,
+      "activity": "Display Vendor (Purchasing)",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "MM03",
+      "executionCount": 1,
+      "activity": "Display Material &",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "MM04",
+      "executionCount": 1,
+      "activity": "Display Material Change Documents",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "MM60",
+      "executionCount": 1,
+      "activity": "Materials List",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "MMBE",
+      "executionCount": 1,
+      "activity": "Stock Overview",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "SP01",
+      "executionCount": 1,
+      "activity": "Output Controller",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "SP02",
+      "executionCount": 1,
+      "activity": "Display Spool Requests",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "SU3",
+      "executionCount": 1,
+      "activity": "Maintain Users Own Data",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    },
+    {
+      "tCode": "SU53",
+      "executionCount": 1,
+      "activity": "Evaluate Authorization Check",
+      "source": "Auth Trace",
+      "confidence": "Medium"
+    }
+  ]
+}

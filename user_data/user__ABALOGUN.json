@@ -1,0 +1,78 @@
+{
+  "id": 1,
+  "firstName": "Abetunji",
+  "lastName": "Balogun",
+  "sapId": "ABALOGUN",
+  "email": "Adetunji.Balogun@bs.nttdata.com",
+  "roleCount": 0,
+  "authCount": 0,
+  "license": "NA",
+  "targetLicense": "NA",
+  "inferredLicense": "NA",
+  "status": "Active",
+  "sapUserType": "Dialog",
+  "lastLogin": "15-04-2024 03:33:39",
+  "referenceUser": "ABALOGUN",
+  "fue": 0,
+  "validFrom": "2024-09-29",
+  "validTo": "2026-12-11",
+  "licenseCounts": {
+    "professional": 0,
+    "functional": 0,
+    "productivity": 0
+  },
+  "authSummary": {
+    "total": 0,
+    "used": 0,
+    "unused": 0,
+    "critical": 0,
+    "duplicates": 0,
+    "cleansable": 0
+  },
+  "roleActivity": {
+    "total": 0,
+    "active": 0,
+    "inactive": 0,
+    "composite": 0,
+    "single": 0
+  },
+  "usageDonut": {
+    "active": 0,
+    "idle": 60,
+    "critical": 40
+  },
+  "loginCounts": {
+    "last30": 0,
+    "last60": 0,
+    "last90": 0
+  },
+  "topTcodes": [],
+  "monthlyUsage": [
+    {
+      "month": "Jan '26",
+      "count": 40
+    },
+    {
+      "month": "Feb '26",
+      "count": 48
+    },
+    {
+      "month": "Mar '26",
+      "count": 66
+    },
+    {
+      "month": "Apr '26",
+      "count": 48
+    },
+    {
+      "month": "May '26",
+      "count": 50
+    },
+    {
+      "month": "Jun '26",
+      "count": 57
+    }
+  ],
+  "roles": [],
+  "directAuthObjs": []
+}

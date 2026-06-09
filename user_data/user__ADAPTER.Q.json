@@ -1,0 +1,4234 @@
+{
+  "id": 4,
+  "firstName": "NA",
+  "lastName": "ADAPTER.Q",
+  "sapId": "ADAPTER.Q",
+  "email": "ADAPTER.QUICKBOOKS@lottechem.us",
+  "roleCount": 4,
+  "authCount": 488,
+  "license": "HD Professional",
+  "targetLicense": "HD Professional",
+  "inferredLicense": "HD Professional",
+  "status": "Active",
+  "sapUserType": "Reference",
+  "lastLogin": "09-12-2020 00:00:00",
+  "referenceUser": "ADAPTER.Q",
+  "fue": 0,
+  "validFrom": "2024-10-03",
+  "validTo": "2028-01-06",
+  "licenseCounts": {
+    "professional": 4,
+    "functional": 0,
+    "productivity": 334
+  },
+  "authSummary": {
+    "total": 488,
+    "used": 0,
+    "unused": 488,
+    "critical": 171,
+    "duplicates": 72,
+    "cleansable": 488
+  },
+  "roleActivity": {
+    "total": 4,
+    "active": 0,
+    "inactive": 4,
+    "composite": 0,
+    "single": 4
+  },
+  "usageDonut": {
+    "active": 0,
+    "idle": 60,
+    "critical": 40
+  },
+  "loginCounts": {
+    "last30": 0,
+    "last60": 0,
+    "last90": 0
+  },
+  "topTcodes": [
+    {
+      "code": "/IWFND/TRACES",
+      "desc": "SAP Gateway Traces",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2026-05-06",
+      "classification": "HD Professional",
+      "assignmentSource": "Direct"
+    },
+    {
+      "code": "/SCMTMS/BP_NAV",
+      "desc": "Display Business Partner",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2026-04-28",
+      "classification": "HD Professional",
+      "assignmentSource": "Indirect"
+    },
+    {
+      "code": "BP",
+      "desc": "Maintain Business Partner",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2025-12-27",
+      "classification": "HD Productivity",
+      "assignmentSource": "Indirect"
+    },
+    {
+      "code": "BUP3",
+      "desc": "Display Business Partner",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2026-01-30",
+      "classification": "HD Functional",
+      "assignmentSource": "Direct"
+    },
+    {
+      "code": "IH09",
+      "desc": "Display Material",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2026-05-06",
+      "classification": "HD Productivity",
+      "assignmentSource": "Indirect"
+    },
+    {
+      "code": "MB52",
+      "desc": "List of Warehouse Stocks on Hand",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2026-02-26",
+      "classification": "HD Functional",
+      "assignmentSource": "Indirect"
+    },
+    {
+      "code": "ME51N",
+      "desc": "Create Purchase Requisition",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2026-03-06",
+      "classification": "HD Professional",
+      "assignmentSource": "Direct"
+    },
+    {
+      "code": "ME52N",
+      "desc": "Change Purchase Requisition",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2025-12-28",
+      "classification": "HD Functional",
+      "assignmentSource": "Indirect"
+    },
+    {
+      "code": "ME53N",
+      "desc": "Display Purchase Requisition",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2025-12-18",
+      "classification": "HD Productivity",
+      "assignmentSource": "Indirect"
+    },
+    {
+      "code": "MK03",
+      "desc": "Display Vendor (Purchasing)",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2026-01-02",
+      "classification": "HD Productivity",
+      "assignmentSource": "Direct"
+    },
+    {
+      "code": "MM03",
+      "desc": "Display Material &",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2026-04-07",
+      "classification": "HD Professional",
+      "assignmentSource": "Indirect"
+    },
+    {
+      "code": "MM04",
+      "desc": "Display Material Change Documents",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2026-05-20",
+      "classification": "HD Professional",
+      "assignmentSource": "Indirect"
+    },
+    {
+      "code": "MM60",
+      "desc": "Materials List",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2026-02-28",
+      "classification": "HD Functional",
+      "assignmentSource": "Direct"
+    },
+    {
+      "code": "MMBE",
+      "desc": "Stock Overview",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2026-05-11",
+      "classification": "HD Productivity",
+      "assignmentSource": "Indirect"
+    },
+    {
+      "code": "SP01",
+      "desc": "Output Controller",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2026-04-12",
+      "classification": "HD Professional",
+      "assignmentSource": "Indirect"
+    },
+    {
+      "code": "SP02",
+      "desc": "Display Spool Requests",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2026-04-10",
+      "classification": "HD Professional",
+      "assignmentSource": "Direct"
+    },
+    {
+      "code": "SU3",
+      "desc": "Maintain Users Own Data",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2026-06-04",
+      "classification": "HD Productivity",
+      "assignmentSource": "Indirect"
+    },
+    {
+      "code": "SU53",
+      "desc": "Evaluate Authorization Check",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2026-03-22",
+      "classification": "HD Functional",
+      "assignmentSource": "Indirect"
+    }
+  ],
+  "monthlyUsage": [
+    {
+      "month": "Jan '26",
+      "count": 30
+    },
+    {
+      "month": "Feb '26",
+      "count": 21
+    },
+    {
+      "month": "Mar '26",
+      "count": 30
+    },
+    {
+      "month": "Apr '26",
+      "count": 34
+    },
+    {
+      "month": "May '26",
+      "count": 25
+    },
+    {
+      "month": "Jun '26",
+      "count": 30
+    }
+  ],
+  "roles": [
+    {
+      "name": "ZL_BR_CA_ALL_USERS",
+      "type": "Single",
+      "assignmentType": "Indirectly Assigned",
+      "authObjs": [
+        {
+          "name": "/UI2/CHIP",
+          "desc": "Display",
+          "field": "/UI2/CHIP",
+          "values": "X-SAP-UI2-CHIP*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "/UI2/CHIP",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "/UIF/FLEX",
+          "desc": "/UIF/FLEX",
+          "field": "/UIF/CHTY",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "/UIF/FLEX",
+          "desc": "/UIF/FLEX",
+          "field": "/UIF/KEYU",
+          "values": "' '",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "A_S_ANLKL",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "A_S_ANLKL",
+          "desc": "A_S_ANLKL",
+          "field": "ANLKL",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "A_S_ANLKL",
+          "desc": "A_S_ANLKL",
+          "field": "BUKRS",
+          "values": "$BUKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_GRP",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_GRP",
+          "desc": "Display",
+          "field": "BEGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_RLT",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_RLT",
+          "desc": "Display",
+          "field": "RLTYP",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_AFKO_ACT",
+          "desc": "C_AFKO_ACT",
+          "field": "PS_ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_AFKO_ATY",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_AFKO_ATY",
+          "desc": "C_AFKO_ATY",
+          "field": "AUTYP",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_AFKO_AWA",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_AFKO_AWA",
+          "desc": "C_AFKO_AWA",
+          "field": "AUFART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_AFKO_AWA",
+          "desc": "C_AFKO_AWA",
+          "field": "AUTYP",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_AFKO_AWA",
+          "desc": "C_AFKO_AWA",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_AFKO_AWK",
+          "desc": "C_AFKO_AWK",
+          "field": "AUFART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_AFKO_AWK",
+          "desc": "C_AFKO_AWK",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_AFVG_APL",
+          "desc": "C_AFVG_APL",
+          "field": "ARBPL",
+          "values": "$ARBPL",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_AFVG_APL",
+          "desc": "C_AFVG_APL",
+          "field": "PS_ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_AFVG_APL",
+          "desc": "C_AFVG_APL",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_AFVG_TYP",
+          "desc": "C_AFVG_TYP",
+          "field": "PS_ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_AFVG_TYP",
+          "desc": "C_AFVG_TYP",
+          "field": "PS_VGTYP",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_ARPL_WRK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_ARPL_WRK",
+          "desc": "Display",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_DRAD_OBJ",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_DRAD_OBJ",
+          "desc": "Display",
+          "field": "DOKAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_DRAD_OBJ",
+          "desc": "Display",
+          "field": "DOKOB",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_DRAD_OBJ",
+          "desc": "Display",
+          "field": "STATUS",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_DRAW_APL",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_APL",
+          "desc": "Display",
+          "field": "DOKAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_APL",
+          "desc": "Display",
+          "field": "FILEXT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_DOK",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "53",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_DOK",
+          "desc": "C_DRAW_DOK",
+          "field": "DOKAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_TCD",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_TCD",
+          "desc": "Display",
+          "field": "DOKAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_TCS",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_TCS",
+          "desc": "Display",
+          "field": "DOKAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_TCS",
+          "desc": "Display",
+          "field": "DOKST",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_PRPS_ART",
+          "desc": "C_PRPS_ART",
+          "field": "PS_ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_PRPS_ART",
+          "desc": "C_PRPS_ART",
+          "field": "PS_PRART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_PRPS_KOK",
+          "desc": "C_PRPS_KOK",
+          "field": "KOKRS",
+          "values": "$KOKRS",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_PRPS_KOK",
+          "desc": "C_PRPS_KOK",
+          "field": "PS_ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_PRPS_KST",
+          "desc": "C_PRPS_KST",
+          "field": "PS_ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_PRPS_KST",
+          "desc": "C_PRPS_KST",
+          "field": "PS_FKOKR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_PRPS_KST",
+          "desc": "C_PRPS_KST",
+          "field": "PS_FKSTL",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_PRPS_PRC",
+          "desc": "C_PRPS_PRC",
+          "field": "PRCTR",
+          "values": "$PRCTR",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_PRPS_PRC",
+          "desc": "C_PRPS_PRC",
+          "field": "PS_ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_PRPS_VNR",
+          "desc": "C_PRPS_VNR",
+          "field": "PS_ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_PRPS_VNR",
+          "desc": "C_PRPS_VNR",
+          "field": "PS_VERNR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_PSCVP_DB",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_BKPF_BEK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_BKPF_BEK",
+          "desc": "Display",
+          "field": "BRGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_BKPF_BES",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_BKPF_BES",
+          "desc": "Display",
+          "field": "BRGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_BKPF_BLA",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_BKPF_BLA",
+          "desc": "Display",
+          "field": "BRGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_BKPF_BUK",
+          "desc": "Create",
+          "field": "ACTVT",
+          "values": "01",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_BKPF_BUK",
+          "desc": "Create",
+          "field": "BUKRS",
+          "values": "$BUKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_BKPF_BUP",
+          "desc": "F_BKPF_BUP",
+          "field": "BRGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_BKPF_GSB",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_BKPF_GSB",
+          "desc": "Display",
+          "field": "GSBER",
+          "values": "$GSBER",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_BKPF_KOA",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_BKPF_KOA",
+          "desc": "Display",
+          "field": "KOART",
+          "values": "$KOART",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_CNTXI_CX",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_CNTXI_CX",
+          "desc": "Display",
+          "field": "EKGRP",
+          "values": "$EKGRP",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_CNTXI_TE",
+          "desc": "F_CNTXI_TE",
+          "field": "TXI_TE_ACT",
+          "values": "04",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_CNTXI_TE",
+          "desc": "F_CNTXI_TE",
+          "field": "TXI_TE_ID",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_CNTXI_TE",
+          "desc": "F_CNTXI_TE",
+          "field": "TXI_TE_TYP",
+          "values": "TE",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FAGL_LDR",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_FAGL_LDR",
+          "desc": "Display",
+          "field": "BUKRS",
+          "values": "$BUKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_FAGL_LDR",
+          "desc": "Display",
+          "field": "GLRLDNR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_FAGL_LDR",
+          "desc": "Display",
+          "field": "GLRRCTY",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_FAGL_LDR",
+          "desc": "Display",
+          "field": "GLRVERS",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_FAGL_SEG",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_FAGL_SEG",
+          "desc": "Display",
+          "field": "GLRRCTY",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_FAGL_SEG",
+          "desc": "Display",
+          "field": "SEGMENT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_FICA_FOG",
+          "desc": "F_FICA_FOG",
+          "field": "FM_AUTHACT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FICA_FOG",
+          "desc": "F_FICA_FOG",
+          "field": "FM_AUTHGRF",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FICA_FOG",
+          "desc": "F_FICA_FOG",
+          "field": "FM_FIKRS",
+          "values": "$FIKRS",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FICA_FPG",
+          "desc": "F_FICA_FPG",
+          "field": "FM_AUTHACT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FICA_FPG",
+          "desc": "F_FICA_FPG",
+          "field": "FM_AUTHGRP",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FICA_FPG",
+          "desc": "F_FICA_FPG",
+          "field": "FM_FIKRS",
+          "values": "$FIKRS",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FICA_FSG",
+          "desc": "F_FICA_FSG",
+          "field": "FM_AUTHACT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FICA_FSG",
+          "desc": "F_FICA_FSG",
+          "field": "FM_AUTHGRC",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FICA_FSG",
+          "desc": "F_FICA_FSG",
+          "field": "FM_FIKRS",
+          "values": "$FIKRS",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FICB_FKR",
+          "desc": "F_FICB_FKR",
+          "field": "FM_AUTHACT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FICB_FKR",
+          "desc": "F_FICB_FKR",
+          "field": "FM_FIKRS",
+          "values": "$FIKRS",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FIGM_GNT",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_FIGM_GNT",
+          "desc": "F_FIGM_GNT",
+          "field": "GM_AUTHGR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_FIGM_GNT",
+          "desc": "F_FIGM_GNT",
+          "field": "GM_LIFESTA",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_FMMD_FAR",
+          "desc": "F_FMMD_FAR",
+          "field": "FM_AUTHACT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FMMD_FAR",
+          "desc": "F_FMMD_FAR",
+          "field": "FM_FIKRS",
+          "values": "$FIKRS",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FMMD_FAR",
+          "desc": "F_FMMD_FAR",
+          "field": "FM_GRP_FAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FUND_PST",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_FUND_PST",
+          "desc": "F_FUND_PST",
+          "field": "FM_AUTHGRF",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_FUND_PST",
+          "desc": "F_FUND_PST",
+          "field": "FM_FIKRS",
+          "values": "$FIKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_FUNDSRES",
+          "desc": "F_FUNDSRES",
+          "field": "BUKRS",
+          "values": "$BUKRS",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FUNDSRES",
+          "desc": "F_FUNDSRES",
+          "field": "FMRE_AUTH",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FUNDSRES",
+          "desc": "F_FUNDSRES",
+          "field": "FMRE_BLART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_FUNDSRES",
+          "desc": "F_FUNDSRES",
+          "field": "FMRE_BLTYP",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_KNA1_BED",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_BED",
+          "desc": "Display",
+          "field": "BRGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_BUK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_BUK",
+          "desc": "Display",
+          "field": "BUKRS",
+          "values": "$BUKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_GEN",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_GRP",
+          "desc": "Create",
+          "field": "ACTVT",
+          "values": "01",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_GRP",
+          "desc": "Create",
+          "field": "KTOKD",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_BEK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_BEK",
+          "desc": "Display",
+          "field": "BRGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_BUK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_BUK",
+          "desc": "Display",
+          "field": "BUKRS",
+          "values": "$BUKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_GEN",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_GRP",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_GRP",
+          "desc": "Display",
+          "field": "KTOKK",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_SKA1_BUK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_SKA1_BUK",
+          "desc": "Display",
+          "field": "BUKRS",
+          "values": "$BUKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_SKA1_KTP",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_SKA1_KTP",
+          "desc": "Display",
+          "field": "KTOPL",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "I_AUART",
+          "desc": "I_AUART",
+          "field": "AUFART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "I_AUART",
+          "desc": "I_AUART",
+          "field": "IWERK",
+          "values": "$IWERK",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "K_CSLA",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "K_CSLA",
+          "desc": "K_CSLA",
+          "field": "KOKRS",
+          "values": "$KOKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "K_PCAR_REP",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "K_PCAR_REP",
+          "desc": "K_PCAR_REP",
+          "field": "BUKRS",
+          "values": "$BUKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "K_PCAR_REP",
+          "desc": "K_PCAR_REP",
+          "field": "KSTAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "K_PCAR_REP",
+          "desc": "K_PCAR_REP",
+          "field": "PRCTR",
+          "values": "$PRCTR",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ANFR_BSA",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ANFR_BSA",
+          "desc": "M_ANFR_BSA",
+          "field": "BSART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ANFR_EKG",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ANFR_EKG",
+          "desc": "M_ANFR_EKG",
+          "field": "EKGRP",
+          "values": "$EKGRP",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ANFR_EKO",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ANFR_EKO",
+          "desc": "M_ANFR_EKO",
+          "field": "EKORG",
+          "values": "$EKORG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ANFR_WRK",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ANFR_WRK",
+          "desc": "M_ANFR_WRK",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ANGB_BSA",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ANGB_BSA",
+          "desc": "M_ANGB_BSA",
+          "field": "BSART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ANGB_EKG",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ANGB_EKG",
+          "desc": "M_ANGB_EKG",
+          "field": "EKGRP",
+          "values": "$EKGRP",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ANGB_EKO",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ANGB_EKO",
+          "desc": "M_ANGB_EKO",
+          "field": "EKORG",
+          "values": "$EKORG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ANGB_WRK",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ANGB_WRK",
+          "desc": "M_ANGB_WRK",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BANF_BSA",
+          "desc": "Create",
+          "field": "ACTVT",
+          "values": "01",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BANF_BSA",
+          "desc": "Create",
+          "field": "BSART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BANF_EKG",
+          "desc": "Create",
+          "field": "ACTVT",
+          "values": "01",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BANF_EKG",
+          "desc": "Create",
+          "field": "EKGRP",
+          "values": "$EKGRP",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BANF_EKO",
+          "desc": "Create",
+          "field": "ACTVT",
+          "values": "01",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BANF_EKO",
+          "desc": "Create",
+          "field": "EKORG",
+          "values": "$EKORG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BANF_WRK",
+          "desc": "Create",
+          "field": "ACTVT",
+          "values": "01",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BANF_WRK",
+          "desc": "Create",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BEST_BSA",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BEST_BSA",
+          "desc": "Display",
+          "field": "BSART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BEST_EKG",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BEST_EKG",
+          "desc": "Display",
+          "field": "EKGRP",
+          "values": "$EKGRP",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BEST_EKO",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BEST_EKO",
+          "desc": "Display",
+          "field": "EKORG",
+          "values": "$EKORG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BEST_WRK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BEST_WRK",
+          "desc": "Display",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_CR_WERKS",
+          "desc": "Create",
+          "field": "ACTVT",
+          "values": "01",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_CR_WERKS",
+          "desc": "Create",
+          "field": "BE_SRC_SYS",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_CR_WERKS",
+          "desc": "Create",
+          "field": "BUKRS_EXT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_CR_WERKS",
+          "desc": "Create",
+          "field": "WERKS_EXT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_CTLG_ACC",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_CTLG_ACC",
+          "desc": "Display",
+          "field": "WEB_SRV_ID",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_EINF_EKO",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_EINF_EKO",
+          "desc": "M_EINF_EKO",
+          "field": "EKORG",
+          "values": "$EKORG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_EINF_WRK",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_EINF_WRK",
+          "desc": "M_EINF_WRK",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_LFM1_EKO",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_LFM1_EKO",
+          "desc": "Display",
+          "field": "EKORG",
+          "values": "$EKORG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MAR",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MAR",
+          "desc": "Display",
+          "field": "BEGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MAT",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MAT",
+          "desc": "Display",
+          "field": "BEGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_WGR",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_WGR",
+          "desc": "Display",
+          "field": "BEGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_WRK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_WRK",
+          "desc": "Display",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ORDR_WRK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_ORDR_WRK",
+          "desc": "Display",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_QTN_BSA",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_QTN_BSA",
+          "desc": "M_QTN_BSA",
+          "field": "BSART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_QTN_EKG",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_QTN_EKG",
+          "desc": "M_QTN_EKG",
+          "field": "EKGRP",
+          "values": "$EKGRP",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_QTN_EKO",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_QTN_EKO",
+          "desc": "M_QTN_EKO",
+          "field": "EKORG",
+          "values": "$EKORG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_QTN_WRK",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_QTN_WRK",
+          "desc": "M_QTN_WRK",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RAHM_BSA",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RAHM_BSA",
+          "desc": "M_RAHM_BSA",
+          "field": "BSART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RAHM_EKG",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RAHM_EKG",
+          "desc": "M_RAHM_EKG",
+          "field": "EKGRP",
+          "values": "$EKGRP",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RAHM_EKO",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RAHM_EKO",
+          "desc": "M_RAHM_EKO",
+          "field": "EKORG",
+          "values": "$EKORG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RAHM_WRK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RAHM_WRK",
+          "desc": "Display",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RECH_BUK",
+          "desc": "Create",
+          "field": "ACTVT",
+          "values": "01",
+          "fieldStatus": "Unused",
+          "license": "HD Professional"
+        },
+        {
+          "name": "M_RECH_BUK",
+          "desc": "Create",
+          "field": "BUKRS",
+          "values": "$BUKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Professional"
+        },
+        {
+          "name": "M_RECH_EKG",
+          "desc": "Change",
+          "field": "ACTVT",
+          "values": "02",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RECH_EKG",
+          "desc": "Change",
+          "field": "EKGRP",
+          "values": "$EKGRP",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RECH_WRK",
+          "desc": "Create",
+          "field": "ACTVT",
+          "values": "01",
+          "fieldStatus": "Unused",
+          "license": "HD Professional"
+        },
+        {
+          "name": "M_RECH_WRK",
+          "desc": "Create",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Professional"
+        },
+        {
+          "name": "M_RFQ_BSA",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RFQ_BSA",
+          "desc": "M_RFQ_BSA",
+          "field": "BSART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RFQ_EKG",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RFQ_EKG",
+          "desc": "M_RFQ_EKG",
+          "field": "EKGRP",
+          "values": "$EKGRP",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RFQ_EKO",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RFQ_EKO",
+          "desc": "M_RFQ_EKO",
+          "field": "EKORG",
+          "values": "$EKORG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RFQ_WRK",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RFQ_WRK",
+          "desc": "M_RFQ_WRK",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_SES_EKG",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_SES_EKG",
+          "desc": "M_SES_EKG",
+          "field": "EKGRP",
+          "values": "$EKGRP",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_SES_EKO",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_SES_EKO",
+          "desc": "M_SES_EKO",
+          "field": "EKORG",
+          "values": "$EKORG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_SES_WRK",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_SES_WRK",
+          "desc": "M_SES_WRK",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_TEMPLATE",
+          "desc": "Create",
+          "field": "ACTVT",
+          "values": "01",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_TEMPLATE",
+          "desc": "Create",
+          "field": "J_BO_TYPE",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_USRDF_CC",
+          "desc": "Change",
+          "field": "ACTVT",
+          "values": "02",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_USRDF_CC",
+          "desc": "Change",
+          "field": "BUKRS",
+          "values": "$BUKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_XLS_INTG",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "64",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_XLS_INTG",
+          "desc": "M_XLS_INTG",
+          "field": "BUSOBJECT",
+          "values": "USER DEFAULTS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "P_ORGIN",
+          "desc": "P_ORGIN",
+          "field": "AUTHC",
+          "values": "R",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "P_ORGIN",
+          "desc": "P_ORGIN",
+          "field": "INFTY",
+          "values": "0001",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "P_ORGIN",
+          "desc": "P_ORGIN",
+          "field": "PERSA",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "P_ORGIN",
+          "desc": "P_ORGIN",
+          "field": "PERSG",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "P_ORGIN",
+          "desc": "P_ORGIN",
+          "field": "PERSK",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "P_ORGIN",
+          "desc": "P_ORGIN",
+          "field": "SUBTY",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "P_ORGIN",
+          "desc": "P_ORGIN",
+          "field": "VDSK1",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ADMI_FCD",
+          "desc": "S_ADMI_FCD",
+          "field": "S_ADMI_FCD",
+          "values": "SP01",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_BDS_DS",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_BDS_DS",
+          "desc": "Display",
+          "field": "CLASSNAME",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_BDS_DS",
+          "desc": "Display",
+          "field": "CLASSTYPE",
+          "values": "BO",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_DEVELOP",
+          "desc": "Execute",
+          "field": "ACTVT",
+          "values": "16",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "S_DEVELOP",
+          "desc": "Execute",
+          "field": "DEVCLASS",
+          "values": "' '",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "S_DEVELOP",
+          "desc": "Execute",
+          "field": "OBJNAME",
+          "values": "X-SAP-UI2*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "S_DEVELOP",
+          "desc": "Execute",
+          "field": "OBJTYPE",
+          "values": "WDCC",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "S_DEVELOP",
+          "desc": "Execute",
+          "field": "P_GROUP",
+          "values": "' '",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "REQUEST",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "SCONN_ID",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "SYS_CLIENT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "SYSTEM_ID",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "TEMPL_NAME",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "TEMPL_TYPE",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_QL",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "29",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_GOS_ATT",
+          "desc": "Change",
+          "field": "ACTVT",
+          "values": "02",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "S_GOS_ATT",
+          "desc": "Change",
+          "field": "BOROBJTYPE",
+          "values": "BUS2081",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "S_GUI",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "60",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_OC_DOC",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_PB_CHIP",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_PB_CHIP",
+          "desc": "Display",
+          "field": "CHIP_NAME",
+          "values": "X-SAP-UI2-CHIP*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_SCOPE",
+          "desc": "S_SCOPE",
+          "field": "OA2_CLIENT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_SCOPE",
+          "desc": "S_SCOPE",
+          "field": "OA2_SCOPE",
+          "values": "/IWFND/SG_MED_CATALOG_0001",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_SERVICE",
+          "desc": "S_SERVICE",
+          "field": "SRV_NAME",
+          "values": "07A8221A0DF782B377411EFE7881DA",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_SERVICE",
+          "desc": "S_SERVICE",
+          "field": "SRV_TYPE",
+          "values": "HT",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_SPO_ACT",
+          "desc": "S_SPO_ACT",
+          "field": "SPOACTION",
+          "values": "ATTR",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_SPO_ACT",
+          "desc": "S_SPO_ACT",
+          "field": "SPOAUTH",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_SPO_DEV",
+          "desc": "S_SPO_DEV",
+          "field": "SPODEVICE",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_SPO_PAGE",
+          "desc": "S_SPO_PAGE",
+          "field": "SPODEVICE",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_SPO_PAGE",
+          "desc": "S_SPO_PAGE",
+          "field": "SPOPAGES",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_START",
+          "desc": "S_START",
+          "field": "AUTHOBJNAM",
+          "values": "/IWNGW/NOTIFICATION",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_START",
+          "desc": "S_START",
+          "field": "AUTHOBJTYP",
+          "values": "G4BA",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_START",
+          "desc": "S_START",
+          "field": "AUTHPGMID",
+          "values": "R3TR",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_TC",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_TC",
+          "desc": "Display",
+          "field": "STC_SCN",
+          "values": "' '",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_TCODE",
+          "desc": "SAP Gateway Traces",
+          "field": "TCD",
+          "values": "/IWFND/TRACES",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_WF_WI",
+          "desc": "S_WF_WI",
+          "field": "TASK_CLASS",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_WF_WI",
+          "desc": "S_WF_WI",
+          "field": "WFACTVT",
+          "values": "25",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_WF_WI",
+          "desc": "S_WF_WI",
+          "field": "WI_TYPE",
+          "values": "W",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_WFAR_OBJ",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_WFAR_OBJ",
+          "desc": "Display",
+          "field": "OAARCHIV",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_WFAR_OBJ",
+          "desc": "Display",
+          "field": "OADOKUMENT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_WFAR_OBJ",
+          "desc": "Display",
+          "field": "OAOBJEKTE",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "SDDLVIEW",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "SDDLVIEW",
+          "desc": "Display",
+          "field": "DDLNAME",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "SDDLVIEW",
+          "desc": "Display",
+          "field": "DDLSRCNAME",
+          "values": "ESH_N_INC_INVOICE",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "V_KNA1_VKO",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "V_KNA1_VKO",
+          "desc": "Display",
+          "field": "SPART",
+          "values": "$SPART",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "V_KNA1_VKO",
+          "desc": "Display",
+          "field": "VKORG",
+          "values": "$VKORG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "V_KNA1_VKO",
+          "desc": "Display",
+          "field": "VTWEG",
+          "values": "$VTWEG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "V_VBAK_VKO",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "V_VBAK_VKO",
+          "desc": "V_VBAK_VKO",
+          "field": "SPART",
+          "values": "$SPART",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "V_VBAK_VKO",
+          "desc": "V_VBAK_VKO",
+          "field": "VKORG",
+          "values": "$VKORG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "V_VBAK_VKO",
+          "desc": "V_VBAK_VKO",
+          "field": "VTWEG",
+          "values": "$VTWEG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        }
+      ],
+      "childRoles": null,
+      "licenseCounts": {
+        "professional": 4,
+        "functional": 0,
+        "productivity": 179
+      },
+      "targetLicense": "HD Professional",
+      "description": "—",
+      "module": "—",
+      "recommendation": {
+        "type": "Role-Based Cleaning",
+        "action": "Remove role assignment",
+        "severity": "medium",
+        "justification": "All 287 authorisation objects in this role are unused."
+      }
+    },
+    {
+      "name": "ZL_BR_CA_BP_DIS",
+      "type": "Single",
+      "assignmentType": "Indirectly Assigned",
+      "authObjs": [
+        {
+          "name": "B_BUPA_ADR",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_ADR",
+          "desc": "Display",
+          "field": "SENSTVT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_ATT",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_ATT",
+          "desc": "Display",
+          "field": "AUTHTYP",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_ATT",
+          "desc": "Display",
+          "field": "AUVAL1",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_ATT",
+          "desc": "Display",
+          "field": "AUVAL2",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_BNK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_BNK",
+          "desc": "Display",
+          "field": "SENSTVT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_CRS",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_FDG",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_FDG",
+          "desc": "Display",
+          "field": "FLDGR",
+          "values": "0001-0008",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_GRP",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_GRP",
+          "desc": "Display",
+          "field": "BEGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_RAT",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_RAT",
+          "desc": "Display",
+          "field": "BP_PER_IND",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_RLT",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPA_RLT",
+          "desc": "Display",
+          "field": "RLTYP",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPR_BZT",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPR_BZT",
+          "desc": "Display",
+          "field": "RELTYP",
+          "values": "BUR001",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPR_FDG",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_BUPR_FDG",
+          "desc": "Display",
+          "field": "FLDGR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "B_CCARD",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_DRAD_OBJ",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_DRAD_OBJ",
+          "desc": "Display",
+          "field": "DOKAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_DRAD_OBJ",
+          "desc": "Display",
+          "field": "DOKOB",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_DRAD_OBJ",
+          "desc": "Display",
+          "field": "STATUS",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_DRAW_APL",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_APL",
+          "desc": "Display",
+          "field": "DOKAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_APL",
+          "desc": "Display",
+          "field": "FILEXT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_DOK",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "53",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_DOK",
+          "desc": "C_DRAW_DOK",
+          "field": "DOKAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_TCD",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_TCD",
+          "desc": "Display",
+          "field": "DOKAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_TCS",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_TCS",
+          "desc": "Display",
+          "field": "DOKAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_TCS",
+          "desc": "Display",
+          "field": "DOKST",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_TCLA_BKA",
+          "desc": "C_TCLA_BKA",
+          "field": "KLART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_BKPF_BUK",
+          "desc": "Create",
+          "field": "ACTVT",
+          "values": "01",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_BKPF_BUK",
+          "desc": "Create",
+          "field": "BUKRS",
+          "values": "$BUKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_BNKA_MAN",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_BNKA_MAO",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_BNKA_MAO",
+          "desc": "Display",
+          "field": "BBANKS",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_APP",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_APP",
+          "desc": "Display",
+          "field": "APPKZ",
+          "values": "F",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_BED",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_BED",
+          "desc": "Display",
+          "field": "BRGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_BUK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_BUK",
+          "desc": "Display",
+          "field": "BUKRS",
+          "values": "$BUKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_GEN",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_GRP",
+          "desc": "Create",
+          "field": "ACTVT",
+          "values": "01",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_GRP",
+          "desc": "Create",
+          "field": "KTOKD",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_AEN",
+          "desc": "F_LFA1_AEN",
+          "field": "VGRUP",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "F_LFA1_APP",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_APP",
+          "desc": "Display",
+          "field": "APPKZ",
+          "values": "F",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_BEK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_BEK",
+          "desc": "Display",
+          "field": "BRGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_BUK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_BUK",
+          "desc": "Display",
+          "field": "BUKRS",
+          "values": "$BUKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_GEN",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_GRP",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_GRP",
+          "desc": "Display",
+          "field": "KTOKK",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_SKA1_BUK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_SKA1_BUK",
+          "desc": "Display",
+          "field": "BUKRS",
+          "values": "$BUKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_SKA1_KTP",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_SKA1_KTP",
+          "desc": "Display",
+          "field": "KTOPL",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_LFM1_EKO",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_LFM1_EKO",
+          "desc": "Display",
+          "field": "EKORG",
+          "values": "$EKORG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_WRK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_WRK",
+          "desc": "Display",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "S_SERVICE",
+          "desc": "S_SERVICE",
+          "field": "SRV_NAME",
+          "values": "07A8221A0DF782B377411EFE7881DA",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_SERVICE",
+          "desc": "S_SERVICE",
+          "field": "SRV_TYPE",
+          "values": "HT",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_TCODE",
+          "desc": "SAP Gateway Traces",
+          "field": "TCD",
+          "values": "/IWFND/TRACES",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "V_KNA1_BRG",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "V_KNA1_BRG",
+          "desc": "Display",
+          "field": "BRGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "V_KNA1_VKO",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "V_KNA1_VKO",
+          "desc": "Display",
+          "field": "SPART",
+          "values": "$SPART",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "V_KNA1_VKO",
+          "desc": "Display",
+          "field": "VKORG",
+          "values": "$VKORG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "V_KNA1_VKO",
+          "desc": "Display",
+          "field": "VTWEG",
+          "values": "$VTWEG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        }
+      ],
+      "childRoles": null,
+      "licenseCounts": {
+        "professional": 0,
+        "functional": 0,
+        "productivity": 63
+      },
+      "targetLicense": "HD Productivity",
+      "description": "—",
+      "module": "—",
+      "recommendation": {
+        "type": "Role-Based Cleaning",
+        "action": "Remove role assignment",
+        "severity": "medium",
+        "justification": "All 78 authorisation objects in this role are unused."
+      }
+    },
+    {
+      "name": "ZL_BR_CA_STOCK_DIS",
+      "type": "Single",
+      "assignmentType": "Indirectly Assigned",
+      "authObjs": [
+        {
+          "name": "C_AENR_BGR",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_AENR_BGR",
+          "desc": "C_AENR_BGR",
+          "field": "BEGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_AENR_ERW",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_AENR_ERW",
+          "desc": "C_AENR_ERW",
+          "field": "AEFUN",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_AENR_ERW",
+          "desc": "C_AENR_ERW",
+          "field": "AENST",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_AENR_ERW",
+          "desc": "C_AENR_ERW",
+          "field": "BEGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_AENR_ERW",
+          "desc": "C_AENR_ERW",
+          "field": "RLKEY",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_CABN",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_CABN_GRP",
+          "desc": "C_CABN_GRP",
+          "field": "ATAUTH",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_TCD",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_TCD",
+          "desc": "Display",
+          "field": "DOKAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_TCS",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_TCS",
+          "desc": "Display",
+          "field": "DOKAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_DRAW_TCS",
+          "desc": "Display",
+          "field": "DOKST",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_KLAH_BKL",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_KLAH_BKL",
+          "desc": "C_KLAH_BKL",
+          "field": "BGRKL",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_KLAH_BKP",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_KLAH_BKP",
+          "desc": "Display",
+          "field": "BGRKP",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_KLAH_BSE",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_KLAH_BSE",
+          "desc": "C_KLAH_BSE",
+          "field": "BGRSE",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_STUE_BER",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_STUE_BER",
+          "desc": "Display",
+          "field": "BEGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_STUE_BER",
+          "desc": "Display",
+          "field": "STLAN",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_STUE_BER",
+          "desc": "Display",
+          "field": "STLTY",
+          "values": "M",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_STUE_WRK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_STUE_WRK",
+          "desc": "Display",
+          "field": "CSWRK",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_TCLA_BKA",
+          "desc": "C_TCLA_BKA",
+          "field": "KLART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_TCLS_BER",
+          "desc": "C_TCLS_BER",
+          "field": "KLART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_TCLS_BER",
+          "desc": "C_TCLS_BER",
+          "field": "SICHT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_TCLS_MNT",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_TCLS_MNT",
+          "desc": "C_TCLS_MNT",
+          "field": "KLART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_TCLS_MNT",
+          "desc": "C_TCLS_MNT",
+          "field": "SICHT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "C_VC_MODEL",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_VC_MODEL",
+          "desc": "Display",
+          "field": "LOV_OBJTYP",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_BED",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_BED",
+          "desc": "Display",
+          "field": "BRGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_GEN",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_GRP",
+          "desc": "Create",
+          "field": "ACTVT",
+          "values": "01",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_KNA1_GRP",
+          "desc": "Create",
+          "field": "KTOKD",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_BEK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_BEK",
+          "desc": "Display",
+          "field": "BRGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_GEN",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_GRP",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "F_LFA1_GRP",
+          "desc": "Display",
+          "field": "KTOKK",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BEST_WRK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_BEST_WRK",
+          "desc": "Display",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_INVVAL",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_INVVAL",
+          "desc": "Display",
+          "field": "DISPINVVAL",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MAN",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MAR",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MAR",
+          "desc": "Display",
+          "field": "BEGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MAT",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MAT",
+          "desc": "Display",
+          "field": "BEGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_VKO",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_VKO",
+          "desc": "Display",
+          "field": "VKORG",
+          "values": "$VKORG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_VKO",
+          "desc": "Display",
+          "field": "VTWEG",
+          "values": "$VTWEG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_WGR",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_WGR",
+          "desc": "Display",
+          "field": "BEGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_WRK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_WRK",
+          "desc": "Display",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MRES_BWA",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MRES_BWA",
+          "desc": "Display",
+          "field": "BWART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MRES_WWA",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MRES_WWA",
+          "desc": "Display",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MSEG_BMB",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MSEG_BMB",
+          "desc": "Display",
+          "field": "BWART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MSEG_WMB",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MSEG_WMB",
+          "desc": "Display",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RAHM_WRK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_RAHM_WRK",
+          "desc": "Display",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "REQUEST",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "SCONN_ID",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "SYS_CLIENT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "SYSTEM_ID",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "TEMPL_NAME",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "TEMPL_TYPE",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_SERVICE",
+          "desc": "S_SERVICE",
+          "field": "SRV_NAME",
+          "values": "07A8221A0DF782B377411EFE7881DA",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_SERVICE",
+          "desc": "S_SERVICE",
+          "field": "SRV_TYPE",
+          "values": "HT",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_TCODE",
+          "desc": "SAP Gateway Traces",
+          "field": "TCD",
+          "values": "/IWFND/TRACES",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "V_KONH_VKS",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "V_KONH_VKS",
+          "desc": "Display",
+          "field": "KSCHL",
+          "values": "PR00",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "W_AUFT_BAA",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "W_AUFT_BAA",
+          "desc": "W_AUFT_BAA",
+          "field": "AUFAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "W_BETR_USR",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "W_BETR_USR",
+          "desc": "Display",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "W_WAKH_EKO",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "W_WAKH_EKO",
+          "desc": "W_WAKH_EKO",
+          "field": "EKGRP",
+          "values": "$EKGRP",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "W_WAKH_EKO",
+          "desc": "W_WAKH_EKO",
+          "field": "EKORG",
+          "values": "$EKORG",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "W_WAKH_VKO",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "F4",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "W_WAKH_VKO",
+          "desc": "W_WAKH_VKO",
+          "field": "VKORG",
+          "values": "$VKORG",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "W_WAKH_VKO",
+          "desc": "W_WAKH_VKO",
+          "field": "VTWEG",
+          "values": "$VTWEG",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        }
+      ],
+      "childRoles": null,
+      "licenseCounts": {
+        "professional": 0,
+        "functional": 0,
+        "productivity": 62
+      },
+      "targetLicense": "HD Productivity",
+      "description": "—",
+      "module": "—",
+      "recommendation": {
+        "type": "Role-Based Cleaning",
+        "action": "Remove role assignment",
+        "severity": "medium",
+        "justification": "All 91 authorisation objects in this role are unused."
+      }
+    },
+    {
+      "name": "ZL_BR_CA_MAT_MSTR_DIS",
+      "type": "Single",
+      "assignmentType": "Indirectly Assigned",
+      "authObjs": [
+        {
+          "name": "C_DRAD_OBJ",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_DRAD_OBJ",
+          "desc": "Display",
+          "field": "DOKAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_DRAD_OBJ",
+          "desc": "Display",
+          "field": "DOKOB",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_DRAD_OBJ",
+          "desc": "Display",
+          "field": "STATUS",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_KLAH_BKL",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_KLAH_BKL",
+          "desc": "C_KLAH_BKL",
+          "field": "BGRKL",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "C_TCLA_BKA",
+          "desc": "C_TCLA_BKA",
+          "field": "KLART",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "K_KEKO",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "K_KEKO",
+          "desc": "Display",
+          "field": "BUKRS",
+          "values": "$BUKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "K_KEKO",
+          "desc": "Display",
+          "field": "KLVAR",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_BUK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_BUK",
+          "desc": "Display",
+          "field": "BUKRS",
+          "values": "$BUKRS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_LGN",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_LGN",
+          "desc": "Display",
+          "field": "LGNUM",
+          "values": "$LGNUM",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MAN",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MAR",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MAR",
+          "desc": "Display",
+          "field": "BEGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MAT",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MAT",
+          "desc": "Display",
+          "field": "BEGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MEX",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MZP",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_MZP",
+          "desc": "Display",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_STA",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_STA",
+          "desc": "Display",
+          "field": "STATM",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_VKO",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_VKO",
+          "desc": "Display",
+          "field": "VKORG",
+          "values": "$VKORG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_VKO",
+          "desc": "Display",
+          "field": "VTWEG",
+          "values": "$VTWEG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_WGR",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_WGR",
+          "desc": "Display",
+          "field": "BEGRU",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_WRK",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "M_MATE_WRK",
+          "desc": "Display",
+          "field": "WERKS",
+          "values": "$WERKS",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "S_TCODE",
+          "desc": "SAP Gateway Traces",
+          "field": "TCD",
+          "values": "/IWFND/TRACES",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        }
+      ],
+      "childRoles": null,
+      "licenseCounts": {
+        "professional": 0,
+        "functional": 0,
+        "productivity": 30
+      },
+      "targetLicense": "HD Productivity",
+      "description": "—",
+      "module": "—",
+      "recommendation": {
+        "type": "Role-Based Cleaning",
+        "action": "Remove role assignment",
+        "severity": "medium",
+        "justification": "All 32 authorisation objects in this role are unused."
+      }
+    }
+  ],
+  "directAuthObjs": []
+}

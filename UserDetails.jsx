@@ -1002,4 +1002,27 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+const __udRoot = ReactDOM.createRoot(document.getElementById("root"));
+
+// Wait for the user_data/ dataset to load before mounting, since UserDetails
+// reads window.LICENSE_DATA synchronously during render.
+function __udMount() { __udRoot.render(<App />); }
+function __udError(err) {
+  __udRoot.render(
+    <div style={{ padding: 40, fontFamily: "Figtree, sans-serif", color: "#b0234a" }}>
+      <h2>Failed to load user data</h2>
+      <p>{String(err && err.message ? err.message : err)}</p>
+      <p style={{ color: "#64748b" }}>
+        This page loads JSON from the <code>user_data/</code> folder, which requires
+        running over HTTP (not opening the file directly). Serve the folder, e.g.
+        <code> npx serve</code> or <code>python -m http.server</code>.
+      </p>
+    </div>
+  );
+}
+
+if (window.LICENSE_DATA_READY && typeof window.LICENSE_DATA_READY.then === "function") {
+  window.LICENSE_DATA_READY.then(__udMount).catch(__udError);
+} else {
+  __udMount();
+}

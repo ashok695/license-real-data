@@ -1,0 +1,602 @@
+{
+  "id": 5,
+  "firstName": "NA",
+  "lastName": "ADS_AGENT",
+  "sapId": "ADS_AGENT",
+  "email": "NA",
+  "roleCount": 8,
+  "authCount": 41,
+  "license": "HD Productivity",
+  "targetLicense": "HD Productivity",
+  "inferredLicense": "HD Productivity",
+  "status": "Active",
+  "sapUserType": "System",
+  "lastLogin": "13-10-2022 05:57:23",
+  "referenceUser": "ADS_AGENT",
+  "fue": 0,
+  "validFrom": "2024-07-03",
+  "validTo": "2026-08-19",
+  "licenseCounts": {
+    "professional": 0,
+    "functional": 0,
+    "productivity": 5
+  },
+  "authSummary": {
+    "total": 41,
+    "used": 0,
+    "unused": 41,
+    "critical": 11,
+    "duplicates": 8,
+    "cleansable": 41
+  },
+  "roleActivity": {
+    "total": 9,
+    "active": 0,
+    "inactive": 9,
+    "composite": 0,
+    "single": 9
+  },
+  "usageDonut": {
+    "active": 0,
+    "idle": 60,
+    "critical": 40
+  },
+  "loginCounts": {
+    "last30": 0,
+    "last60": 0,
+    "last90": 0
+  },
+  "topTcodes": [
+    {
+      "code": "SAPMHTTP",
+      "desc": "Used in workload trace",
+      "module": "—",
+      "executions": 18285,
+      "lastUsed": "2026-03-03",
+      "classification": "HD Professional",
+      "assignmentSource": "Direct"
+    },
+    {
+      "code": "<AD_CATALOG_SYNC>",
+      "desc": "Used in workload trace",
+      "module": "—",
+      "executions": 1,
+      "lastUsed": "2026-03-13",
+      "classification": "HD Productivity",
+      "assignmentSource": "Indirect"
+    }
+  ],
+  "monthlyUsage": [
+    {
+      "month": "Jan '26",
+      "count": 1077
+    },
+    {
+      "month": "Feb '26",
+      "count": 1441
+    },
+    {
+      "month": "Mar '26",
+      "count": 1573
+    },
+    {
+      "month": "Apr '26",
+      "count": 1395
+    },
+    {
+      "month": "May '26",
+      "count": 1689
+    },
+    {
+      "month": "Jun '26",
+      "count": 1550
+    }
+  ],
+  "roles": [
+    {
+      "name": "SAP_BC_FPADS_ICF",
+      "type": "Single",
+      "assignmentType": "Indirectly Assigned",
+      "authObjs": [
+        {
+          "name": "S_DATASET",
+          "desc": "Assigned",
+          "field": "ACTVT",
+          "values": "33",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_DATASET",
+          "desc": "S_DATASET",
+          "field": "FILENAME",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_DATASET",
+          "desc": "S_DATASET",
+          "field": "PROGRAM",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_FP_ICF",
+          "desc": "S_FP_ICF",
+          "field": "FPICF",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        }
+      ],
+      "childRoles": null,
+      "licenseCounts": {
+        "professional": 0,
+        "functional": 0,
+        "productivity": 0
+      },
+      "targetLicense": "NA",
+      "description": "—",
+      "module": "—",
+      "recommendation": {
+        "type": "Role-Based Cleaning",
+        "action": "Remove role assignment",
+        "severity": "medium",
+        "justification": "All 4 authorisation objects in this role are unused."
+      }
+    },
+    {
+      "name": "SAP_ESH_BOS_RFC_ENDUSER",
+      "type": "Single",
+      "assignmentType": "Indirectly Assigned",
+      "authObjs": [
+        {
+          "name": "S_DEVELOP",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "S_DEVELOP",
+          "desc": "Display",
+          "field": "DEVCLASS",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "S_DEVELOP",
+          "desc": "Display",
+          "field": "OBJNAME",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "S_DEVELOP",
+          "desc": "Display",
+          "field": "OBJTYPE",
+          "values": "PROG",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "S_DEVELOP",
+          "desc": "Display",
+          "field": "P_GROUP",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "HD Productivity"
+        },
+        {
+          "name": "S_RFC",
+          "desc": "Execute",
+          "field": "ACTVT",
+          "values": "16",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_RFC",
+          "desc": "Execute",
+          "field": "RFC_NAME",
+          "values": "COM_SES_SEARCH",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_RFC",
+          "desc": "Execute",
+          "field": "RFC_TYPE",
+          "values": "FUGR",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_START",
+          "desc": "S_START",
+          "field": "AUTHOBJNAM",
+          "values": "ESH_SEARCH_RESULTS_UI",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_START",
+          "desc": "S_START",
+          "field": "AUTHOBJTYP",
+          "values": "WDYA",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_START",
+          "desc": "S_START",
+          "field": "AUTHPGMID",
+          "values": "R3TR",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_TCODE",
+          "desc": "Enterprise Search",
+          "field": "TCD",
+          "values": "ESH_SEARCH",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_USER_GRP",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_USER_GRP",
+          "desc": "Display",
+          "field": "CLASS",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        }
+      ],
+      "childRoles": null,
+      "licenseCounts": {
+        "professional": 0,
+        "functional": 0,
+        "productivity": 5
+      },
+      "targetLicense": "HD Productivity",
+      "description": "—",
+      "module": "—",
+      "recommendation": {
+        "type": "Role-Based Cleaning",
+        "action": "Remove role assignment",
+        "severity": "medium",
+        "justification": "All 14 authorisation objects in this role are unused."
+      }
+    },
+    {
+      "name": "SAP_ESH_SEARCH_CATEG",
+      "type": "Single",
+      "assignmentType": "Indirectly Assigned",
+      "authObjs": [
+        {
+          "name": "S_ESH_CAT",
+          "desc": "S_ESH_CAT",
+          "field": "ESH_CATEG",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        }
+      ],
+      "childRoles": null,
+      "licenseCounts": {
+        "professional": 0,
+        "functional": 0,
+        "productivity": 0
+      },
+      "targetLicense": "NA",
+      "description": "—",
+      "module": "—",
+      "recommendation": {
+        "type": "Role-Based Cleaning",
+        "action": "Remove role assignment",
+        "severity": "medium",
+        "justification": "All 1 authorisation objects in this role are unused."
+      }
+    },
+    {
+      "name": "SAP_ESH_SEARCH_USER",
+      "type": "Single",
+      "assignmentType": "Indirectly Assigned",
+      "authObjs": [
+        {
+          "name": "S_ESH_CAT",
+          "desc": "S_ESH_CAT",
+          "field": "ESH_CATEG",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "REQUEST",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "SCONN_ID",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "SYS_CLIENT",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "SYSTEM_ID",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "TEMPL_NAME",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_ESH_CONN",
+          "desc": "S_ESH_CONN",
+          "field": "TEMPL_TYPE",
+          "values": "BI",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_START",
+          "desc": "S_START",
+          "field": "AUTHOBJNAM",
+          "values": "ESH_SEARCH_RESULTS_UI",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_START",
+          "desc": "S_START",
+          "field": "AUTHOBJTYP",
+          "values": "WDYA",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_START",
+          "desc": "S_START",
+          "field": "AUTHPGMID",
+          "values": "R3TR",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        }
+      ],
+      "childRoles": null,
+      "licenseCounts": {
+        "professional": 0,
+        "functional": 0,
+        "productivity": 0
+      },
+      "targetLicense": "NA",
+      "description": "—",
+      "module": "—",
+      "recommendation": {
+        "type": "Role-Based Cleaning",
+        "action": "Remove role assignment",
+        "severity": "medium",
+        "justification": "All 10 authorisation objects in this role are unused."
+      }
+    },
+    {
+      "name": "SAP_BC_FP_ICF",
+      "type": "Single",
+      "assignmentType": "Indirectly Assigned",
+      "authObjs": [
+        {
+          "name": "S_FP_ICF",
+          "desc": "S_FP_ICF",
+          "field": "FPICF",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        }
+      ],
+      "childRoles": null,
+      "licenseCounts": {
+        "professional": 0,
+        "functional": 0,
+        "productivity": 0
+      },
+      "targetLicense": "NA",
+      "description": "—",
+      "module": "—",
+      "recommendation": {
+        "type": "Role-Based Cleaning",
+        "action": "Remove role assignment",
+        "severity": "medium",
+        "justification": "All 1 authorisation objects in this role are unused."
+      }
+    },
+    {
+      "name": "SAP_BC_SEFS_RFC_ENDUSER",
+      "type": "Single",
+      "assignmentType": "Indirectly Assigned",
+      "authObjs": [
+        {
+          "name": "S_LDAP",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_LDAP",
+          "desc": "Display",
+          "field": "LDAP_SERV",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_RFC",
+          "desc": "Execute",
+          "field": "ACTVT",
+          "values": "16",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_RFC",
+          "desc": "Execute",
+          "field": "RFC_NAME",
+          "values": "COM_SES_SEARCH",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_RFC",
+          "desc": "Execute",
+          "field": "RFC_TYPE",
+          "values": "FUGR",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        }
+      ],
+      "childRoles": null,
+      "licenseCounts": {
+        "professional": 0,
+        "functional": 0,
+        "productivity": 0
+      },
+      "targetLicense": "NA",
+      "description": "—",
+      "module": "—",
+      "recommendation": {
+        "type": "Role-Based Cleaning",
+        "action": "Remove role assignment",
+        "severity": "medium",
+        "justification": "All 5 authorisation objects in this role are unused."
+      }
+    },
+    {
+      "name": "SAP_BC_SES_RFC_ENDUSER",
+      "type": "Single",
+      "assignmentType": "Indirectly Assigned",
+      "authObjs": [
+        {
+          "name": "S_RFC",
+          "desc": "Execute",
+          "field": "ACTVT",
+          "values": "16",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_RFC",
+          "desc": "Execute",
+          "field": "RFC_NAME",
+          "values": "COM_SES_SEARCH",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "S_RFC",
+          "desc": "Execute",
+          "field": "RFC_TYPE",
+          "values": "FUGR",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        }
+      ],
+      "childRoles": null,
+      "licenseCounts": {
+        "professional": 0,
+        "functional": 0,
+        "productivity": 0
+      },
+      "targetLicense": "NA",
+      "description": "—",
+      "module": "—",
+      "recommendation": {
+        "type": "Role-Based Cleaning",
+        "action": "Remove role assignment",
+        "severity": "medium",
+        "justification": "All 3 authorisation objects in this role are unused."
+      }
+    },
+    {
+      "name": "SAP_ESH_SEARCH_CDS",
+      "type": "Single",
+      "assignmentType": "Indirectly Assigned",
+      "authObjs": [
+        {
+          "name": "SDDLVIEW",
+          "desc": "Display",
+          "field": "ACTVT",
+          "values": "03",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "SDDLVIEW",
+          "desc": "Display",
+          "field": "DDLNAME",
+          "values": "NA",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        },
+        {
+          "name": "SDDLVIEW",
+          "desc": "Display",
+          "field": "DDLSRCNAME",
+          "values": "*",
+          "fieldStatus": "Unused",
+          "license": "NA"
+        }
+      ],
+      "childRoles": null,
+      "licenseCounts": {
+        "professional": 0,
+        "functional": 0,
+        "productivity": 0
+      },
+      "targetLicense": "NA",
+      "description": "—",
+      "module": "—",
+      "recommendation": {
+        "type": "Role-Based Cleaning",
+        "action": "Remove role assignment",
+        "severity": "medium",
+        "justification": "All 3 authorisation objects in this role are unused."
+      }
+    }
+  ],
+  "directAuthObjs": []
+}

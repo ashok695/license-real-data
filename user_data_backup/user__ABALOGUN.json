@@ -1,0 +1,38 @@
+{
+  "userInfo": {
+    "username": "ABALOGUN",
+    "userType": "Dialog",
+    "firstName": "Abetunji",
+    "lastName": "Balogun",
+    "sapId": "ABALOGUN",
+    "emailId": "Adetunji.Balogun@bs.nttdata.com",
+    "status": "Not Locked",
+    "lastLogin": "15-04-2024 03:33:39",
+    "license": "NA",
+    "inferredLicense": "NA",
+    "fueValue": 0
+  },
+  "authSummary": {
+    "totalRoles": 0,
+    "totalProfiles": 0,
+    "activeRoles": 0,
+    "totalAuthorizationObjects": 0,
+    "totalAuthorizationFields": 0,
+    "totalAuthorizedTransactions": 0
+  },
+  "roleActivityOverview": {
+    "totalTraceAuthObjects": 0,
+    "roleBreakdownBuckets": 0,
+    "assignedActivities": 0,
+    "unusedActivities": 0,
+    "assignedAuthorizationFields": 0,
+    "unusedAuthObjects": 0
+  },
+  "authorizationUsageRate": {
+    "percentage": 0,
+    "label": "0% of assigned activities (ACTVT) were used in the last 90 days"
+  },
+  "roleBreakdown": [],
+  "topTransactions": [],
+  "authorizedTransactions": []
+}
