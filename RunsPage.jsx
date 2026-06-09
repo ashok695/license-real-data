@@ -27,7 +27,7 @@ const RUNS_DATA = [
     licenseMatchRate: 72,
     target: "index.html",
     sapSystem: "PRD — Production",
-    licenseClassification: { professional: 509, functional: 40, productivity: 10 },
+    licenseClassification: { professional: 3, functional: 1, productivity: 2 },
   },
   {
     id: "run-003",
@@ -41,7 +41,7 @@ const RUNS_DATA = [
     licenseMatchRate: 61,
     target: "index.html",
     sapSystem: "QAS — Quality Assurance",
-    licenseClassification: { professional: 412, functional: 78, productivity: 31 },
+    licenseClassification: { professional: 3, functional: 1, productivity: 2 },
   },
   {
     id: "run-004",
@@ -55,7 +55,7 @@ const RUNS_DATA = [
     licenseMatchRate: 55,
     target: "index.html",
     sapSystem: "PRD — Production",
-    licenseClassification: { professional: 380, functional: 85, productivity: 33 },
+    licenseClassification: { professional: 3, functional: 1, productivity: 2 },
   },
 ];
 
